@@ -1,0 +1,131 @@
+{
+  "title": "QUASAR — escolha o mundo visual",
+  "question": "A rolagem definiu O Horizonte de Cenários. Mantenha, escolha uma alternativa ou role de novo.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "O Horizonte de Cenários",
+      "kicker": "THE ROLL",
+      "lineage": "Gráficos de cenário (fan charts) dos relatórios de bancos centrais",
+      "thesis": "O futuro desenhado como cenários: a QUASAR mostra o que vem antes de chegar.",
+      "palette": ["#F5F6F3", "#0E2A47", "#108CCF", "#8EC9EA", "#6C42F5"],
+      "materials": ["faixas de probabilidade em azul translúcido e luminoso", "papel de relatório fosco", "notas de fonte em corpo pequeno"],
+      "viewport": "Um fan chart ocupa a tela: o passado em linha fina, 'hoje' marcado em violeta, o futuro abrindo em faixas azuis até 2035 com marcos reais (NIST 2030/2035, CMN 5.274) e o título por cima.",
+      "risk": "Pode soar como banco central frio se as faixas perderem luz; o gráfico precisa ser vivo, luminoso e animado.",
+      "raised": [
+        {"from": "challenger-catalog", "raise": "Todo pilar, insight e marco ganha um número de referência QUASAR (Q-01…), e o índice vira o mapa do site."},
+        {"from": "challenger-city", "raise": "Cada um dos 6 pilares tem a sua própria faixa de tom dentro da mesma família azul→violeta."},
+        {"from": "challenger-hypercard", "raise": "Cada marco e cenário tem endereço próprio, para o executivo encaminhar direto ao Conselho."},
+        {"from": "challenger-flap", "raise": "A Agenda do Conselho é uma tabela regida pelo tempo: linhas por data, estados (em vigor, em tramitação, previsto) sem quebrar a grade."},
+        {"from": "challenger-angura", "raise": "Uma única origem governa as composições: tudo se abre a partir de 'hoje'."}
+      ],
+      "comp": ".impeccable/mocks/decision/assigned.png"
+    },
+    {
+      "id": "model-pick",
+      "label": "O Relatório Anual",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Relatórios anuais de companhias abertas e programas de identidade suíços",
+      "thesis": "A QUASAR como o relatório anual de uma companhia que antecipa: capítulos, números grandes, fotografia arquitetônica.",
+      "palette": ["#FFFFFF", "#111A24", "#0B3A66", "#108CCF", "#C9CFD4"],
+      "materials": ["fotografia arquitetônica em sangria", "grade suíça rigorosa", "algarismos tabulares em escala de capa"],
+      "viewport": "Capa de relatório: fotografia arquitetônica em sangria, 'Transformamos Ciência em Estratégia' em tipo grande e o índice dos 6 pilares numerados como capítulos.",
+      "risk": "Familiar: é onde a maioria das consultorias globais aterrissa; pode soar conservador e editorial.",
+      "comp": ".impeccable/mocks/decision/model-pick.png"
+    },
+    {
+      "id": "challenger-cloud",
+      "label": "A Borda Iridescente",
+      "verdict": "competitive",
+      "lineage": "Nuvens iridescentes: a franja de cor no instante em que algo se forma",
+      "thesis": "Antecipar é ver a borda onde o novo se forma: céu claro, texto em ardósia e uma franja de luz marcando o que muda.",
+      "palette": ["#F7F8FA", "#3E4A57", "#108CCF", "#9FE3CF", "#8E7CF0"],
+      "materials": ["fotografia de céu e nuvem em grande escala", "franjas de cor finíssimas", "margens brancas amplas"],
+      "viewport": "Céu claro com uma nuvem em grande escala e franja iridescente na borda; título fino em ardósia; os 6 pilares como faixas de cor estreitas.",
+      "case": "Funde bem com imagens conceituais e com o 'nada frio'; perde em clareza: o céu explica menos do que um cenário datado.",
+      "risk": "Pode ficar etéreo, quase wellness, se a tipografia e a estrutura não forem rigorosas.",
+      "comp": ".impeccable/mocks/decision/challenger-cloud.png",
+      "hero": "https://impeccable.style/worlds/cards/clouds-storms-auroras-iridescent-cloud-edge-hero.webp",
+      "board": "https://impeccable.style/worlds/cards/clouds-storms-auroras-iridescent-cloud-edge.webp"
+    },
+    {
+      "id": "challenger-catalog",
+      "label": "Catálogo de Selo (pulsar plot)",
+      "verdict": "declined",
+      "lineage": "Identidade de catálogo de gravadora, plot de pulsar em linhas brancas",
+      "thesis": "Tudo vira entrada numerada de catálogo, sobre preto fosco.",
+      "palette": ["#111111", "#F2F2F2", "#E63B2E", "#2E6FE6"],
+      "materials": ["preto fosco", "linhas brancas finíssimas"],
+      "viewport": "Um plot de pulsar domina a tela, com o número de catálogo como único título.",
+      "case": "Funde mal: preto dominante contraria o briefing, e códigos escondem informação do executivo.",
+      "kept": "O sistema de numeração de referência e o índice como mapa.",
+      "risk": "Escuro e críptico demais para o Conselho.",
+      "hero": "https://impeccable.style/worlds/cards/brand-identity-canon-saville-catalog-sleeve-hero.webp"
+    },
+    {
+      "id": "challenger-angura",
+      "label": "Cartaz de Teatro Angura",
+      "verdict": "declined",
+      "lineage": "Cartazes serigráficos do teatro underground japonês",
+      "thesis": "Raios de cor chapada partindo de um ponto de origem.",
+      "palette": ["#E3401F", "#1E9C7A", "#F2C21B", "#FFFFFF"],
+      "materials": ["serigrafia", "letreiro desenhado à mão"],
+      "viewport": "Explosão de raios a partir de um ponto, bordas lotadas de datas.",
+      "case": "Funde mal: contraria a sofisticação e a sobriedade pedidas.",
+      "kept": "A composição de origem única.",
+      "risk": "Ruidoso e informal."
+    },
+    {
+      "id": "challenger-city",
+      "label": "Cidade Dobrada em Sonho",
+      "verdict": "declined",
+      "lineage": "Mapa surreal de cidade adormecida",
+      "thesis": "Bairros que sonham climas diferentes sob a mesma noite.",
+      "palette": ["#141E3C", "#E8C15A", "#F1EEE6", "#6FA8C9"],
+      "materials": ["quilting", "luzes bordadas"],
+      "viewport": "Cidade noturna dobrando como colcha.",
+      "case": "Funde mal: noturno e lúdico, longe do nível Conselho.",
+      "kept": "Cada região com seu próprio tom dentro de um só sistema.",
+      "risk": "Fantasioso demais."
+    },
+    {
+      "id": "challenger-hypercard",
+      "label": "Pilha HyperCard",
+      "verdict": "declined",
+      "lineage": "Pilhas de cartões HyperCard em 1 bit",
+      "thesis": "Cartões linkados por botões, leitura e autoria no mesmo objeto.",
+      "palette": ["#000000", "#FFFFFF", "#9A9A9A"],
+      "materials": ["1 bit", "pontilhado"],
+      "viewport": "Um cartão fixo com botões pintados à mão.",
+      "case": "Funde mal: retrô e técnico, sem a autoridade pedida.",
+      "kept": "Cada cartão com endereço próprio e trilha de volta.",
+      "risk": "Nostálgico."
+    },
+    {
+      "id": "challenger-flap",
+      "label": "Painel Split-flap",
+      "verdict": "declined",
+      "lineage": "Painéis de partida de estações ferroviárias",
+      "thesis": "Linhas vivas ordenadas pelo tempo numa grade que nunca se move.",
+      "palette": ["#141414", "#F4F4F4", "#E8A93A", "#B23A3A"],
+      "materials": ["placas pretas", "moldura de aço escovado"],
+      "viewport": "O painel inteiro como composição, linhas virando letra a letra.",
+      "case": "Funde só em parte: a agenda temporal serve, mas o preto dominante contraria o briefing.",
+      "kept": "A tabela regida pelo tempo, com estados que não quebram a grade.",
+      "risk": "Escuro e mecânico."
+    }
+  ],
+  "reroll": { "registers": ["safer", "bolder"] },
+  "buildPath": { "value": "comp", "toggle": true },
+  "canon": true,
+  "canonCard": {
+    "label": "Consultoria global padrão",
+    "thesis": "O que uma consultoria estratégica global publica, executado com perfeição.",
+    "palette": ["#FFFFFF", "#0B1F33", "#002B5B", "#108CCF"],
+    "materials": ["fotografia arquitetônica em sangria", "grade de insights em cartões"],
+    "viewport": "Foto arquitetônica em tela cheia, título grande à esquerda e uma faixa de insights em cartões logo abaixo.",
+    "risk": "Indistinguível de qualquer consultoria global, por definição.",
+    "comp": ".impeccable/mocks/decision/canon.png"
+  },
+  "steer": true
+}

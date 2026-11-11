@@ -1,0 +1,37 @@
+{
+  "title": "Home QUASAR — escolha a composição",
+  "question": "Mesmo mundo, três composições. Qual leva adiante? Use o campo de direcionamento para combinar ou pedir ajustes (ex.: '1 com a Agenda do Conselho do 3').",
+  "options": [
+    {
+      "id": "comp-1",
+      "label": "1 · Horizonte",
+      "thesis": "Título à esquerda, o futuro se abrindo à direita e a régua dos 6 pilares na base.",
+      "palette": ["#F5F6F3", "#0E2A47", "#108CCF", "#8EC9EA", "#6C42F5"],
+      "materials": ["fan chart dominante", "régua de pilares"],
+      "viewport": "Uma composição só: título + cenário + pilares na mesma dobra; o gráfico é o momento focal.",
+      "risk": "Eixo do comp com erros (HOJE duplicado, 2024 após hoje), que serão corrigidos no build.",
+      "comp": ".impeccable/mocks/home-comp-1-horizonte.png"
+    },
+    {
+      "id": "comp-2",
+      "label": "2 · Palco",
+      "thesis": "Título centralizado e o cenário de ponta a ponta, com marcos como notas numeradas penduradas.",
+      "palette": ["#F5F6F3", "#0E2A47", "#108CCF", "#8EC9EA", "#6C42F5"],
+      "materials": ["gráfico em sangria", "notas Q-01…Q-04 com fonte"],
+      "viewport": "O gráfico vira palco de largura total; os pilares começam logo abaixo da dobra.",
+      "risk": "Fontes inventadas pelo gerador ('QUASAR Research', 'Fórum Quantum') e tons verde-azulados que não são do mundo; serão corrigidos no build.",
+      "comp": ".impeccable/mocks/home-comp-2-palco.png"
+    },
+    {
+      "id": "comp-3",
+      "label": "3 · Relatório denso",
+      "thesis": "Índice dos pilares à esquerda, título ao centro, cenário compacto e Agenda do Conselho à direita.",
+      "palette": ["#F5F6F3", "#0E2A47", "#108CCF", "#8EC9EA", "#6C42F5"],
+      "materials": ["índice Q-01…Q-06", "tabela temporal com estados"],
+      "viewport": "A primeira dobra já entrega o mapa do site e a agenda regulatória; mais 'mega-corporação', menos espetáculo.",
+      "risk": "O gráfico perde escala e impacto; o gerador usou serifa no título (fora da direção) e repetiu 2030 no eixo.",
+      "comp": ".impeccable/mocks/home-comp-3-relatorio.png"
+    }
+  ],
+  "steer": true
+}

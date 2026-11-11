@@ -1,0 +1,418 @@
+---
+import { pillars, pillarOffers, agenda, context, approach, sectors, boardQuestions, nav } from '../data/site';
+
+const statusClass: Record<string, string> = {
+  'Em vigor': 'is-live',
+  'Em tramitação': 'is-pending',
+  Previsto: 'is-ahead',
+};
+// Faixa de horizonte da Agenda: posição de cada marco no eixo 2025–2035.
+const pos: Record<string, number> = { 'Q-04': 2025.83, 'Q-01': 2026.17, 'Q-05': 2026.85, 'Q-06': 2026.85, 'Q-07': 2027.5, 'Q-02': 2030, 'Q-03': 2035 };
+const lane: Record<string, number> = { 'Q-04': 1, 'Q-05': 1, 'Q-06': 2 };
+const xOf = (y: number) => ((y - 2025) / 10) * 100;
+const axisYears = Array.from({ length: 11 }, (_, i) => 2025 + i);
+---
+<section id="pilares" class="section" aria-labelledby="pilares-title">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="pilares-title">Seis pilares, uma única visão de risco.</h2>
+      <p class="intro">
+        Tecnologia, segurança, regulação e ciência não chegam ao Conselho separadas. A QUASAR trabalha os seis temas como
+        um só sistema, para que cada decisão considere o que vem depois dela.
+      </p>
+    </div>
+    <ol class="pillar-index">
+      {pillars.map((p) => (
+        <li id={`pilar-${p.num}`} class="pillar-row" style={`--tone:${p.tone}`}>
+          <span class="p-num">{p.num}</span>
+          <div class="p-main">
+            <h3>{p.name}</h3>
+            <p>{p.summary}</p>
+          </div>
+          <ul class="p-offers" aria-label={`Entregas em ${p.name}`}>
+            {pillarOffers[p.num].map((o) => <li>{o}</li>)}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section id="contexto" class="section quiet" aria-labelledby="contexto-title">
+  <div class="wrap">
+    <h2 id="contexto-title" class="narrow">O risco mudou de velocidade. A estratégia precisa mudar antes.</h2>
+    <ul class="context">
+      {context.map((c) => (
+        <li>
+          <p><strong>{c.figure}</strong> {c.text}</p>
+          <span class="note">Fonte: {c.source}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section id="agenda" class="section" aria-labelledby="agenda-title">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="agenda-title">Agenda do Conselho</h2>
+      <p class="intro">
+        Os marcos que já estão no horizonte, em ordem de chegada. Cada linha tem um endereço próprio para ser encaminhada
+        à pauta da próxima reunião.
+      </p>
+    </div>
+    <div class="horizon" aria-hidden="true">
+      <span class="h-today" style={`left:${xOf(2026.85)}%`}><span>HOJE</span></span>
+      {agenda.map((r) => (
+        <a
+          class:list={['h-dot', statusClass[r.status], { 'lane-up': (lane[r.ref] ?? 0) > 0, 'label-left': r.ref === 'Q-04' }]}
+          href={`#marco-${r.ref.toLowerCase()}`}
+          tabindex="-1"
+          style={`left:${xOf(pos[r.ref])}%; --lane:${lane[r.ref] ?? 0}`}
+        ><span>{r.ref}</span></a>
+      ))}
+      <div class="h-axis">
+        {axisYears.map((y) => <span style={`left:${xOf(y)}%`}>{y}</span>)}
+      </div>
+    </div>
+    <div class="table-scroll">
+      <table class="agenda">
+        <caption class="sr-only">Marcos regulatórios e científicos, por data, com situação e fonte</caption>
+        <thead>
+          <tr>
+            <th scope="col">Quando</th>
+            <th scope="col">Marco</th>
+            <th scope="col">O que muda</th>
+            <th scope="col">Situação</th>
+            <th scope="col">Fonte</th>
+          </tr>
+        </thead>
+        <tbody>
+          {agenda.map((r) => (
+            <tr id={`marco-${r.ref.toLowerCase()}`}>
+              <td class="when">{r.when}</td>
+              <th scope="row" class="item">
+                <a href={`#marco-${r.ref.toLowerCase()}`}>{r.item}</a>
+                <span class="ref">[{r.ref}]</span>
+              </th>
+              <td class="detail">{r.detail}</td>
+              <td><span class:list={['status', statusClass[r.status]]}>{r.status}</span></td>
+              <td class="src">{r.source}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Situação verificada em novembro de 2026. Conferir a fonte primária antes de decisões formais.</p>
+  </div>
+</section>
+
+<section id="abordagem" class="section" aria-labelledby="abordagem-title">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="abordagem-title">Do diagnóstico ao horizonte.</h2>
+      <p class="intro">Pensamos em risco, atuamos com estratégia e entregamos com clareza. Toda conversa começa pelo que está exposto, nunca pela ferramenta.</p>
+    </div>
+    <ol class="route">
+      {approach.map((a, i) => (
+        <li>
+          <span class="station" aria-hidden="true"></span>
+          <span class="step-num">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{a.step}</h3>
+          <p>{a.text}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section id="setores" class="section" aria-labelledby="setores-title">
+  <div class="wrap">
+    <h2 id="setores-title" class="narrow">Onde o risco tecnológico é uma questão de estratégia.</h2>
+    <dl class="sectors">
+      {sectors.map((s) => (
+        <div class="sector">
+          <dt>{s.name}</dt>
+          <dd>{s.text}</dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<section id="insights" class="section quiet" aria-labelledby="insights-title">
+  <div class="wrap">
+    <h2 id="insights-title" class="narrow">Perguntas que o Conselho deveria fazer agora.</h2>
+    <ol class="questions">
+      {boardQuestions.map((b) => (
+        <li>
+          <span class="theme">{b.theme}</span>
+          <p>{b.q}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<section id="lideranca" class="section" aria-labelledby="lideranca-title">
+  <div class="wrap leader">
+    <div class="leader-id">
+      <h2 id="lideranca-title">Jorge Muzy</h2>
+      <p class="role">Fundador e Chief AI Officer</p>
+      <blockquote>
+        <p>“Na QUASAR, cada projeto é uma experiência científica com propósito estratégico. Nossa entrega é conhecimento aplicado, e nossa métrica é o impacto real.”</p>
+      </blockquote>
+    </div>
+    <div class="leader-body">
+      <p>
+        Mais de quarenta anos de carreira corporativa como CEO e em posições C-level em empresas como Icon Aviation, EMS,
+        Amil e Ibmec. Na última década, dedicado à aplicação corporativa e à governança da inteligência artificial.
+      </p>
+      <p>
+        Chairman do Instituto Valor, fundador e CEO da AINEWS e idealizador do AI Summit Brasil. Autor de um livro sobre inteligência artificial, <cite>Além dos Algoritmos</cite>,
+        e de centenas de publicações sobre tecnologia, inovação e IA.
+      </p>
+      <ul class="ecosystem" aria-label="Ecossistema">
+        <li><span>Instituto Valor</span><span class="note">Chairman</span></li>
+        <li><span>AINEWS</span><span class="note">Fundador e CEO</span></li>
+        <li><a href="https://aisummit.ia.br/" rel="noopener">AI Summit Brasil</a><span class="note">QUASAR é patrocinadora oficial da edição 2026</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="contato" class="section close" aria-labelledby="contato-title">
+  <div class="wrap close-grid">
+    <h2 id="contato-title">Vamos olhar para o horizonte da sua empresa.</h2>
+    <div class="close-body">
+      <p class="intro">Uma conversa estratégica com a liderança da QUASAR, para entender o que está exposto e o que vem pela frente.</p>
+      <a class="btn" href="mailto:muzy@quasar.ia.br?subject=Conversa%20estrat%C3%A9gica%20com%20a%20QUASAR">Agendar uma conversa</a>
+      <ul class="channels">
+        <li><a href="mailto:muzy@quasar.ia.br">muzy@quasar.ia.br</a></li>
+        <li><a href="https://www.linkedin.com/company/quasar-ia/" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/quasar.ia.br/" rel="noopener">Instagram</a></li>
+        <li><a href="https://chat.whatsapp.com/HCzXAB70XIqBTvUaakYoxt" rel="noopener">Grupo de WhatsApp</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap foot">
+    <a class="foot-brand" href="/" aria-label="QUASAR — página inicial">
+      <img src="/brand/quasar-mark.png" alt="" width="32" height="32" />
+      <span>QUASAR</span>
+    </a>
+    <p class="foot-sign">Transformamos Ciência em Estratégia</p>
+    <nav aria-label="Rodapé">
+      <ul>{nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}</ul>
+    </nav>
+    <p class="note foot-legal">© 2026 QUASAR Technology. Dados de mercado e regulatórios com fonte indicada em cada seção.</p>
+  </div>
+</footer>
+
+<style>
+  .wrap { margin-inline: 8.3vw; }
+  .section { padding-block: clamp(5rem, 9vw, 9.5rem); border-top: 1px solid var(--rule); }
+  .section.quiet { background: var(--ground-raised); }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(2rem, 3.3vw, 3.6rem);
+    font-weight: 500;
+    line-height: 1.04;
+    letter-spacing: -0.032em;
+    text-wrap: balance;
+  }
+  h2.narrow { max-width: 18ch; }
+  h3 { margin: 0; font-weight: 500; letter-spacing: -0.015em; }
+  .head {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: 2rem 6vw;
+    align-items: end;
+    margin-bottom: clamp(3rem, 5vw, 5rem);
+  }
+  .intro { margin: 0; font-size: clamp(1.05rem, 1.15vw, 1.25rem); line-height: 1.55; color: var(--ink-soft); max-width: 46ch; text-wrap: pretty; }
+  .note { font-size: 0.8125rem; line-height: 1.4; color: var(--ink-muted); }
+  .ref { font-size: 0.8125rem; color: var(--ink-muted); }
+
+  /* Pilares */
+  .pillar-index { list-style: none; margin: 0; padding: 0; }
+  .pillar-row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 6rem minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 1.5rem 4vw;
+    padding-block: 2.25rem 2.5rem;
+    border-top: 1px solid var(--rule);
+    scroll-margin-top: 2rem;
+  }
+  .pillar-row:last-child { border-bottom: 1px solid var(--rule); }
+  .pillar-row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: -1px;
+    width: 100%;
+    height: 3px;
+    background: var(--tone);
+    clip-path: inset(0 calc(100% - 2.75rem) 0 0);
+    transition: clip-path 0.8s var(--ease-out);
+  }
+  .pillar-row:target::before,
+  .pillar-row:hover::before { clip-path: inset(0 0 0 0); }
+  .p-num { font-size: 1.5rem; line-height: 1.2; color: var(--ink-muted); }
+  .p-main h3 { font-size: clamp(1.5rem, 2vw, 2.1rem); line-height: 1.1; margin-bottom: 0.75rem; }
+  .p-main p { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--ink-soft); max-width: 52ch; }
+  .p-offers { list-style: none; margin: 0; padding: 0.35rem 0 0; display: grid; gap: 0.7rem; }
+  .p-offers li { font-size: 1.0625rem; line-height: 1.45; padding-left: 1.25rem; position: relative; }
+  .p-offers li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.68em;
+    width: 0.6rem;
+    height: 1px;
+    background: var(--tone);
+  }
+
+  /* Contexto */
+  .context { list-style: none; margin: clamp(3rem, 5vw, 5rem) 0 0; padding: 0; display: grid; gap: 0; }
+  .context li { padding-block: 2rem; border-top: 1px solid var(--rule); display: grid; grid-template-columns: minmax(0, 1fr) 16rem; gap: 1rem 4vw; align-items: baseline; }
+  .context p { margin: 0; font-size: clamp(1.5rem, 2vw, 2.1rem); line-height: 1.25; letter-spacing: -0.018em; max-width: 34ch; text-wrap: pretty; }
+  .context strong { font-weight: 600; color: var(--blue); }
+
+  /* Agenda */
+  .table-scroll { overflow-x: auto; }
+  .agenda { width: 100%; border-collapse: collapse; font-size: 1.0625rem; }
+  .agenda th, .agenda td { text-align: left; vertical-align: top; padding: 1.15rem 1.5rem 1.15rem 0; border-top: 1px solid var(--rule); }
+  .agenda thead th { font-size: 0.8125rem; font-weight: 500; color: var(--ink-muted); border-top: 0; padding-bottom: 0.9rem; }
+  .agenda tbody tr { scroll-margin-top: 2rem; transition: background-color 0.4s var(--ease-out); }
+  .agenda tbody tr:hover, .agenda tbody tr:target { background: color-mix(in oklab, var(--band-4) 55%, transparent); }
+  .agenda tbody tr:last-child > * { border-bottom: 1px solid var(--rule); }
+  .when { white-space: nowrap; color: var(--ink-soft); width: 7rem; }
+  .item { font-weight: 500; width: 26%; }
+  .item a { text-decoration: none; }
+  .item a:hover { text-decoration: underline; }
+  .item .ref { display: block; font-weight: 400; margin-top: 0.25rem; }
+  .detail { color: var(--ink-soft); line-height: 1.5; }
+  .src { color: var(--ink-muted); font-size: 0.8125rem; width: 14%; }
+  .status { display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; font-size: 0.8125rem; }
+  .status::before { content: ''; width: 0.6rem; height: 0.6rem; border-radius: 50%; flex: none; }
+  .is-live::before { background: var(--ink); }
+  .is-pending::before { border: 2px solid var(--violet); }
+  .is-ahead::before { background: var(--band-2); }
+  #agenda > .wrap > .note { margin: 1.25rem 0 0; }
+
+  .horizon { position: relative; height: 8.5rem; margin: 0 1.5rem 3.5rem 0; }
+  .horizon::before { content: ''; position: absolute; left: 0; right: 0; top: 4.6rem; height: 1px; background: linear-gradient(90deg, var(--ink) 0 18.5%, var(--band-1) 18.5% 100%); }
+  .h-today { position: absolute; top: 0; bottom: 3.2rem; width: 2px; margin-left: -1px; background: var(--violet); }
+  .h-today span { position: absolute; right: 0.5rem; top: 0; font-size: 0.8125rem; color: var(--violet); letter-spacing: 0.02em; }
+  .h-dot { position: absolute; top: calc(4.6rem - 0.4rem - var(--lane) * 1.6rem); width: 0.8rem; height: 0.8rem; margin-left: -0.4rem; border-radius: 50%; text-decoration: none; }
+  .h-dot span { position: absolute; left: 50%; bottom: 1.15rem; transform: translateX(-50%); font-size: 0.8125rem; color: var(--ink-muted); white-space: nowrap; }
+  .h-dot.lane-up span { left: 1.15rem; bottom: auto; top: 50%; transform: translateY(-50%); }
+  .h-dot.label-left span { left: auto; right: 1.15rem; }
+  .h-dot.is-live { background: var(--ink); }
+  .h-dot.is-pending { background: var(--ground); border: 2px solid var(--violet); }
+  .h-dot.is-ahead { background: var(--band-1); }
+  .h-dot:hover span { color: var(--ink); }
+  .h-axis span { position: absolute; top: 5.6rem; transform: translateX(-50%); font-size: 0.8125rem; color: var(--ink-soft); }
+  .h-axis span:first-child { transform: none; }
+  .h-axis span:last-child { transform: translateX(-100%); }
+
+  /* Abordagem */
+  .route { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 3vw; position: relative; }
+  .route::before { content: ''; position: absolute; left: 0; right: 0; top: 0.55rem; height: 1px; background: linear-gradient(90deg, var(--ink) 0 22%, var(--band-1) 22% 100%); }
+  .route li { position: relative; padding-top: 2.5rem; }
+  .station { position: absolute; left: 0; top: 0.05rem; width: 1.05rem; height: 1.05rem; border-radius: 50%; background: var(--ground); border: 2.5px solid var(--ink); }
+  .route li:first-child .station { border-color: var(--violet); background: var(--violet); }
+  .step-num { display: block; font-size: 0.8125rem; color: var(--ink-muted); margin-bottom: 0.6rem; }
+  .route h3 { font-size: clamp(1.25rem, 1.75vw, 1.8rem); margin-bottom: 0.7rem; }
+  .route p { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--ink-soft); }
+
+  /* Setores */
+  .sectors { margin: clamp(3rem, 5vw, 5rem) 0 0; }
+  .sector { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem 6vw; padding-block: 2rem; border-top: 1px solid var(--rule); }
+  .sector:last-child { border-bottom: 1px solid var(--rule); }
+  .sector dt { font-size: clamp(1.5rem, 2vw, 2.1rem); font-weight: 500; letter-spacing: -0.018em; line-height: 1.15; }
+  .sector dd { margin: 0; font-size: 1.0625rem; line-height: 1.6; color: var(--ink-soft); max-width: 48ch; }
+
+  /* Perguntas */
+  .questions { list-style: none; margin: clamp(3rem, 5vw, 5rem) 0 0; padding: 0; counter-reset: q; }
+  .questions li { display: grid; grid-template-columns: 14rem minmax(0, 1fr); gap: 1rem 4vw; padding-block: 1.75rem; border-top: 1px solid var(--rule); }
+  .questions li:last-child { border-bottom: 1px solid var(--rule); }
+  .theme { font-size: 0.8125rem; color: var(--ink-muted); padding-top: 0.45rem; }
+  .questions p { margin: 0; font-size: clamp(1.25rem, 1.75vw, 1.8rem); line-height: 1.3; letter-spacing: -0.015em; max-width: 40ch; text-wrap: pretty; }
+
+  /* Liderança */
+  .leader { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 3rem 6vw; }
+  .role { margin: 0.9rem 0 0; font-size: 1.0625rem; color: var(--ink-soft); }
+  .leader-body > p { margin: 0 0 1.25rem; font-size: clamp(1.05rem, 1.15vw, 1.25rem); line-height: 1.65; max-width: 58ch; color: var(--ink-soft); }
+  .leader-body cite { font-style: normal; color: var(--ink); }
+  blockquote { margin: clamp(2.5rem, 5vw, 4.5rem) 0 0; padding: 0 0 0 1.5rem; border-left: 1px solid var(--violet); }
+  blockquote p { margin: 0; font-size: clamp(1.25rem, 1.75vw, 1.8rem); line-height: 1.3; letter-spacing: -0.015em; max-width: 34ch; }
+  .ecosystem { list-style: none; margin: 0; padding: 0; }
+  .ecosystem li { display: flex; justify-content: space-between; gap: 2rem; align-items: baseline; padding-block: 1rem; border-top: 1px solid var(--rule); font-size: 1.0625rem; font-weight: 500; }
+  .ecosystem li:last-child { border-bottom: 1px solid var(--rule); }
+  .ecosystem a { text-decoration: none; }
+  .ecosystem a:hover { text-decoration: underline; }
+  .ecosystem .note { text-align: right; font-weight: 400; }
+
+  /* Fechamento */
+  .close { padding-block: clamp(6rem, 11vw, 11rem); }
+  .close-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 3rem 6vw; align-items: end; }
+  .close h2 { font-size: clamp(2.4rem, 4.4vw, 4.8rem); max-width: 14ch; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    padding: 1rem 1.5rem;
+    background: var(--ink);
+    color: var(--ground);
+    text-decoration: none;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    border-radius: 2px;
+    transition: background-color 0.4s var(--ease-out);
+  }
+  .btn::after { content: ''; width: 1.25rem; height: 1px; background: currentColor; transform-origin: left; transition: transform 0.5s var(--ease-out); }
+  .btn:hover { background: var(--ink-soft); }
+  .btn:hover::after { transform: scaleX(1.6); }
+  .channels { list-style: none; margin: 2rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.75rem 1.75rem; font-size: 1.0625rem; }
+  .channels a { color: var(--ink-soft); }
+  .channels a:hover { color: var(--ink); }
+
+  /* Rodapé */
+  .footer { border-top: 1px solid var(--rule); padding-block: 3rem; }
+  .foot { display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem 3rem; align-items: center; }
+  .foot-brand { display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; font-weight: 500; letter-spacing: 0.035em; }
+  .foot-sign { margin: 0; color: var(--ink-soft); }
+  .foot nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 0.8125rem; }
+  .foot nav a { text-decoration: none; color: var(--ink-soft); }
+  .foot nav a:hover { color: var(--ink); text-decoration: underline; }
+  .foot-legal { grid-column: 1 / -1; margin: 1rem 0 0; }
+
+  @media (max-width: 900px) {
+    .wrap { margin-inline: 1.25rem; }
+    .head, .leader, .close-grid { grid-template-columns: 1fr; }
+    .pillar-row { grid-template-columns: 3.5rem minmax(0, 1fr); }
+    .p-offers { grid-column: 2; }
+    .context li, .questions li, .sector { grid-template-columns: 1fr; }
+    .questions .theme { order: 2; padding-top: 0; }
+    .route { grid-template-columns: 1fr; gap: 2.5rem; }
+    .route::before { left: 0.5rem; right: auto; top: 0.5rem; bottom: 0; width: 1px; height: auto; background: linear-gradient(180deg, var(--ink) 0 18%, var(--band-1) 18% 100%); }
+    .route li { padding-top: 0; padding-left: 2.5rem; }
+    .station { top: 0.1rem; }
+    .foot { grid-template-columns: 1fr; }
+    .horizon { margin-right: 0.75rem; }
+    .h-axis span:nth-child(even) { display: none; }
+    .h-dot span { display: none; }
+    .agenda thead { display: none; }
+    .agenda, .agenda tbody, .agenda tr, .agenda td, .agenda th { display: block; width: auto; }
+    .agenda tr { padding-block: 1.25rem; border-top: 1px solid var(--rule); }
+    .agenda th, .agenda td { border: 0; padding: 0.2rem 0; }
+    .agenda tbody tr:last-child > * { border-bottom: 0; }
+  }
+</style>
