@@ -1,33 +1,35 @@
-/* QUASAR — O Horizonte de Cenários. Tokens provisórios (fonte: comp aprovado). */
+/* QUASAR v2 — linha dos benchmarks (Palo Alto, CrowdStrike, consultorias globais). */
 :root {
-  --ground: #f4f5f2;
-  --ground-raised: #f9faf8;
+  --navy-950: #070c18;
+  --navy-900: #0a1222;
+  --navy-850: #10192e;
+  --navy-800: #16223b;
+  --navy-700: #22304d;
+  --line: rgb(255 255 255 / 0.12);
+  --line-strong: rgb(255 255 255 / 0.22);
+  --text: #f5f7fa;
+  --text-soft: #a7b0bf;
+  --text-muted: #7d8798;
+
+  --blue: #0b8fd6;
+  --blue-hover: #2ba3e6;
+  --blue-bright: #3fb4ff;
+  --violet: #6c42f5;
+
+  --paper: #f3f5f8;
+  --paper-raised: #ffffff;
   --ink: #0a1a36;
   --ink-soft: #3b4a5e;
   --ink-muted: #5d6a7b;
-  --rule: #d7dce1;
-  --rule-strong: #b9c0c8;
-  --grid: #e3e6e8;
+  --rule: #d9dee5;
 
-  --blue: #108ccf;
-  --band-core: #108ccf;
-  --band-1: #38a0d7;
-  --band-2: #7cc0e5;
-  --band-3: #b9d9ea;
-  --band-4: #d8e9f1;
-  --violet: #6c42f5;
-
-  --tone-1: #1c8fd3;
-  --tone-2: #2a86d6;
-  --tone-3: #3d7bdc;
-  --tone-4: #5868e2;
-  --tone-5: #6655ea;
-  --tone-6: #6c42f5;
-
-  --font: 'Hanken Grotesk Variable', 'Hanken Grotesk', system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', system-ui, sans-serif;
+  --font: 'Vend Sans Variable', 'Vend Sans', system-ui, sans-serif;
+  --font-wordmark: 'Syne', var(--font-display);
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --gutter: 8.1vw;
 
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 *,
@@ -35,34 +37,36 @@
 *::after { box-sizing: border-box; }
 
 html {
-  background: var(--ground);
-  color: var(--ink);
+  background: var(--navy-900);
+  color: var(--text);
   font-family: var(--font);
   font-feature-settings: 'tnum' 1, 'lnum' 1;
   -webkit-text-size-adjust: 100%;
-  scrollbar-color: var(--rule-strong) var(--ground);
+  scrollbar-color: var(--navy-700) var(--navy-950);
+  scroll-behavior: smooth;
 }
 
 body { margin: 0; }
+img { display: block; max-width: 100%; }
 
-::selection { background: color-mix(in oklab, var(--blue) 22%, transparent); color: var(--ink); }
+::selection { background: color-mix(in oklab, var(--blue) 45%, transparent); color: #fff; }
 
 a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
 
 :focus-visible {
-  outline: 2px solid var(--violet);
+  outline: 2px solid var(--blue-bright);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .skip {
   position: absolute;
   left: 1rem;
   top: -4rem;
-  z-index: 10;
+  z-index: 50;
   padding: 0.6rem 0.9rem;
-  background: var(--ink);
-  color: var(--ground);
+  background: var(--blue);
+  color: #fff;
   text-decoration: none;
 }
 .skip:focus { top: 1rem; }
@@ -76,6 +80,27 @@ a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1p
   white-space: nowrap;
 }
 
+/* Botões em pílula (linguagem dos benchmarks) */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6em;
+  border-radius: 999px;
+  font-family: var(--font);
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.35s var(--ease-out), color 0.35s var(--ease-out), border-color 0.35s var(--ease-out);
+}
+.pill-solid { background: var(--blue); color: #fff; }
+.pill-solid:hover { background: var(--blue-hover); }
+.pill-ghost { border: 2px solid rgb(255 255 255 / 0.85); color: #fff; }
+.pill-ghost:hover { background: #fff; color: var(--navy-900); }
+.pill-ink { border: 2px solid var(--ink); color: var(--ink); }
+.pill-ink:hover { background: var(--ink); color: #fff; }
+
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

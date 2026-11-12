@@ -110,7 +110,7 @@ export const agenda: AgendaRow[] = [
 ];
 
 export const context = [
-  { figure: 'R$ 7,19 milhões', text: 'é o custo médio de uma violação de dados no Brasil. O comprometimento de terceiros e da cadeia de suprimentos é o vetor mais caro.', source: 'IBM, Cost of a Data Breach 2025' },
+  { figure: 'R$ 7,19', unit: 'milhões', text: 'é o custo médio de uma violação de dados no Brasil. O comprometimento de terceiros e da cadeia de suprimentos é o vetor mais caro.', source: 'IBM, Cost of a Data Breach 2025' },
   { figure: '87%', text: 'dos líderes ouvidos pelo Fórum Econômico Mundial relataram aumento de vulnerabilidades ligadas à IA no último ano.', source: 'WEF, Global Cybersecurity Outlook 2026' },
   { figure: '2030', text: 'é o ano em que o NIST passa a depreciar a criptografia de chave pública usada hoje. Dados capturados agora podem ser decifrados depois.', source: 'NIST IR 8547' },
 ];
@@ -135,3 +135,40 @@ export const boardQuestions = [
   { theme: 'Regulação', q: 'Estamos acompanhando a agenda regulatória ou reagindo a ela depois que vira obrigação?' },
   { theme: 'Investimento', q: 'Nosso orçamento de segurança segue o risco do negócio ou a lista de ferramentas?' },
 ];
+
+// v2 (benchmarks): destaques do hero e perspectivas
+export const featured = [
+  { label: 'Agenda do Conselho', title: 'Agenda do Conselho: os marcos regulatórios de 2026', href: '#agenda' },
+  { label: 'Pós-quântico', title: 'Pós-quântico: o prazo de 2030 já começou', href: '#perspectivas' },
+  { label: 'AI Summit Brasil', title: 'AI Summit Brasil: a QUASAR é patrocinadora oficial 2026', href: '#ecossistema' },
+];
+
+export const perspectives = [
+  {
+    category: 'Pós-quântico', image: '/images/insight-02.webp',
+    title: 'O prazo de 2030 já começou',
+    text: 'O NIST prevê depreciar RSA e ECC após 2030. Dados capturados hoje podem ser decifrados amanhã: o inventário criptográfico é decisão de Conselho, não de TI.',
+    href: '#agenda',
+  },
+  {
+    category: 'Inteligência Artificial', image: '/images/insight-01.webp',
+    title: 'Quem governa os modelos que decidem por você?',
+    text: '87% dos líderes ouvidos pelo Fórum Econômico Mundial viram crescer as vulnerabilidades ligadas à IA. Governança de IA virou pauta de risco corporativo.',
+    href: '#pilares',
+  },
+  {
+    category: 'Governança', image: '/images/insight-03.webp',
+    title: 'ISO/IEC 27001:2022 e o papel do Conselho',
+    text: 'A transição terminou em outubro de 2025. Certificação é o começo: maturidade, métricas e resiliência são o que sustentam a confiança.',
+    href: '#agenda',
+  },
+];
+
+export const pillarImages: Record<string, string> = {
+  '01': '/images/pilar-01.webp',
+  '02': '/images/pilar-02.webp',
+  '03': '/images/pilar-03.webp',
+  '04': '/images/pilar-04.webp',
+  '05': '/images/pilar-05.webp',
+  '06': '/images/pilar-06.webp',
+};

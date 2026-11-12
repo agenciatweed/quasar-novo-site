@@ -155,6 +155,8 @@ Inventário de conteúdo que essa ambição pede (proposta, cada bloco [A CONFIR
 - **Patrocínio:** "Patrocinadora Oficial — AI Summit Brasil 2026". [A CONFIRMAR] Manter após o evento?
 - **Rodapé:** o site atual cita *Provérbios 27:12 (NVT)*, "O prudente antevê o perigo e toma precauções…". O versículo combina com "antecipação", mas destoa de uma consultoria global e institucional. [A CONFIRMAR] Manter, mover ou remover.
 
+- **Linha visual pinada pelo cliente (2026-11-12):** o site segue os benchmarks Palo Alto Networks, CrowdStrike, EY-Parthenon, Bain, BCG, McKinsey e Sensedia (análise em `docs/benchmarks-visuais.md`). Isso prevalece sobre o trecho do briefing original que pedia evitar excesso de preto: a base é navy profundo com fotografia cinematográfica. Continuam vetados hackers, encapuzados, cadeados, escudos e código.
+
 ## Evidence on Hand
 
 ### Do cliente
@@ -162,6 +164,8 @@ Inventário de conteúdo que essa ambição pede (proposta, cada bloco [A CONFIR
 - Textos do site atual: institucional, consultorias, serviços, FAQ e pilares.
 - Vídeo institucional no YouTube (canal QUASAR TECHNOLOGY / Jorge Muzy).
 - Logos (símbolo e horizontal). As imagens de banco do site atual são justamente o tipo vetado pelo briefing e não devem ser reaproveitadas.
+- Foto real de Jorge Muzy, enviada pelo usuário em 2026-11-12 (`public/team/jorge-muzy.png`).
+- Imagens do site geradas no Magnific (hero, pilares, perspectivas, contato), com o prompt registrado em cada arquivo.
 
 ### Liderança: Jorge Muzy (fontes: site atual da QUASAR e [aisummit.ia.br](https://aisummit.ia.br/))
 - Fundador da QUASAR. O site da QUASAR o chama de Chief AI Officer.

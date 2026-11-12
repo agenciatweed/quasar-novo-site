@@ -1,14 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
-import ScenarioHero from '../components/ScenarioHero.astro';
-import HomeSections from '../components/HomeSections.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import Hero from '../components/Hero.astro';
+import Sections from '../components/Sections.astro';
 ---
 <Base
   title="QUASAR · Transformamos Ciência em Estratégia"
   description="Consultoria estratégica em risco tecnológico, cyber e AI security, inteligência artificial, computação quântica e segurança pós-quântica para Conselhos e executivos."
 >
+  <SiteHeader />
   <main>
-    <ScenarioHero />
-    <HomeSections />
+    <Hero />
+    <Sections />
   </main>
 </Base>

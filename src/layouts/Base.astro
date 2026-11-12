@@ -1,5 +1,7 @@
 ---
-import '@fontsource-variable/hanken-grotesk';
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/vend-sans';
+import '@fontsource/syne/700.css';
 import '../styles/global.css';
 
 interface Props {
@@ -15,10 +17,11 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#F4F5F2" />
+    <meta name="theme-color" content="#0A1222" />
     <link rel="icon" type="image/png" href="/brand/quasar-mark.png" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/hero-photo.webp" />
     <meta property="og:locale" content="pt_BR" />
   </head>
   <body>

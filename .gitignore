@@ -10,3 +10,7 @@ dist/
 .impeccable/build/
 .vercel
 .impeccable/questions/
+
+# Originais pesados e arquivos de build antigos
+.impeccable/assets-src/
+.impeccable/build-v1/

@@ -1,0 +1,40 @@
+{
+  "title": "QUASAR — nova home na linha dos benchmarks",
+  "question": "Três leituras dos sites de referência. Qual vira a nova home? Use o direcionamento para combinar (ex.: 'A com os cards editoriais do B').",
+  "options": [
+    {
+      "id": "comp-a",
+      "label": "A · Cyber premium escuro",
+      "lineage": "Palo Alto Networks, CrowdStrike, Sensedia",
+      "thesis": "Hero fotográfico noturno de tela cheia, título branco forte à esquerda, CTAs em pílula azul e faixa de destaques sobre a base do hero.",
+      "palette": ["#0A1426", "#111C33", "#FFFFFF", "#108CCF"],
+      "materials": ["foto cinematográfica noturna", "barra utilitária + mega-menu", "faixa translúcida de 3 destaques"],
+      "viewport": "Executivo diante da cidade à noite; 'Antecipamos o futuro. Protegemos o que importa.'; Agenda do Conselho, Pós-quântico 2030 e AI Summit na faixa inferior.",
+      "risk": "É a leitura mais 'empresa de cyber' das três; precisa de imagens próprias fortes para não cair no genérico.",
+      "comp": ".impeccable/mocks/v2-comp-a-cyber.png"
+    },
+    {
+      "id": "comp-b",
+      "label": "B · Consultoria editorial escura",
+      "lineage": "McKinsey, EY-Parthenon",
+      "thesis": "Título grande em serifa ao lado de um mosaico de insights com imagem: a QUASAR se apresenta pelo que pensa.",
+      "palette": ["#0A1426", "#FFFFFF", "#AEB8C8", "#108CCF"],
+      "materials": ["serifa editorial leve", "mosaico de cards com imagem", "navegação mínima"],
+      "viewport": "'Transformamos ciência em estratégia.' à esquerda; três perspectivas (Pós-quântico, Governança, IA) em cards de imagem à direita.",
+      "risk": "Depende de produzir perspectivas reais com frequência; sem conteúdo novo, o mosaico envelhece.",
+      "comp": ".impeccable/mocks/v2-comp-b-editorial.png"
+    },
+    {
+      "id": "comp-c",
+      "label": "C · Consultoria clara",
+      "lineage": "Bain & Company, BCG",
+      "thesis": "Menu branco, hero fotográfico diurno com abas de carrossel na base e seções claras com cards de imagem.",
+      "palette": ["#FFFFFF", "#EEF0F4", "#0A1A36", "#108CCF"],
+      "materials": ["foto diurna de reunião executiva", "abas de carrossel", "seções claras"],
+      "viewport": "'A IA mudou o risco. O Conselho precisa mudar antes.' sobre foto de reunião; abas IA no Conselho / Pós-quântico 2030 / Agenda regulatória / AI Summit.",
+      "risk": "Mais institucional e menos 'tecnologia de ponta'; fotos de reunião podem soar banco de imagem se não forem bem dirigidas. (A moldura de navegador do comp não faz parte do design.)",
+      "comp": ".impeccable/mocks/v2-comp-c-consultoria.png"
+    }
+  ],
+  "steer": true
+}
