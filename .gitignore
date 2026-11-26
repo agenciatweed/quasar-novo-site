@@ -16,6 +16,6 @@ dist/
 .impeccable/build-v1/
 
 # Material do cliente v3 (guia, HTML preliminar, PNGs originais do Midjourney) e logo em PDF
-v3/
-Logo Quasar.pdf
+/v3/
+/Logo Quasar.pdf
 Thumbs.db
