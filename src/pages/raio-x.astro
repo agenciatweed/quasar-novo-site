@@ -1,0 +1,407 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import { dimensions, scale, unknown, tiers } from '../data/raiox';
+const total = dimensions.reduce((n, d) => n + d.questions.length, 0);
+let qn = 0;
+---
+<Base title="Raio-X Quasar" description="Sua empresa está pronta para a era da IA? Responda às 21 perguntas do Raio-X Quasar em cerca de 5 minutos e receba uma nota para cada dimensão da sua segurança.">
+  <PageHero img="raiox-hero" title="Sua empresa está pronta" accent="para a era da IA?" lead="O Raio-X Quasar avalia sete dimensões da sua segurança — da governança à prontidão pós-quântica. Responda com sinceridade: o resultado é seu e serve para decidir o próximo passo." crumbs={[{ label: 'Raio-X Quasar' }]} side="// raio-x · 21 perguntas" compact>
+    <a href="#raiox" class="btn btn-primary">Começar o Raio-X<Icon name="arrow-right" /></a>
+    <ul slot="after" class="rx-facts">
+      <li><Icon name="list-checks" size={18} /><strong>{total}</strong> perguntas</li>
+      <li><Icon name="timer" size={18} /><strong>5</strong> minutos</li>
+      <li><Icon name="chart-no-axes-column" size={18} /><strong>7</strong> dimensões com nota</li>
+    </ul>
+  </PageHero>
+
+  <section class="section rx-sec" id="raiox">
+    <div class="fx-grid" style="--gx:85%; --gy:0%"></div>
+    <div class="wrap rx" data-rx data-total={total}>
+      <aside class="rx-side" aria-label="Etapas do Raio-X">
+        <div class="rx-progress card">
+          <div class="ring" aria-hidden="true">
+            <svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" class="ring-bg" /><circle cx="60" cy="60" r="52" class="ring-fg" data-ring /></svg>
+            <span class="ring-txt num"><b data-answered>0</b><small>/{total}</small></span>
+          </div>
+          <p>perguntas respondidas</p>
+        </div>
+        <ol class="rx-steps">
+          {dimensions.map((d, i) => (
+            <li><button type="button" data-goto={i} class:list={['rx-step', { on: i === 0 }]}><span class="rx-step-n mono">{String(i + 1).padStart(2, '0')}</span><span>{d.name}</span><span class="rx-step-ok" aria-hidden="true"><Icon name="check" size={14} stroke={2.5} /></span></button></li>
+          ))}
+          <li><button type="button" data-goto={dimensions.length} class="rx-step"><span class="rx-step-n mono">08</span><span>Seus dados</span><span class="rx-step-ok" aria-hidden="true"><Icon name="check" size={14} stroke={2.5} /></span></button></li>
+          <li><span class="rx-step rx-step--res" data-res-step><span class="rx-step-n mono"><Icon name="sparkles" size={14} /></span><span>Resultado</span></span></li>
+        </ol>
+      </aside>
+
+      <form class="rx-main" novalidate data-rx-form>
+        {dimensions.map((d, di) => (
+          <fieldset class="rx-panel" data-panel={di} hidden={di !== 0}>
+            <legend class="sr-only">{d.name}</legend>
+            <header class="rx-head">
+              <span class="ico" style="--ico:60px"><Icon name={d.icon} /></span>
+              <div>
+                <p class="rx-k">Dimensão {di + 1} de {dimensions.length}</p>
+                <h2 class="rx-title">{d.name}</h2>
+                <p class="rx-intro">{d.intro}</p>
+              </div>
+            </header>
+            {d.questions.map((q, qi) => {
+              qn++;
+              const name = `q-${d.key}-${qi}`;
+              return (
+                <div class="rx-q card" data-q={name}>
+                  <div class="rx-q-top">
+                    <span class="rx-q-n mono num">{String(qn).padStart(2, '0')}/{total}</span>
+                    <div>
+                      <p class="rx-q-t" id={`${name}-t`}>{q.q}</p>
+                      <p class="rx-q-h">{q.help}</p>
+                    </div>
+                  </div>
+                  <div class="rx-opts" role="radiogroup" aria-labelledby={`${name}-t`}>
+                    {scale.map((o) => (
+                      <label class="rx-opt">
+                        <input type="radio" name={name} value={o.v} data-dim={d.key} />
+                        <span class="rx-opt-box"><span class="rx-opt-bar" data-lv={o.v} aria-hidden="true"><i /><i /><i /></span><strong>{o.label}</strong><small>{o.hint}</small></span>
+                      </label>
+                    ))}
+                    <label class="rx-opt rx-opt--unk">
+                      <input type="radio" name={name} value={unknown.v} data-dim={d.key} />
+                      <span class="rx-opt-box"><Icon name="circle-help" size={17} /><strong>{unknown.label}</strong></span>
+                    </label>
+                  </div>
+                </div>
+              );
+            })}
+            <div class="rx-nav">
+              {di > 0 ? <button type="button" class="btn btn-ghost" data-prev><Icon name="arrow-left" />Voltar</button> : <span />}
+              <p class="rx-warn" data-warn hidden>Responda às três perguntas para continuar (use “Não sei” se for o caso).</p>
+              <button type="button" class="btn btn-primary" data-next>{di === dimensions.length - 1 ? 'Seus dados' : 'Próxima dimensão'}<Icon name="arrow-right" /></button>
+            </div>
+          </fieldset>
+        ))}
+
+        <fieldset class="rx-panel" data-panel={dimensions.length} hidden>
+          <legend class="sr-only">Seus dados</legend>
+          <header class="rx-head">
+            <span class="ico ico--violet" style="--ico:60px"><Icon name="user-round" /></span>
+            <div>
+              <p class="rx-k">Última etapa</p>
+              <h2 class="rx-title">Para quem enviamos o resultado?</h2>
+              <p class="rx-intro">Você vê a sua nota na hora. Com os seus dados, a nossa liderança pode preparar uma leitura do resultado para a sua empresa.</p>
+            </div>
+          </header>
+          <div class="rx-data card">
+            <div class="form-grid">
+              <div class="field"><label for="rx-nome">Nome completo</label><input class="input" id="rx-nome" name="nome" required autocomplete="name" /></div>
+              <div class="field"><label for="rx-email">E-mail corporativo</label><input class="input" id="rx-email" name="email" type="email" required autocomplete="email" /></div>
+              <div class="field"><label for="rx-empresa">Empresa</label><input class="input" id="rx-empresa" name="empresa" required autocomplete="organization" /></div>
+              <div class="field"><label for="rx-cargo">Cargo</label>
+                <select class="select" id="rx-cargo" name="cargo" required>
+                  <option value="">Selecione</option><option>Conselheiro(a) ou membro de comitê</option><option>CEO / Presidente</option><option>CFO / Diretor(a) financeiro(a)</option><option>CISO / Segurança da informação</option><option>CIO / CTO / TI</option><option>Compliance, DPO ou jurídico</option><option>Outro cargo de diretoria</option><option>Outro</option>
+                </select>
+              </div>
+              <div class="field"><label for="rx-setor">Setor</label>
+                <select class="select" id="rx-setor" name="setor" required>
+                  <option value="">Selecione</option><option>Financeiro, pagamentos ou seguros</option><option>Saúde</option><option>Indústria</option><option>Varejo e consumo</option><option>Tecnologia e serviços digitais</option><option>Energia, infraestrutura e logística</option><option>Setor público</option><option>Outro</option>
+                </select>
+              </div>
+              <div class="field"><label for="rx-porte">Porte</label>
+                <select class="select" id="rx-porte" name="porte" required>
+                  <option value="">Selecione</option><option>Até 250 colaboradores</option><option>251 a 1.000 colaboradores</option><option>Mais de 1.000 colaboradores</option><option>Grupo empresarial</option>
+                </select>
+              </div>
+              <div class="field span-2"><label for="rx-tel">Telefone / WhatsApp <span class="hint">(opcional)</span></label><input class="input" id="rx-tel" name="telefone" type="tel" autocomplete="tel" /></div>
+              <label class="check span-2"><input type="checkbox" name="consent" required /><span>Autorizo a Quasar a usar estes dados e as respostas do Raio-X para entrar em contato sobre o resultado, conforme a LGPD.</span></label>
+              <label class="check span-2"><input type="checkbox" name="newsletter" checked /><span>Quero receber a newsletter mensal Ciber no Conselho.</span></label>
+            </div>
+          </div>
+          <div class="rx-nav">
+            <button type="button" class="btn btn-ghost" data-prev><Icon name="arrow-left" />Voltar</button>
+            <p class="rx-warn" data-warn hidden>Preencha os campos obrigatórios e aceite o termo para ver o resultado.</p>
+            <button type="submit" class="btn btn-primary">Ver resultado e enviar<Icon name="arrow-right" /></button>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="rx-result" data-result hidden tabindex="-1">
+        <div class="res-ok"><Icon name="circle-check" size={20} /><p><strong data-res-name>Raio-X registrado.</strong> Nossa liderança recebe o seu resultado e entra em contato em até 1 dia útil.</p></div>
+        <div class="res-top card hud" style="--hud-size:20px">
+          <div class="fx-glow fx-glow--violet" style="right:-360px; top:-380px; --size:800px"></div>
+          <div class="res-ring">
+            <svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#35C6F0" /><stop offset="1" stop-color="#9B86FF" /></linearGradient></defs><circle cx="100" cy="100" r="86" class="res-ring-bg" /><circle cx="100" cy="100" r="86" class="res-ring-fg" data-res-ring /></svg>
+            <span class="res-score num"><b data-res-score>0</b><small>/100</small></span>
+          </div>
+          <div class="res-txt">
+            <p class="rx-k">Índice de prontidão Quasar</p>
+            <h2 class="res-tier" data-res-tier>—</h2>
+            <p data-res-tier-text></p>
+            <p class="res-unk" data-res-unk hidden><Icon name="circle-help" size={16} /><span></span></p>
+          </div>
+        </div>
+        <div class="res-grid">
+          <div class="res-dims card">
+            <p class="res-h">Nota por dimensão</p>
+            <ul>
+              {dimensions.map((d) => (
+                <li data-res-dim={d.key}><span class="res-dn"><Icon name={d.icon} size={17} />{d.name}</span><span class="res-bar"><i /></span><span class="res-dv num">0</span></li>
+              ))}
+            </ul>
+          </div>
+          <div class="res-prio">
+            <p class="res-h">Suas 3 prioridades</p>
+            <ol data-res-prio></ol>
+          </div>
+        </div>
+        <div class="res-actions">
+          <a href="/diagnostico-executivo/" class="btn btn-primary">Discutir o resultado no Diagnóstico Executivo<Icon name="arrow-right" /></a>
+          <button type="button" class="btn btn-ghost" data-print><Icon name="file-text" />Salvar em PDF</button>
+          <button type="button" class="btn btn-ghost" data-restart>Refazer o Raio-X</button>
+        </div>
+        <template data-prio-tpl>
+          <li class="card"><span class="prio-n mono"></span><div><p class="prio-t"></p><p class="prio-d"></p><a class="link" href="#"><span></span><Icon name="arrow-right" /></a></div></li>
+        </template>
+      </div>
+    </div>
+    <script type="application/json" data-rx-data set:html={JSON.stringify({ dims: dimensions.map((d) => ({ key: d.key, name: d.name, n: d.questions.length, advice: d.advice, href: d.href, cta: d.cta })), tiers })} />
+  </section>
+</Base>
+
+<style>
+  .rx-facts { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+  .rx-facts li { display: inline-flex; align-items: center; gap: 9px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line-2); background: rgb(3 7 11 / 0.6); backdrop-filter: blur(8px); color: var(--text-3); font-size: 0.92rem; }
+  .rx-facts :global(svg) { color: var(--cyan-hi); }
+  .rx-facts strong { color: #fff; }
+  .rx { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
+  .rx-side { position: sticky; top: calc(var(--header-h) + 24px); display: grid; gap: 14px; }
+  .rx-progress { display: flex; align-items: center; gap: 16px; padding: 18px; }
+  .rx-progress p { color: var(--text-3); font-size: 0.88rem; line-height: 1.35; }
+  .ring { position: relative; width: 76px; height: 76px; flex: none; }
+  .ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .ring circle { fill: none; stroke-width: 9; }
+  .ring-bg { stroke: var(--line); }
+  .ring-fg { stroke: var(--cyan-hi); stroke-linecap: round; stroke-dasharray: 326.7; stroke-dashoffset: 326.7; transition: stroke-dashoffset 0.6s var(--ease); }
+  .ring-txt { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; line-height: 1; }
+  .ring-txt b { font-family: var(--font-display); font-size: 1.35rem; color: #fff; }
+  .ring-txt small { font-size: 0.7rem; color: var(--text-4); }
+  .rx-steps { list-style: none; display: grid; gap: 4px; padding: 8px; border-radius: var(--radius); border: 1px solid var(--line); background: rgb(10 20 28 / 0.6); }
+  .rx-step { width: 100%; display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 10px; text-align: left; font-size: 0.9rem; color: var(--text-3); transition: background-color 0.2s, color 0.2s; }
+  button.rx-step:hover { color: #fff; background: rgb(255 255 255 / 0.04); }
+  .rx-step > span:nth-child(2) { flex: 1; line-height: 1.3; }
+  .rx-step-n { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 8px; border: 1px solid var(--line-2); font-size: 0.64rem; letter-spacing: 0.04em; color: var(--text-4); }
+  .rx-step-ok { width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; background: var(--cyan); color: var(--bg); opacity: 0; transform: scale(0.5); transition: opacity 0.3s, transform 0.4s var(--ease); }
+  .rx-step.done .rx-step-ok { opacity: 1; transform: none; }
+  .rx-step.done .rx-step-n { color: var(--cyan-hi); border-color: var(--cyan-hi); }
+  .rx-step.on { color: #fff; background: linear-gradient(90deg, rgb(0 163 214 / 0.16), rgb(124 92 255 / 0.06)); }
+  .rx-step.on .rx-step-n { background: var(--cyan); color: var(--bg); border-color: var(--cyan); }
+  .rx-step--res { opacity: 0.5; }
+  .rx-step--res.on { opacity: 1; }
+
+  .rx-main { min-width: 0; }
+  .rx-panel { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 16px; }
+  .rx-panel:not([hidden]) { animation: rxin 0.55s var(--ease); }
+  @keyframes rxin { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .rx-head { display: flex; gap: 20px; align-items: flex-start; margin-bottom: 12px; }
+  .rx-k { color: var(--cyan-hi); font-weight: 600; font-size: 0.85rem; }
+  .rx-title { font-size: clamp(1.7rem, 2.6vw, 2.4rem); margin-top: 6px; }
+  .rx-intro { margin-top: 8px; color: var(--text-3); }
+  .rx-q { padding: clamp(20px, 2.4vw, 30px); transition: border-color 0.3s; }
+  .rx-q.answered { border-color: var(--line-2); }
+  .rx-q.missing { border-color: #b06a5e; }
+  .rx-q-top { display: flex; gap: 18px; align-items: flex-start; }
+  .rx-q-n { flex: none; padding: 5px 8px; border-radius: 7px; border: 1px solid var(--line-2); color: var(--cyan-hi); font-size: 0.66rem; letter-spacing: 0.06em; margin-top: 2px; }
+  .rx-q-t { color: #fff; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.05rem, 1.3vw, 1.2rem); line-height: 1.38; letter-spacing: -0.015em; }
+  .rx-q-h { margin-top: 6px; color: var(--text-4); font-size: 0.9rem; }
+  .rx-opts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)) auto; gap: 8px; margin-top: 20px; }
+  .rx-opt { position: relative; cursor: pointer; }
+  .rx-opt input { position: absolute; opacity: 0; pointer-events: none; }
+  .rx-opt-box { height: 100%; display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 12px; border: 1px solid var(--line-2); background: rgb(3 7 11 / 0.5); transition: border-color 0.2s, background-color 0.2s, box-shadow 0.3s; }
+  .rx-opt-box strong { color: #fff; font-size: 0.92rem; font-weight: 600; }
+  .rx-opt-box small { color: var(--text-4); font-size: 0.78rem; line-height: 1.4; }
+  .rx-opt-bar { display: flex; gap: 3px; margin-bottom: 2px; }
+  .rx-opt-bar i { width: 14px; height: 4px; border-radius: 2px; background: var(--line-2); }
+  .rx-opt-bar[data-lv='1'] i:nth-child(-n+1), .rx-opt-bar[data-lv='2'] i:nth-child(-n+2), .rx-opt-bar[data-lv='3'] i { background: var(--cyan-hi); }
+  .rx-opt--unk .rx-opt-box { flex-direction: row; align-items: center; justify-content: center; gap: 8px; padding-inline: 18px; color: var(--text-4); }
+  .rx-opt--unk .rx-opt-box strong { color: var(--text-3); white-space: nowrap; }
+  .rx-opt:hover .rx-opt-box { border-color: #2a6178; }
+  .rx-opt input:checked + .rx-opt-box { border-color: var(--cyan-hi); background: linear-gradient(160deg, rgb(0 163 214 / 0.18), rgb(124 92 255 / 0.08)); box-shadow: 0 14px 30px -18px rgb(53 198 240 / 0.8); }
+  .rx-opt--unk input:checked + .rx-opt-box { border-color: var(--lilac); background: rgb(124 92 255 / 0.12); }
+  .rx-opt--unk input:checked + .rx-opt-box strong { color: #fff; }
+  .rx-opt input:focus-visible + .rx-opt-box { outline: 2px solid var(--cyan-hi); outline-offset: 2px; }
+  .rx-nav { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 14px; padding-top: 22px; border-top: 1px solid var(--line); }
+  .rx-warn { color: #ffb4a8; font-size: 0.88rem; flex: 1; text-align: center; }
+  .rx-warn[hidden] { display: none; }
+  .rx-data { padding: clamp(22px, 3vw, 36px); }
+
+  .rx-result { min-width: 0; display: grid; gap: 18px; outline: none; }
+  .rx-result[hidden] { display: none; }
+  .rx-result:not([hidden]) { animation: rxin 0.6s var(--ease); }
+  .res-ok { display: flex; gap: 12px; align-items: center; padding: 16px 20px; border-radius: 14px; border: 1px solid rgb(53 198 240 / 0.4); background: rgb(0 163 214 / 0.08); color: var(--text-2); font-size: 0.95rem; }
+  .res-ok :global(svg) { color: var(--cyan-hi); flex: none; }
+  .res-ok strong { color: #fff; }
+  .res-top { position: relative; isolation: isolate; overflow: hidden; display: flex; align-items: center; gap: clamp(24px, 4vw, 56px); padding: clamp(26px, 4vw, 52px); }
+  .res-ring { position: relative; width: 190px; height: 190px; flex: none; }
+  .res-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .res-ring circle { fill: none; stroke-width: 12; }
+  .res-ring-bg { stroke: var(--line); }
+  .res-ring-fg { stroke: url(#rg); stroke-linecap: round; stroke-dasharray: 540.4; stroke-dashoffset: 540.4; transition: stroke-dashoffset 1.6s var(--ease); }
+  .res-score { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; line-height: 1; }
+  .res-score b { font-family: var(--font-display); font-weight: 800; font-size: 3.6rem; color: #fff; letter-spacing: -0.04em; }
+  .res-score small { color: var(--text-4); font-weight: 600; margin-top: 4px; }
+  .res-txt { display: grid; gap: 10px; }
+  .res-tier { font-size: clamp(2rem, 3.4vw, 3rem); background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .res-txt > p:not(.rx-k) { color: var(--text-2); max-width: 54ch; }
+  .res-unk { display: flex; align-items: center; gap: 8px; color: var(--lilac) !important; font-size: 0.9rem; }
+  .res-unk[hidden] { display: none; }
+  .res-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 18px; align-items: start; }
+  .res-h { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.15rem; letter-spacing: -0.02em; margin-bottom: 18px; }
+  .res-dims { padding: clamp(22px, 3vw, 32px); }
+  .res-dims ul { list-style: none; display: grid; gap: 14px; }
+  .res-dims li { display: grid; grid-template-columns: minmax(150px, 1.1fr) 1fr 34px; align-items: center; gap: 14px; }
+  .res-dn { display: flex; align-items: center; gap: 9px; color: var(--text-2); font-size: 0.9rem; line-height: 1.3; }
+  .res-dn :global(svg) { color: var(--cyan-hi); flex: none; }
+  .res-bar { height: 8px; border-radius: 99px; background: var(--line); overflow: hidden; }
+  .res-bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--flow); transition: width 1.2s var(--ease); }
+  .res-dims li.low .res-bar i { background: linear-gradient(90deg, #9b86ff, #c77dff); }
+  .res-dv { text-align: right; color: #fff; font-weight: 700; }
+  .res-prio ol { list-style: none; display: grid; gap: 12px; }
+  .res-prio :global(li) { display: flex; gap: 16px; padding: 20px 22px; }
+  .res-prio :global(.prio-n) { flex: none; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; background: var(--cyan); color: var(--bg); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em; }
+  .res-prio :global(.prio-t) { color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; letter-spacing: -0.015em; }
+  .res-prio :global(.prio-d) { margin: 6px 0 10px; color: var(--text-3); font-size: 0.92rem; }
+  .res-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
+  @media (max-width: 1100px) { .rx { grid-template-columns: 1fr; } .rx-side { position: static; } .rx-steps { display: none; } .res-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 760px) { .rx-opts { grid-template-columns: 1fr 1fr; } .rx-opt--unk { grid-column: 1 / -1; } .res-top { flex-direction: column; align-items: flex-start; } .res-dims li { grid-template-columns: 1fr 34px; } .res-bar { grid-column: 1 / -1; grid-row: 2; } }
+  @media print {
+    :global(.site-header), :global(.footer), :global(.phero), .rx-side, .res-actions, .res-ok { display: none !important; }
+    :global(body) { background: #03070b; }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-rx]')!;
+  const form = root.querySelector<HTMLFormElement>('[data-rx-form]')!;
+  const panels = [...root.querySelectorAll<HTMLFieldSetElement>('[data-panel]')];
+  const stepBtns = [...root.querySelectorAll<HTMLButtonElement>('[data-goto]')];
+  const resStep = root.querySelector<HTMLElement>('[data-res-step]')!;
+  const result = root.querySelector<HTMLElement>('[data-result]')!;
+  const data = JSON.parse(document.querySelector('[data-rx-data]')!.textContent!);
+  const total = Number(root.dataset.total);
+  const nDims = data.dims.length;
+  let cur = 0;
+
+  const groups = (p: Element) => [...new Set([...p.querySelectorAll<HTMLInputElement>('input[type=radio]')].map((i) => i.name))];
+  const answered = (name: string) => !!form.querySelector(`input[name="${name}"]:checked`);
+  const panelDone = (i: number) => (i < nDims ? groups(panels[i]).every(answered) : false);
+
+  function refresh() {
+    const all = [...form.querySelectorAll<HTMLInputElement>('input[type=radio]:checked')].length;
+    root.querySelector('[data-answered]')!.textContent = String(all);
+    (root.querySelector('[data-ring]') as SVGCircleElement).style.strokeDashoffset = String(326.7 * (1 - all / total));
+    stepBtns.forEach((b, i) => { b.classList.toggle('done', panelDone(i)); b.classList.toggle('on', i === cur && result.hidden); });
+  }
+  function show(i: number, scroll = true) {
+    cur = Math.max(0, Math.min(i, panels.length - 1));
+    panels.forEach((p, k) => (p.hidden = k !== cur));
+    form.hidden = false; result.hidden = true; resStep.classList.remove('on');
+    refresh();
+    if (scroll) root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function warn(p: Element, on: boolean) { const w = p.querySelector<HTMLElement>('[data-warn]'); if (w) w.hidden = !on; }
+
+  form.addEventListener('change', (e) => {
+    const t = e.target as HTMLInputElement;
+    if (t.type === 'radio') {
+      const q = t.closest('[data-q]')!; q.classList.add('answered'); q.classList.remove('missing');
+      if (panelDone(cur)) warn(panels[cur], false);
+    }
+    refresh();
+  });
+  root.querySelectorAll('[data-next]').forEach((b) => b.addEventListener('click', () => {
+    const p = panels[cur];
+    const missing = groups(p).filter((n) => !answered(n));
+    p.querySelectorAll('[data-q]').forEach((q) => q.classList.toggle('missing', missing.includes((q as HTMLElement).dataset.q!)));
+    if (missing.length) { warn(p, true); p.querySelector<HTMLElement>(`[data-q="${missing[0]}"]`)?.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    warn(p, false); show(cur + 1);
+  }));
+  root.querySelectorAll('[data-prev]').forEach((b) => b.addEventListener('click', () => show(cur - 1)));
+  stepBtns.forEach((b, i) => b.addEventListener('click', () => {
+    // só permite avançar até a primeira dimensão incompleta
+    const firstOpen = panels.findIndex((_, k) => k < nDims && !panelDone(k));
+    const limit = firstOpen === -1 ? nDims : firstOpen;
+    show(Math.min(i, limit));
+  }));
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const firstOpen = panels.findIndex((_, k) => k < nDims && !panelDone(k));
+    if (firstOpen !== -1) { show(firstOpen); return; }
+    const p = panels[nDims];
+    const fields = [...p.querySelectorAll<HTMLInputElement | HTMLSelectElement>('input:not([type=radio]), select')];
+    const ok = fields.every((f) => f.checkValidity());
+    warn(p, !ok);
+    if (!ok) { fields.find((f) => !f.checkValidity())?.reportValidity(); return; }
+    render();
+  });
+
+  function render() {
+    const fd = new FormData(form);
+    let unk = 0;
+    const scores = data.dims.map((d: any) => {
+      let sum = 0;
+      for (let i = 0; i < d.n; i++) { const v = Number(fd.get(`q-${d.key}-${i}`)); if (v < 0) unk++; else sum += v; }
+      return { ...d, score: Math.round((sum / (d.n * 3)) * 100) };
+    });
+    const overall = Math.round(scores.reduce((a: number, s: any) => a + s.score, 0) / scores.length);
+    const tier = data.tiers.find((t: any) => overall >= t.min);
+    const name = String(fd.get('nome') || '').trim().split(' ')[0];
+
+    form.hidden = true; result.hidden = false; resStep.classList.add('on');
+    stepBtns.forEach((b) => b.classList.remove('on'));
+    stepBtns[nDims].classList.add('done');
+    result.querySelector('[data-res-name]')!.textContent = name ? `Obrigado, ${name}. Seu Raio-X foi registrado.` : 'Seu Raio-X foi registrado.';
+    result.querySelector('[data-res-tier]')!.textContent = tier.name;
+    result.querySelector('[data-res-tier-text]')!.textContent = tier.text;
+    const unkEl = result.querySelector<HTMLElement>('[data-res-unk]')!;
+    unkEl.hidden = unk === 0;
+    unkEl.querySelector('span')!.textContent = `${unk} ${unk === 1 ? 'resposta “Não sei” contou' : 'respostas “Não sei” contaram'} como zero. Não saber já é um achado.`;
+
+    const scoreEl = result.querySelector('[data-res-score]')!;
+    const t0 = performance.now();
+    const tick = (t: number) => { const k = Math.min(1, (t - t0) / 1400); scoreEl.textContent = String(Math.round(overall * (1 - Math.pow(1 - k, 3)))); if (k < 1) requestAnimationFrame(tick); };
+    requestAnimationFrame(tick);
+    requestAnimationFrame(() => {
+      (result.querySelector('[data-res-ring]') as SVGCircleElement).style.strokeDashoffset = String(540.4 * (1 - overall / 100));
+      scores.forEach((s: any) => {
+        const li = result.querySelector<HTMLElement>(`[data-res-dim="${s.key}"]`)!;
+        li.querySelector<HTMLElement>('.res-bar i')!.style.width = `${Math.max(s.score, 2)}%`;
+        li.querySelector('.res-dv')!.textContent = String(s.score);
+        li.classList.toggle('low', s.score < 50);
+      });
+    });
+    const tpl = result.querySelector<HTMLTemplateElement>('[data-prio-tpl]')!;
+    const ol = result.querySelector('[data-res-prio]')!;
+    ol.innerHTML = '';
+    [...scores].sort((a: any, b: any) => a.score - b.score).slice(0, 3).forEach((s: any, i: number) => {
+      const li = tpl.content.firstElementChild!.cloneNode(true) as HTMLElement;
+      li.querySelector('.prio-n')!.textContent = String(i + 1).padStart(2, '0');
+      li.querySelector('.prio-t')!.textContent = `${s.name} · ${s.score}/100`;
+      li.querySelector('.prio-d')!.textContent = s.advice;
+      const a = li.querySelector<HTMLAnchorElement>('a')!; a.href = s.href; a.querySelector('span')!.textContent = s.cta;
+      ol.appendChild(li);
+    });
+    result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    result.focus({ preventScroll: true });
+  }
+
+  result.querySelector('[data-print]')!.addEventListener('click', () => window.print());
+  result.querySelector('[data-restart]')!.addEventListener('click', () => {
+    form.reset();
+    form.querySelectorAll('[data-q]').forEach((q) => q.classList.remove('answered', 'missing'));
+    stepBtns.forEach((b) => b.classList.remove('done'));
+    show(0);
+  });
+  refresh();
+</script>

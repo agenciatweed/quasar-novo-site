@@ -1,0 +1,186 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+import DataFlow from '../components/DataFlow.astro';
+import { layers, services, serviceHref } from '../data/site';
+import { articles } from '../data/articles';
+const p4 = articles.filter((a) => a.pillar === 'p4');
+---
+<Base title="Metodologia: modelo de defesa em 6 camadas" description="O modelo de defesa em camadas da Quasar integra governança executiva e operação contínua em seis camadas interdependentes, com execução da AMSi Networks.">
+  <PageHero img="metodologia-hero" title="Modelo de defesa em camadas" accent="Quasar." lead="Nossa metodologia integra governança executiva e operação contínua em seis camadas interdependentes. Em vez de adquirir ferramentas isoladas, sua empresa constrói resiliência mensurável contra interrupções, vazamentos e sanções regulatórias." crumbs={[{ label: 'Metodologia' }]} side="// arquitetura de defesa em profundidade">
+    <a href="#as-6-camadas" class="btn btn-primary">Conhecer as 6 camadas<Icon name="arrow-right" /></a>
+    <a href="/raio-x/" class="btn btn-ghost"><Icon name="scan-eye" />Avaliar minha empresa</a>
+  </PageHero>
+
+  <section class="section duo-sec">
+    <div class="fx-grid" style="--gx:50%; --gy:20%"></div>
+    <div class="wrap">
+      <SectionHead title="Quem antecipa," accent="quem sustenta." lead="O mapa de 6 camadas da AMSi Networks é a base de execução. A Quasar antecipa e desenha; a AMSi sustenta os controles em cada camada — e tudo é explicado na língua de quem decide." />
+      <div class="duo">
+        <div class="duo-card card hud" data-reveal style="--hud-size:18px">
+          <img src="/brand/quasar-logo-white.svg" alt="Quasar Technology" width="160" height="59" class="duo-logo" loading="lazy" />
+          <p class="duo-role">Antecipa e desenha</p>
+          <ul>
+            <li><Icon name="check" size={17} />Diagnóstico executivo e mapa de riscos por camada</li>
+            <li><Icon name="check" size={17} />IA aplicada à defesa, segurança de modelos e prontidão pós-quântica</li>
+            <li><Icon name="check" size={17} />Governança, conformidade e relatório para o conselho</li>
+          </ul>
+        </div>
+        <div class="duo-link" aria-hidden="true"><span class="mono">+</span></div>
+        <div class="duo-card card hud" data-reveal style="--d:.1s; --hud-size:18px">
+          <p class="duo-name">AMSi Networks</p>
+          <p class="duo-role">Sustenta os controles</p>
+          <ul>
+            <li><Icon name="check" size={17} />Execução técnica dos controles em cada uma das 6 camadas</li>
+            <li><Icon name="check" size={17} />Operação, monitoramento e manutenção da proteção</li>
+            <li><Icon name="check" size={17} />Revisão técnica das recomendações e evidências</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint section--line" id="as-6-camadas">
+    <span class="fx-side fx-side--right">// de fora para dentro — uma camada por vez</span>
+    <div class="wrap lay-grid">
+      <aside class="lay-nav" aria-label="Camadas">
+        <div class="stack" aria-hidden="true">
+          {layers.slice().reverse().map((l) => <span class="plate" data-plate={l.num}><b class="mono">{l.num}</b></span>)}
+        </div>
+        <ol class="lay-index">
+          {layers.map((l) => <li><a href={`#camada-${l.num}`} data-lay-link={l.num}><span class="mono">{l.num}</span>{l.title}</a></li>)}
+        </ol>
+      </aside>
+      <div class="lay-list">
+        {layers.map((l) => {
+          const rel = services.filter((s) => s.layers.includes(l.id));
+          return (
+            <article class="lay card hud" id={`camada-${l.num}`} data-lay={l.num} data-reveal style="--hud-size:16px; --hud-alpha:.5">
+              <header class="lay-head">
+                <span class="ico" style="--ico:60px"><Icon name={l.icon} /></span>
+                <div>
+                  <p class="lay-n">Camada {l.num}</p>
+                  <h2 class="h3">{l.title}</h2>
+                  <p class="lay-sub">{l.subtitle}</p>
+                </div>
+              </header>
+              <div class="lay-boxes">
+                <div><p class="lbl"><Icon name="shield-check" size={16} />Escopo de proteção</p><p>{l.protects}</p></div>
+                <div><p class="lbl lbl--v"><Icon name="shield-alert" size={16} />Risco corporativo mitigado</p><p>{l.risk}</p></div>
+              </div>
+              <ul class="lay-controls">{l.controls.map((c) => <li><Icon name="check" size={15} />{c}</li>)}</ul>
+              {rel.length > 0 && <div class="lay-rel">{rel.map((s) => <a href={serviceHref(s)} class="chip">{s.menu}<Icon name="arrow-up-right" size={13} /></a>)}</div>}
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section principles">
+    <DataFlow class="pr-flow" />
+    <div class="wrap">
+      <SectionHead title="Por que camadas" accent="e não ferramentas." />
+      <div class="pr-grid">
+        {[
+          ['layers', 'Defesa em profundidade', 'Nenhum controle isolado é suficiente. Quando uma camada falha, a próxima contém o dano antes que ele chegue ao negócio.'],
+          ['chart-no-axes-column', 'Resiliência mensurável', 'Cada camada tem escopo, risco mitigado e controles definidos — o que permite medir maturidade e evolução ao longo do tempo.'],
+          ['landmark', 'Decisão no topo', 'O mapa traduz controles técnicos em risco, impacto, prioridade e prazo: a linguagem que conselho e diretoria usam para decidir.'],
+          ['handshake', 'Execução integrada', 'Estratégia e operação no mesmo modelo: a Quasar desenha e prioriza; a AMSi Networks sustenta os controles no dia a dia.'],
+        ].map(([ic, t, d], i) => (
+          <div class="pr card" data-reveal style={`--d:${i * 0.06}s`}><span class="ico" style="--ico:50px"><Icon name={ic} /></span><h3 class="h3">{t}</h3><p>{d}</p></div>
+        ))}
+      </div>
+      {p4.length > 0 && (
+        <div class="series card" data-reveal>
+          <div>
+            <p class="series-t">Série “De fora para dentro — uma camada por vez”</p>
+            <p class="series-d">Artigos que percorrem o mapa de 6 camadas na prática, para quem decide.</p>
+          </div>
+          <ul>{p4.map((a) => <li><a href={`/insights/${a.slug}/`}>{a.title}<Icon name="arrow-right" size={15} /></a></li>)}</ul>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <CtaBand variant="raiox" title="Avalie a maturidade das 6 camadas na sua organização." text="Responda às 21 perguntas do Raio-X Quasar e receba uma nota por dimensão para discutir com a nossa liderança — em cerca de 5 minutos." />
+</Base>
+
+<style>
+  .duo { display: grid; grid-template-columns: 1fr auto 1fr; align-items: stretch; }
+  .duo-card { padding: clamp(28px, 3.4vw, 48px); }
+  .duo-logo { height: 52px; width: auto; }
+  .duo-name { font-family: var(--font-display); font-weight: 800; font-size: 1.9rem; color: #fff; letter-spacing: -0.03em; line-height: 52px; }
+  .duo-role { margin-top: 22px; font-family: var(--font-display); font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .duo-card ul { list-style: none; display: grid; gap: 12px; margin-top: 20px; }
+  .duo-card li { display: flex; gap: 10px; color: var(--text-2); }
+  .duo-card li :global(svg) { color: var(--cyan-hi); flex: none; margin-top: 4px; }
+  .duo-link { display: grid; place-items: center; width: 72px; position: relative; }
+  .duo-link::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--flow); }
+  .duo-link .mono { position: relative; width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: var(--bg); border: 1px solid var(--cyan-hi); color: var(--cyan-hi); font-size: 1.1rem; letter-spacing: 0; }
+
+  .lay-grid { display: grid; grid-template-columns: 320px minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; }
+  .lay-nav { position: sticky; top: calc(var(--header-h) + 32px); }
+  .stack { position: relative; height: 230px; perspective: 900px; margin-bottom: 30px; }
+  .plate { position: absolute; left: 10%; right: 10%; height: 90px; border-radius: 14px; border: 1px solid var(--line-2); background: linear-gradient(135deg, rgb(14 27 37 / 0.85), rgb(10 20 28 / 0.85)); transform: rotateX(62deg) rotateZ(-38deg); transition: border-color 0.4s, background 0.4s, box-shadow 0.4s, transform 0.5s var(--ease); display: flex; align-items: center; justify-content: center; }
+  .plate:nth-child(1) { top: 0; } .plate:nth-child(2) { top: 26px; } .plate:nth-child(3) { top: 52px; } .plate:nth-child(4) { top: 78px; } .plate:nth-child(5) { top: 104px; } .plate:nth-child(6) { top: 130px; }
+  .plate b { color: var(--text-4); font-size: 0.8rem; }
+  .plate.on { border-color: var(--cyan-hi); background: linear-gradient(135deg, rgb(0 163 214 / 0.45), rgb(124 92 255 / 0.35)); box-shadow: 0 0 40px -6px rgb(53 198 240 / 0.7); }
+  .plate.on b { color: #fff; }
+  .lay-index { list-style: none; display: grid; gap: 4px; }
+  .lay-index a { display: flex; gap: 12px; align-items: baseline; padding: 9px 12px; border-radius: 10px; font-size: 0.9rem; color: var(--text-3); line-height: 1.35; transition: color 0.2s, background-color 0.2s; }
+  .lay-index a .mono { color: var(--cyan-hi); font-size: 0.68rem; letter-spacing: 0.06em; }
+  .lay-index a:hover, .lay-index a.on { color: #fff; background: rgb(53 198 240 / 0.08); }
+  .lay-list { display: grid; gap: 20px; }
+  .lay { padding: clamp(26px, 3vw, 42px); scroll-margin-top: calc(var(--header-h) + 24px); }
+  .lay-head { display: flex; gap: 20px; align-items: flex-start; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  .lay-n { color: var(--cyan-hi); font-weight: 600; font-size: 0.85rem; margin-bottom: 6px; }
+  .lay-head h2 { font-size: clamp(1.35rem, 2vw, 1.75rem); }
+  .lay-sub { margin-top: 6px; color: var(--text-4); font-size: 0.95rem; }
+  .lay-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 24px 0; }
+  .lay-boxes > div { padding: 20px; border-radius: 12px; background: rgb(3 7 11 / 0.5); border: 1px solid var(--line); }
+  .lay-boxes p:last-child { color: var(--text-2); font-size: 0.96rem; }
+  .lbl { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; font-weight: 600; color: var(--cyan-hi); margin-bottom: 10px; }
+  .lbl--v { color: var(--lilac); }
+  .lay-controls { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .lay-controls li { display: flex; align-items: center; gap: 9px; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--line); background: rgb(10 20 28 / 0.7); font-size: 0.9rem; color: #fff; }
+  .lay-controls :global(svg) { color: var(--cyan-hi); flex: none; }
+  .lay-rel { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+  .lay-rel .chip:hover { border-color: var(--cyan-hi); color: var(--cyan-hi); }
+
+  .principles { overflow: hidden; }
+  .principles :global(.pr-flow) { width: 80%; right: -25%; top: 0; opacity: 0.45; }
+  .pr-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+  .pr { display: flex; flex-direction: column; gap: 16px; padding: 28px; }
+  .pr p { color: var(--text-3); font-size: 0.96rem; }
+  .series { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px; padding: clamp(26px, 3vw, 40px); }
+  .series-t { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.35rem; letter-spacing: -0.02em; line-height: 1.2; }
+  .series-d { margin-top: 10px; color: var(--text-3); }
+  .series ul { list-style: none; display: grid; gap: 4px; }
+  .series a { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--text-2); font-weight: 500; }
+  .series a:hover { color: var(--cyan-hi); }
+  .series a :global(svg) { color: var(--cyan-hi); flex: none; }
+  @media (max-width: 1100px) { .pr-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 960px) {
+    .lay-grid, .series { grid-template-columns: 1fr; }
+    .lay-nav { position: static; } .stack { display: none; } .lay-index { grid-template-columns: 1fr 1fr; }
+    .duo { grid-template-columns: 1fr; } .duo-link { width: auto; height: 56px; } .duo-link::before { left: 50%; right: auto; top: 0; bottom: 0; width: 1px; height: auto; }
+  }
+  @media (max-width: 640px) { .lay-boxes, .lay-controls, .pr-grid, .lay-index { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const cards = document.querySelectorAll<HTMLElement>('[data-lay]');
+  const plates = document.querySelectorAll<HTMLElement>('[data-plate]');
+  const links = document.querySelectorAll<HTMLElement>('[data-lay-link]');
+  const set = (n: string) => {
+    plates.forEach((p) => p.classList.toggle('on', p.dataset.plate === n));
+    links.forEach((l) => l.classList.toggle('on', l.dataset.layLink === n));
+  };
+  set('01');
+  const io = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && set((e.target as HTMLElement).dataset.lay!)), { rootMargin: '-45% 0px -50% 0px' });
+  cards.forEach((c) => io.observe(c));
+</script>

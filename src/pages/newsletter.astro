@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import SectionHead from '../components/SectionHead.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { articles } from '../data/articles';
+const recent = articles.filter((a) => a.pillar === 'p3').slice(0, 3);
+const blocks = [
+  ['radar', 'Radar Quasar em 5 pontos', 'O que mudou no mês em IA ofensiva, computação quântica e regulação — cada ponto com fonte e com o que significa para o negócio.'],
+  ['layers', 'Uma camada de defesa a fundo', 'Uma das 6 camadas do modelo explicada sem sigla: o que protege, o risco que reduz e por onde começar.'],
+  ['circle-help', '3 perguntas para o board', 'Perguntas prontas para levar à próxima reunião de conselho ou de comitê de riscos.'],
+];
+---
+<Base title="Newsletter Ciber no Conselho" description="O radar mensal de IA, computação quântica e cibersegurança para quem decide. Radar Quasar em 5 pontos, uma camada de defesa a fundo e 3 perguntas para o board.">
+  <PageHero img="home-newsletter" title="Ciber no" accent="Conselho" lead="O radar mensal de IA, computação quântica e cibersegurança, para quem decide. O que mudou — e as perguntas que a sua liderança deveria fazer." crumbs={[{ label: 'Newsletter' }]} side="// newsletter mensal">
+    <div class="hero-form"><NewsletterForm id="nl-page" /></div>
+  </PageHero>
+
+  <section class="section">
+    <div class="fx-grid" style="--gx:85%; --gy:10%"></div>
+    <div class="wrap">
+      <SectionHead title="Em cada" accent="edição." lead="Uma vez por mês, leitura de 5 minutos. Sem alarme, sem sigla sem tradução — e sempre com o próximo passo." />
+      <div class="blocks">
+        {blocks.map(([ic, t, d], i) => (
+          <article class="blk card hud" data-reveal style={`--d:${i * 0.08}s; --hud-size:14px; --hud-alpha:.5`}>
+            <span class="blk-n mono">{String(i + 1).padStart(2, '0')}</span>
+            <span class="ico" style="--ico:56px"><Icon name={ic} /></span>
+            <h3 class="h3">{t}</h3>
+            <p>{d}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint section--line">
+    <div class="wrap preview">
+      <div data-reveal>
+        <h2 class="h2">Para quem <span class="grad">decide.</span></h2>
+        <p class="lead">Conselheiros, CEOs, CFOs, CISOs, líderes de compliance e jurídico — e parceiros que precisam levar o tema aos seus clientes em linguagem simples.</p>
+        <ul class="aud">
+          <li><Icon name="landmark" size={19} />Conselhos e comitês de riscos</li>
+          <li><Icon name="briefcase" size={19} />CEO e CFO</li>
+          <li><Icon name="shield-check" size={19} />CISO e TI</li>
+          <li><Icon name="scale" size={19} />Compliance, DPO e jurídico</li>
+          <li><Icon name="handshake" size={19} />Contadores, consultores e auditores</li>
+        </ul>
+      </div>
+      <div class="mock card" data-reveal style="--d:.1s" aria-label="Estrutura de uma edição">
+        <div class="mock-top">
+          <img src="/brand/quasar-orb.svg" alt="" width="34" height="34" />
+          <div><p class="mock-name">Ciber no Conselho</p><p class="mono mock-ed">edição mensal</p></div>
+        </div>
+        <div class="mock-sec"><p class="mono">01 · radar quasar</p><span class="ln w90"></span><span class="ln w75"></span><span class="ln w82"></span><span class="ln w60"></span><span class="ln w70"></span></div>
+        <div class="mock-sec"><p class="mono">02 · camada a fundo</p><span class="ln w85"></span><span class="ln w65"></span></div>
+        <div class="mock-sec"><p class="mono">03 · para o board</p>
+          <p class="mock-q"><Icon name="circle-help" size={16} />Temos protocolo contra deepfake de executivo?</p>
+          <p class="mock-q"><Icon name="circle-help" size={16} />Quais dados precisam continuar secretos por 10 anos?</p>
+          <p class="mock-q"><Icon name="circle-help" size={16} />Nosso plano de resposta foi testado no último ano?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {recent.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <SectionHead title="Enquanto a próxima edição" accent="não chega." />
+        <div class="rec">{recent.map((a, i) => <ArticleCard a={a} delay={i * 0.08} />)}</div>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .hero-form { width: 100%; }
+  .blocks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .blk { position: relative; display: flex; flex-direction: column; gap: 16px; padding: 32px; }
+  .blk-n { position: absolute; top: 30px; right: 30px; color: var(--text-4); font-size: 0.7rem; }
+  .blk p { color: var(--text-3); }
+  .preview { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .preview .lead { margin-top: 20px; }
+  .aud { list-style: none; display: grid; gap: 12px; margin-top: 30px; }
+  .aud li { display: flex; align-items: center; gap: 12px; color: #fff; font-weight: 500; }
+  .aud :global(svg) { color: var(--cyan-hi); }
+  .mock { padding: 28px; display: grid; gap: 22px; transform: rotate(-1.5deg); box-shadow: 0 50px 90px -50px rgb(0 163 214 / 0.6); }
+  .mock-top { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .mock-name { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.15rem; }
+  .mock-ed { color: var(--cyan-hi); font-size: 0.6rem; }
+  .mock-sec { display: grid; gap: 9px; }
+  .mock-sec .mono { color: var(--cyan-hi); font-size: 0.62rem; margin-bottom: 4px; }
+  .ln { display: block; height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--line-2), var(--line)); }
+  .w90 { width: 90%; } .w75 { width: 75%; } .w82 { width: 82%; } .w60 { width: 60%; } .w70 { width: 70%; } .w85 { width: 85%; } .w65 { width: 65%; }
+  .mock-q { display: flex; gap: 10px; align-items: flex-start; font-size: 0.9rem; color: var(--text-2); }
+  .mock-q :global(svg) { color: var(--lilac); flex: none; margin-top: 3px; }
+  .rec { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  @media (max-width: 900px) { .blocks, .rec { grid-template-columns: 1fr; } .preview { grid-template-columns: 1fr; } .mock { transform: none; } }
+</style>

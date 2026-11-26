@@ -1,31 +1,64 @@
 ---
-import '@fontsource-variable/bricolage-grotesque';
-import '@fontsource-variable/vend-sans';
-import '@fontsource/syne/700.css';
+import '@fontsource-variable/manrope';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
 
-interface Props {
-  title: string;
-  description: string;
-}
-const { title, description } = Astro.props;
+interface Props { title: string; description: string; image?: string }
+const { title, description, image = '/images/v3/og.jpg' } = Astro.props;
+const full = title.includes('Quasar') ? title : `${title} · Quasar Technology`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{full}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0A1222" />
-    <link rel="icon" type="image/png" href="/brand/quasar-mark.png" />
-    <meta property="og:title" content={title} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#03070B" />
+    <link rel="icon" type="image/svg+xml" href="/brand/quasar-orb.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Quasar Technology" />
+    <meta property="og:title" content={full} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content="/images/hero-photo.webp" />
+    <meta property="og:image" content={new URL(image, Astro.site)} />
     <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
     <a class="skip" href="#conteudo">Pular para o conteúdo</a>
-    <slot />
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+        els.forEach((el) => io.observe(el));
+      } else els.forEach((el) => el.classList.add('in'));
+
+      // Formulários sem lógica de envio (por enquanto): valida e mostra a confirmação.
+      document.querySelectorAll<HTMLFormElement>('form[data-fake-form]').forEach((f) => {
+        f.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const ok = f.checkValidity();
+          const err = f.querySelector<HTMLElement>('.form-err');
+          if (err) err.hidden = ok;
+          if (!ok) { f.reportValidity(); return; }
+          f.querySelector<HTMLElement>('.form-ok')!.hidden = false;
+          f.classList.add('sent');
+          f.querySelectorAll<HTMLInputElement>('input, button, select, textarea').forEach((el) => (el.disabled = true));
+        });
+      });
+    </script>
   </body>
 </html>

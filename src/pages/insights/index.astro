@@ -1,0 +1,103 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import Art from '../../components/Art.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { pillars } from '../../data/site';
+import { articles, coverOf, pillarName } from '../../data/articles';
+const lead = articles.find((a) => a.featured) ?? articles[0];
+const count = (k: string) => articles.filter((a) => a.pillar === k).length;
+---
+<Base title="Insights executivos" description="Briefings para conselhos e diretorias sobre IA no ataque e na defesa, pós-quântico, governança, as 6 camadas de defesa e ciência aplicada.">
+  <PageHero img="insights-hero" title="Insights" accent="executivos." lead="Análises regulatórias, guias de governança de Inteligência Artificial e diretrizes práticas para decisões de risco — com dado, sem alarme, na língua de quem decide." crumbs={[{ label: 'Insights' }]} side="// briefings para conselhos e diretorias" compact>
+    <a href="#artigos" class="btn btn-primary">Ver os {articles.length} artigos<Icon name="arrow-right" /></a>
+    <a href="/newsletter/" class="btn btn-ghost"><Icon name="mail" />Receber por e-mail</a>
+  </PageHero>
+
+  {lead && (
+    <section class="section feat-sec">
+      <div class="wrap">
+        <a href={`/insights/${lead.slug}/`} class="feat card" data-reveal>
+          <div class="feat-img hud" style="--hud-size:16px; --hud-inset:14px"><Art id={coverOf(lead)} eager sizes="(max-width: 900px) 100vw, 55vw" /></div>
+          <div class="feat-body">
+            <span class="chip chip--mono">Destaque · {pillarName(lead)}</span>
+            <h2 class="feat-t">{lead.title}</h2>
+            <p>{lead.summary}</p>
+            <div class="feat-meta"><span><Icon name="clock" size={15} />{lead.readTime} min de leitura</span><span class="link">Ler o artigo<Icon name="arrow-right" /></span></div>
+          </div>
+        </a>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--tint section--line" id="artigos">
+    <div class="wrap">
+      <div class="filters" role="toolbar" aria-label="Filtrar por linha editorial" data-filters>
+        <button type="button" class="flt on" data-f="all" aria-pressed="true">Todos <span class="num">{articles.length}</span></button>
+        {pillars.map((p) => (
+          <button type="button" class="flt" data-f={p.key} aria-pressed="false"><span class="mono">{p.code}</span>{p.name} <span class="num">{count(p.key)}</span></button>
+        ))}
+      </div>
+      <div class="pdesc" data-pdesc aria-live="polite">
+        {pillars.map((p) => (
+          <div class="pdesc-item" data-pd={p.key} hidden>
+            <span class="ico" style="--ico:46px"><Icon name={p.icon} /></span>
+            <p><strong>{p.code} · {p.name}.</strong> {p.desc}</p>
+          </div>
+        ))}
+      </div>
+      <div class="grid" data-grid>
+        {articles.map((a, i) => <ArticleCard a={a} delay={(i % 3) * 0.06} />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand variant="raiox" />
+</Base>
+
+<style>
+  .feat-sec { padding-bottom: clamp(56px, 6vw, 88px); }
+  .feat { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); overflow: hidden; }
+  .feat-img { position: relative; min-height: 380px; overflow: hidden; }
+  .feat-img :global(picture), .feat-img :global(img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+  .feat:hover .feat-img :global(img) { transform: scale(1.04); }
+  .feat-body { display: flex; flex-direction: column; gap: 20px; padding: clamp(28px, 4vw, 56px); justify-content: center; }
+  .feat-body .chip { align-self: flex-start; }
+  .feat-t { font-size: clamp(1.7rem, 2.8vw, 2.6rem); line-height: 1.1; transition: color 0.25s; }
+  .feat:hover .feat-t { color: var(--cyan-hi); }
+  .feat-body p { color: var(--text-3); font-size: 1.05rem; }
+  .feat-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 18px; border-top: 1px solid var(--line); font-size: 0.88rem; color: var(--text-4); }
+  .feat-meta > span:first-child { display: inline-flex; align-items: center; gap: 7px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .flt { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--line-2); font-size: 0.9rem; font-weight: 500; color: var(--text-2); background: rgb(3 7 11 / 0.4); transition: border-color 0.2s, background-color 0.2s, color 0.2s; }
+  .flt:hover { border-color: var(--cyan-hi); color: #fff; }
+  .flt .mono { color: var(--cyan-hi); font-size: 0.66rem; letter-spacing: 0.1em; }
+  .flt .num { font-size: 0.75rem; color: var(--text-4); }
+  .flt.on { background: var(--cyan); border-color: var(--cyan); color: var(--bg); font-weight: 600; }
+  .flt.on .mono, .flt.on .num { color: var(--bg); }
+  .pdesc { margin-bottom: 30px; }
+  .pdesc-item { display: flex; align-items: center; gap: 16px; padding: 18px 22px; border-radius: 14px; border: 1px solid var(--line); background: rgb(3 7 11 / 0.45); color: var(--text-3); }
+  .pdesc-item[hidden] { display: none; }
+  .pdesc-item strong { color: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .grid > :global([hidden]) { display: none; }
+  @media (max-width: 1000px) { .grid { grid-template-columns: 1fr 1fr; } .feat { grid-template-columns: 1fr; } .feat-img { min-height: 260px; } }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  const btns = [...document.querySelectorAll<HTMLButtonElement>('[data-filters] .flt')];
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-grid] > [data-pillar]')];
+  const descs = [...document.querySelectorAll<HTMLElement>('[data-pd]')];
+  const apply = (f: string, push = true) => {
+    btns.forEach((b) => { const on = b.dataset.f === f; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); });
+    cards.forEach((c) => { c.hidden = f !== 'all' && c.dataset.pillar !== f; if (!c.hidden) c.classList.add('in'); });
+    descs.forEach((d) => (d.hidden = d.dataset.pd !== f));
+    if (push) { const u = new URL(location.href); f === 'all' ? u.searchParams.delete('linha') : u.searchParams.set('linha', f); history.replaceState(null, '', u); }
+  };
+  btns.forEach((b) => b.addEventListener('click', () => apply(b.dataset.f!)));
+  const initial = new URLSearchParams(location.search).get('linha');
+  if (initial && btns.some((b) => b.dataset.f === initial)) { apply(initial, false); document.getElementById('artigos')?.scrollIntoView(); }
+</script>

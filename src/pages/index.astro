@@ -1,16 +1,445 @@
 ---
 import Base from '../layouts/Base.astro';
-import SiteHeader from '../components/SiteHeader.astro';
-import Hero from '../components/Hero.astro';
-import Sections from '../components/Sections.astro';
+import Art from '../components/Art.astro';
+import ArtSection from '../components/ArtSection.astro';
+import Icon from '../components/Icon.astro';
+import DataFlow from '../components/DataFlow.astro';
+import SectionHead from '../components/SectionHead.astro';
+import LayersExplorer from '../components/LayersExplorer.astro';
+import CtaBand from '../components/CtaBand.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import NewsletterForm from '../components/NewsletterForm.astro';
+import { brand, categories, contacts, fronts, heroStats, pillars, services, serviceHref, solutions } from '../data/site';
+import { articles } from '../data/articles';
+import { isReady } from '../data/images';
+
+const featured = (articles.filter((a) => a.featured).length >= 3 ? articles.filter((a) => a.featured) : articles).slice(0, 3);
+const frontServices = fronts.map((slug) => services.find((s) => s.slug === slug)!);
+const pillarsHome = [
+  {
+    n: '01', cat: 'consultoria' as const, tag: 'Estratégia & Conformidade', icon: 'compass',
+    bullets: ['Tradução de riscos cibernéticos em impacto financeiro e jurídico para a diretoria.', 'Preparação completa para auditorias de clientes corporativos e certificações internacionais.'],
+    cta: 'Explorar frentes de Consultoria',
+  },
+  {
+    n: '02', cat: 'servicos-gerenciados' as const, tag: 'Resiliência Contínua', icon: 'radar',
+    bullets: ['Contenção rápida contra ransomware e movimentação lateral antes da paralisação operacional.', 'Visibilidade contínua de exposição externa, nuvem e endpoints com SLAs corporativos.'],
+    cta: 'Explorar Serviços Gerenciados',
+  },
+];
 ---
-<Base
-  title="QUASAR · Transformamos Ciência em Estratégia"
-  description="Consultoria estratégica em risco tecnológico, cyber e AI security, inteligência artificial, computação quântica e segurança pós-quântica para Conselhos e executivos."
->
-  <SiteHeader />
-  <main>
-    <Hero />
-    <Sections />
-  </main>
+<Base title="Quasar Technology · Cibersegurança e ciência aplicada para a era da IA" description="Consultoria estratégica e serviços gerenciados de cibersegurança: IA aplicada à defesa, segurança de modelos de IA, prontidão pós-quântica e arquiteturas resilientes em 6 camadas, com a AMSi Networks.">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero hud hud--frame" aria-labelledby="hero-t">
+    <div class="art-bg"><Art id="home-hero" eager /></div>
+    <div class="fx-grid" style="--gx:72%; --gy:28%"></div>
+    <div class="fx-glow fx-glow--cyan" style="left:-520px; top:-560px; --size:1200px"></div>
+    <div class="fx-glow fx-glow--violet" style="right:-420px; bottom:-560px; --size:1100px"></div>
+    <span class="fx-side fx-side--left">{brand.statusSide}</span>
+    <span class="fx-side fx-side--right">{brand.hexSide}</span>
+    <DataFlow class="hero-flow" />
+    <div class="wrap hero-in">
+      <div class="hero-copy">
+        <p class="hero-badge chip chip--mono"><span class="dot" aria-hidden="true"></span>Consultoria corporativa & resiliência cibernética</p>
+        <h1 id="hero-t" class="display">Resiliência cibernética, governança e continuidade para negócios <span class="grad">que não podem parar.</span></h1>
+        <p class="lead hero-lead">Unimos consultoria estratégica e operações gerenciadas de segurança para proteger dados críticos, garantir conformidade regulatória e sustentar o crescimento da sua empresa.</p>
+        <div class="hero-actions">
+          <a href="/diagnostico-executivo/" class="btn btn-primary">Agendar Diagnóstico Executivo<Icon name="arrow-right" /></a>
+          <a href="#camadas-home" class="btn btn-ghost"><Icon name="layers" />Explorar modelo de defesa</a>
+        </div>
+      </div>
+      <aside class="hero-card card hud" style="--hud-size:14px; --hud-alpha:.6">
+        <span class="ico" style="--ico:46px"><Icon name="landmark" /></span>
+        <p class="hero-card-t">Governança para o Conselho & C-Level</p>
+        <p class="hero-card-p">Mitigação de risco regulatório, responsabilidade fiduciária e continuidade operacional.</p>
+      </aside>
+    </div>
+    <div class="wrap hero-stats-wrap">
+      <ul class="hero-stats">
+        {heroStats.map((s) => (
+          <li><Icon name={s.icon} size={20} /><span><small>{s.label}</small><strong>{s.value}</strong></span></li>
+        ))}
+        <li class="hero-scroll"><a href="#quem-somos" aria-label="Rolar para Quem somos"><span class="mono">role</span><span class="scroll-line" aria-hidden="true"></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 01 · QUEM SOMOS ============ -->
+  <ArtSection img="home-quem-somos" id="quem-somos" side="// 01 · quem somos" labelledby="qs-t">
+    <h2 id="qs-t" class="h1" data-reveal>Ciência aplicada à segurança <span class="grad">da era da IA.</span></h2>
+    <p class="lead art-lead" data-reveal style="--d:.08s">Consultoria de cibersegurança e inovação científica aplicada. Protegemos dados, sistemas, algoritmos e decisões críticas — antecipando ameaças em vez de reagir a elas.</p>
+    <ul class="seals" data-reveal style="--d:.14s">
+      <li><Icon name="bot" size={17} />IA aplicada à defesa</li>
+      <li><Icon name="brain-circuit" size={17} />Segurança de modelos</li>
+      <li><Icon name="atom" size={17} />Criptografia pós-quântica</li>
+      <li><Icon name="layers" size={17} />Arquiteturas resilientes</li>
+    </ul>
+    <div class="founders" data-reveal style="--d:.2s">
+      <div class="avatars">
+        <img src="/team/jorge-muzy.png" alt="" width="56" height="56" loading="lazy" />
+        {isReady('andre-silva') ? <Art id="andre-silva" alt="" class="av-pic" /> : <span class="av-mono" aria-hidden="true">AS</span>}
+      </div>
+      <p><small>Fundadores</small><strong>Jorge Muzy · André Silva</strong></p>
+      <a href="/sobre/" class="link">Conheça a Quasar<Icon name="arrow-right" /></a>
+    </div>
+  </ArtSection>
+
+  <!-- ============ OS DOIS PILARES ============ -->
+  <section class="section section--line pillars2" aria-labelledby="p2-t">
+    <div class="fx-grid" style="--gx:50%; --gy:0%"></div>
+    <span class="fx-side fx-side--left">// arquitetura de entrega integrada</span>
+    <div class="wrap">
+      <SectionHead id="p2-t" title="Os dois pilares" accent="da Quasar." lead="Diferente de consultorias puras, que apenas apontam lacunas em relatórios, a Quasar projeta a estratégia de governança e opera continuamente a proteção do seu negócio." />
+      <div class="p2-grid">
+        {pillarsHome.map((p, i) => (
+          <article class="p2-card card hud" data-reveal style={`--d:${i * 0.1}s; --hud-size:20px; --hud-alpha:.55`}>
+            <div class="p2-top">
+              <span class="ico" style="--ico:60px"><Icon name={p.icon} /></span>
+              <span class="p2-n mono">{p.n} · {p.tag}</span>
+            </div>
+            <h3 class="p2-title">{categories[p.cat].title}</h3>
+            <p class="p2-lead">{categories[p.cat].lead}</p>
+            <ul class="p2-bullets">{p.bullets.map((b) => <li><Icon name="circle-check" size={19} />{b}</li>)}</ul>
+            <ul class="p2-links">
+              {services.filter((s) => s.cat === p.cat).map((s) => <li><a href={serviceHref(s)}>{s.menu}<Icon name="arrow-up-right" size={14} /></a></li>)}
+            </ul>
+            <a href={`/${p.cat}/`} class="btn btn-ghost p2-btn">{p.cta}<Icon name="arrow-right" /></a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 · NOSSAS SOLUÇÕES (carrossel) ============ -->
+  <section class="sol hud hud--frame" aria-labelledby="sol-t" data-carousel>
+    <div class="art-bg" style="--scrim: linear-gradient(180deg, rgb(3 7 11 / 0.9) 0%, rgb(3 7 11 / 0.72) 50%, rgb(3 7 11 / 0.92) 100%)"><Art id="home-solucoes" /></div>
+    <div class="fx-grid" style="--gx:80%; --gy:20%"></div>
+    <div class="fx-glow fx-glow--violet" style="right:-420px; top:-420px; --size:1000px"></div>
+    <span class="fx-side fx-side--left">// 02 · nossas soluções</span>
+    <span class="fx-side fx-side--right">{brand.hexSide}</span>
+    <div class="wrap sol-head">
+      <SectionHead id="sol-t" title="Da inteligência artificial" accent="ao núcleo dos seus dados." lead="Seis frentes para antecipar ameaças — da defesa com IA à criptografia que precisa resistir aos computadores quânticos.">
+        <div class="car-ctrl">
+          <span class="car-count mono num" aria-live="polite"><b data-car-idx>01</b> / {String(solutions.length).padStart(2, '0')}</span>
+          <button type="button" class="car-btn" data-car-prev aria-label="Solução anterior"><Icon name="chevron-left" /></button>
+          <button type="button" class="car-btn" data-car-next aria-label="Próxima solução"><Icon name="chevron-right" /></button>
+        </div>
+      </SectionHead>
+    </div>
+    <ul class="car-track" data-car-track tabindex="0" aria-label="Nossas soluções">
+      {solutions.map((s, i) => (
+        <li class="car-item">
+          <a href={s.href} class="sol-card hud" style="--hud-size:18px">
+            <Art id={s.img} class="sol-img" sizes="(max-width: 767px) 85vw, 420px" />
+            <span class="sol-n mono">{String(i + 1).padStart(2, '0')}</span>
+            <span class="ico sol-ico" style="--ico:54px"><Icon name={s.icon} /></span>
+            <span class="sol-body">
+              <strong class="sol-title">{s.title}</strong>
+              <span class="sol-text">{s.text}</span>
+              <span class="link">Saiba mais<Icon name="arrow-right" /></span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <div class="wrap"><div class="car-progress" aria-hidden="true"><i data-car-bar></i></div></div>
+  </section>
+
+  <!-- ============ 6 CAMADAS ============ -->
+  <section class="section section--tint section--line" aria-labelledby="cam-t">
+    <div class="fx-grid" style="--gx:85%; --gy:20%"></div>
+    <div class="fx-glow fx-glow--cyan" style="left:-560px; bottom:-620px; --size:1100px"></div>
+    <span class="fx-side fx-side--right">// metodologia proprietária · 6 camadas</span>
+    <div class="wrap">
+      <SectionHead id="cam-t" title="Mapa de controles de cibersegurança" accent="em 6 camadas." lead="Profundidade técnica da governança corporativa até a proteção de dados e endpoints. A Quasar antecipa e desenha; a AMSi Networks sustenta os controles em cada camada. Selecione uma camada para ver o escopo e o impacto no negócio.">
+        <a href="/metodologia/" class="btn btn-ghost">Ver a metodologia completa<Icon name="arrow-right" /></a>
+      </SectionHead>
+      <div data-reveal><LayersExplorer id="camadas-home" /></div>
+    </div>
+  </section>
+
+  <!-- ============ 03 · IDEIA CENTRAL ============ -->
+  <ArtSection img="home-ideia" align="center" side="// 03 · ideia central" labelledby="ideia-t" class="ideia">
+    <DataFlow class="ideia-flow" slot="fx" />
+    <h2 id="ideia-t" class="display ideia-t" data-reveal>Enquanto outros reagem, <span class="grad">a Quasar antecipa.</span></h2>
+    <p class="ideia-sig" data-reveal style="--d:.1s">{brand.signature}</p>
+    <ul class="ideia-tags" data-reveal style="--d:.16s">
+      <li><Icon name="bot" size={18} />IA</li>
+      <li><Icon name="atom" size={18} />Pós-quântico</li>
+      <li><Icon name="layers" size={18} />Arquiteturas resilientes</li>
+    </ul>
+  </ArtSection>
+
+  <!-- ============ FRENTES DE ATUAÇÃO ============ -->
+  <section class="section" aria-labelledby="fr-t">
+    <div class="fx-grid" style="--gx:15%; --gy:10%"></div>
+    <span class="fx-side fx-side--left">// portfólio orientado a risco</span>
+    <div class="wrap">
+      <SectionHead id="fr-t" title="Frentes de atuação" accent="por prioridade de negócio." lead="Soluções desenhadas para as prioridades reais de orçamento, auditoria e continuidade das médias e grandes empresas no Brasil." />
+      <div class="fr-grid">
+        {frontServices.map((s, i) => (
+          <a href={serviceHref(s)} class="fr-card card" data-reveal style={`--d:${(i % 3) * 0.08}s`}>
+            <div class="fr-top">
+              <span class="ico" style="--ico:52px"><Icon name={s.icon} /></span>
+              <span class="chip chip--mono">{s.tag}</span>
+            </div>
+            <h3 class="h3">{s.title}</h3>
+            <p>{s.short}</p>
+            <span class="link">Ver impacto e metodologia<Icon name="arrow-right" /></span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand variant="raiox" />
+
+  <!-- ============ INSIGHTS ============ -->
+  <section class="section section--tint section--line" aria-labelledby="in-t">
+    <span class="fx-side fx-side--right">// briefings para conselhos e diretorias</span>
+    <div class="wrap">
+      <SectionHead id="in-t" title="Insights" accent="executivos." lead="Análises sobre IA, computação quântica, regulação e risco — com dado, sem alarme, na língua de quem decide.">
+        <a href="/insights/" class="btn btn-ghost">Ver todos os insights<Icon name="arrow-right" /></a>
+      </SectionHead>
+      <div class="in-grid">
+        {featured.map((a, i) => <ArticleCard a={a} delay={i * 0.08} />)}
+      </div>
+      <ul class="in-pillars" data-reveal>
+        {pillars.map((p) => (
+          <li><a href={`/insights/?linha=${p.key}`}><span class="mono">{p.code}</span>{p.name}<Icon name="arrow-up-right" size={14} /></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ AUTORIDADE ============ -->
+  <ArtSection img="home-autoridade" align="right" side="// autoridade & liderança internacional" labelledby="au-t">
+    <h2 id="au-t" class="h2" data-reveal>Experiência internacional aplicada à realidade <span class="grad">regulatória e corporativa do Brasil.</span></h2>
+    <p class="lead art-lead" data-reveal style="--d:.08s">Com mais de 25 anos de trajetória e atuação executiva no Brasil, no Canadá e nos Estados Unidos, a liderança da Quasar atua diretamente junto a Conselhos, CEOs e Diretores Jurídicos na interseção entre riscos cibernéticos, governança de Inteligência Artificial e continuidade de negócios.</p>
+    <div class="au-items" data-reveal style="--d:.14s">
+      <div class="au-item"><span class="ico" style="--ico:48px"><Icon name="presentation" /></span><div><strong>Keynote Speaker</strong><p>Participação recorrente em grandes fóruns executivos, incluindo o AI Summit Brasil (Salvador e São Paulo).</p></div></div>
+      <div class="au-item"><span class="ico ico--violet" style="--ico:48px"><Icon name="globe" /></span><div><strong>Atuação transfronteiriça</strong><p>Operação estruturada entre o Rio de Janeiro e a América do Norte, trazendo padrões globais para empresas brasileiras.</p></div></div>
+    </div>
+    <a href="/sobre/" class="btn btn-ghost au-btn" data-reveal>Conheça a liderança e a história<Icon name="arrow-right" /></a>
+  </ArtSection>
+
+  <!-- ============ 04 · NEWSLETTER ============ -->
+  <ArtSection img="home-newsletter" side="// 04 · newsletter" labelledby="nl-t">
+    <h2 id="nl-t" class="display nl-t" data-reveal>Ciber no <span class="grad">Conselho</span></h2>
+    <p class="lead art-lead" data-reveal style="--d:.08s">O que mudou em IA, quântica e cibersegurança — e as perguntas que a sua liderança deveria fazer. Uma vez por mês.</p>
+    <ul class="nl-items" data-reveal style="--d:.12s">
+      <li><span class="mono">01</span>Radar Quasar em 5 pontos</li>
+      <li><span class="mono">02</span>Uma camada de defesa a fundo</li>
+      <li><span class="mono">03</span>3 perguntas para o board</li>
+    </ul>
+    <div data-reveal style="--d:.18s"><NewsletterForm id="nl-home" /></div>
+  </ArtSection>
+
+  <!-- ============ 05 · CONTATO ============ -->
+  <ArtSection img="home-contato" side="// 05 · contato" labelledby="ct-t" id="contato">
+    <h2 id="ct-t" class="display" data-reveal>Vamos antecipar <span class="grad">juntos?</span></h2>
+    <p class="lead art-lead" data-reveal style="--d:.08s">Em 60 minutos, mostramos onde estão as lacunas da sua empresa — inclusive diante da IA e da computação quântica.</p>
+    <div class="ct-actions" data-reveal style="--d:.12s">
+      <a href="/diagnostico-executivo/" class="btn btn-primary">Agendar Diagnóstico Executivo<Icon name="arrow-right" /></a>
+      <a href="/raio-x/" class="btn btn-ghost"><Icon name="scan-eye" />Fazer o Raio-X</a>
+    </div>
+    <ul class="ct-direct" data-reveal style="--d:.16s">
+      {contacts.people.map((p) => <li><a href={`mailto:${p.email}`}><Icon name="mail" size={17} /><span><small>{p.name}</small>{p.email}</span></a></li>)}
+    </ul>
+    <ul class="ct-facts" slot="aside" data-reveal style="--d:.2s">
+      <li><span class="num">60</span><span>minutos com a diretoria ou o comitê de riscos</span></li>
+      <li><span class="num">6</span><span>camadas avaliadas, da governança à operação 24x7</span></li>
+      <li><span class="num">3</span><span>prioridades para agir, com dono e prazo</span></li>
+    </ul>
+  </ArtSection>
 </Base>
+
+<style>
+  /* HERO */
+  .hero { position: relative; isolation: isolate; overflow: hidden; min-height: max(100svh, 760px); display: flex; flex-direction: column; justify-content: flex-end; padding-top: calc(var(--header-h) + 36px + 60px); }
+  .hero { --hud-inset: calc(var(--header-h) + 60px) clamp(16px, 2.2vw, 36px) clamp(16px, 2.2vw, 36px); }
+  .hero :global(.hero-flow) { width: min(900px, 50vw); right: -8vw; top: 16%; opacity: 0.85; }
+  .hero-in { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 48px; align-items: end; }
+  .hero-copy { max-width: 900px; }
+  .hero-badge { margin-bottom: 30px; white-space: normal; max-width: 100%; line-height: 1.5; padding-block: 6px; }
+  .hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--cyan-hi); box-shadow: 0 0 10px var(--cyan-hi); }
+  .hero h1 { max-width: 21ch; font-size: clamp(2.15rem, 4.5vw, 4.6rem); }
+  .hero-lead { margin-top: 28px; color: var(--text-2); }
+  .hero-actions { margin-top: 40px; display: flex; flex-wrap: wrap; gap: 14px; }
+  .hero-card { padding: 26px; display: grid; gap: 12px; background: rgb(6 13 19 / 0.72); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+  .hero-card-t { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.15rem; letter-spacing: -0.02em; line-height: 1.2; }
+  .hero-card-p { font-size: 0.92rem; color: var(--text-3); line-height: 1.55; }
+  .hero-stats-wrap { position: relative; z-index: 1; margin-top: clamp(48px, 6vw, 88px); }
+  .hero-stats { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)) auto; border-top: 1px solid rgb(53 198 240 / 0.22); }
+  .hero-stats li { display: flex; align-items: center; gap: 14px; padding: 26px 24px 30px 0; }
+  .hero-stats li + li { padding-left: 24px; border-left: 1px solid rgb(53 198 240 / 0.14); }
+  .hero-stats :global(svg) { color: var(--cyan-hi); flex: none; }
+  .hero-stats small { display: block; font-size: 0.78rem; color: var(--text-4); }
+  .hero-stats strong { display: block; color: #fff; font-weight: 600; font-size: 1rem; line-height: 1.3; }
+  .hero-scroll a { display: flex; align-items: center; gap: 12px; color: var(--text-4); }
+  .hero-scroll .mono { font-size: 0.66rem; }
+  .scroll-line { position: relative; width: 1px; height: 44px; background: var(--line-2); overflow: hidden; }
+  .scroll-line::after { content: ''; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--cyan-hi); animation: drop 2s var(--ease) infinite; }
+  @keyframes drop { to { top: 100%; } }
+
+  /* QUEM SOMOS */
+  .art-lead { margin-top: 26px; color: var(--text-2); }
+  .seals { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px; }
+  .seals li { display: inline-flex; align-items: center; gap: 9px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line-2); background: rgb(3 7 11 / 0.55); backdrop-filter: blur(8px); font-size: 0.9rem; font-weight: 500; color: var(--text); }
+  .seals :global(svg) { color: var(--cyan-hi); }
+  .founders { display: flex; align-items: center; gap: 16px 18px; flex-wrap: wrap; margin-top: 40px; padding-top: 30px; border-top: 1px solid rgb(53 198 240 / 0.18); }
+  .avatars { display: flex; }
+  .avatars img, .avatars :global(.av-pic img) { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--line-2); }
+  .avatars :global(.av-pic) { margin-left: -12px; }
+  .av-mono { margin-left: -12px; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; border: 2px solid var(--bg); box-shadow: 0 0 0 1px var(--line-2); background: linear-gradient(135deg, #0E2733, #1A1840); color: var(--cyan-2, #35C6F0); font-family: var(--font-mono, 'JetBrains Mono Variable', monospace); font-size: 13px; letter-spacing: .08em; font-weight: 600; }
+  .founders p small { display: block; font-size: 0.78rem; color: var(--text-4); }
+  .founders p strong { display: block; color: #fff; font-weight: 600; }
+  .founders .link { margin-left: auto; }
+
+  /* DOIS PILARES */
+  .pillars2 { overflow: hidden; }
+  .p2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2vw, 28px); }
+  .p2-card { display: flex; flex-direction: column; padding: clamp(28px, 3.4vw, 52px); }
+  .p2-top { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+  .p2-n { color: var(--cyan-hi); font-size: 0.68rem; text-align: right; }
+  .p2-title { margin-top: 30px; font-size: clamp(1.7rem, 2.4vw, 2.3rem); }
+  .p2-lead { margin-top: 16px; color: var(--text-3); }
+  .p2-bullets { list-style: none; display: grid; gap: 14px; margin-top: 28px; padding-top: 26px; border-top: 1px solid var(--line); }
+  .p2-bullets li { display: flex; gap: 12px; color: var(--text-2); font-size: 0.98rem; line-height: 1.55; }
+  .p2-bullets :global(svg) { color: var(--cyan-hi); flex: none; margin-top: 2px; }
+  .p2-links { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+  .p2-links a { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; border: 1px solid var(--line); font-size: 0.84rem; color: var(--text-3); transition: border-color 0.2s, color 0.2s; }
+  .p2-links a:hover { border-color: var(--cyan-hi); color: var(--cyan-hi); }
+  .p2-btn { margin-top: auto; align-self: flex-start; }
+  .p2-links { margin-bottom: 34px; }
+
+  /* SOLUÇÕES — carrossel */
+  .sol { position: relative; isolation: isolate; overflow: hidden; min-height: clamp(760px, 56.25vw, 1080px); padding-block: clamp(100px, 9vw, 150px); display: flex; flex-direction: column; justify-content: center; }
+  .sol-head :global(.shead) { margin-bottom: 48px; }
+  .car-ctrl { display: flex; align-items: center; gap: 10px; }
+  .car-count { margin-right: 10px; color: var(--text-4); font-size: 0.78rem; }
+  .car-count b { color: #fff; font-weight: 600; }
+  .car-btn { width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; color: #fff; background: rgb(3 7 11 / 0.5); backdrop-filter: blur(6px); transition: border-color 0.2s, color 0.2s, background-color 0.2s, opacity 0.2s; }
+  .car-btn:hover:not(:disabled) { border-color: var(--cyan-hi); color: var(--cyan-hi); }
+  .car-btn:disabled { opacity: 0.35; cursor: default; }
+  .car-track { --pad: max(var(--gutter), calc((100vw - var(--wrap)) / 2 + var(--gutter))); list-style: none; display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--pad); padding: 8px var(--pad) 8px; scrollbar-width: none; overscroll-behavior-x: contain; }
+  .car-track::-webkit-scrollbar { display: none; }
+  .car-track:focus-visible { outline-offset: -2px; }
+  .car-item { flex: 0 0 clamp(290px, 30vw, 420px); scroll-snap-align: start; }
+  .sol-card { position: relative; isolation: isolate; display: flex; flex-direction: column; justify-content: flex-end; aspect-ratio: 4 / 5; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: var(--panel); --hud-inset: 14px; --hud-alpha: 0; transition: border-color 0.4s, box-shadow 0.5s var(--ease); }
+  .sol-card::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgb(3 7 11 / 0.1) 0%, rgb(3 7 11 / 0.45) 38%, rgb(3 7 11 / 0.94) 72%); transition: opacity 0.4s; }
+  .sol-card :global(.sol-img) { position: absolute; inset: 0; z-index: -2; }
+  .sol-card :global(.sol-img img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+  .sol-card:hover { border-color: rgb(53 198 240 / 0.5); box-shadow: 0 40px 70px -40px rgb(0 163 214 / 0.7); --hud-alpha: 0.75; --hud-inset: 10px; }
+  .sol-card:hover :global(.sol-img img) { transform: scale(1.06); }
+  .sol-n { position: absolute; top: 26px; right: 26px; color: rgb(53 198 240 / 0.8); font-size: 0.72rem; }
+  .sol-ico { position: absolute; top: 22px; left: 22px; }
+  .sol-body { display: flex; flex-direction: column; gap: 12px; padding: 28px; }
+  .sol-title { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.55rem; letter-spacing: -0.03em; line-height: 1.12; }
+  .sol-text { color: var(--text-3); font-size: 0.95rem; line-height: 1.55; }
+  .sol-body .link { margin-top: 6px; }
+  .car-progress { margin-top: 40px; height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
+  .car-progress i { display: block; height: 100%; width: calc(100% / 6); background: var(--flow); transition: width 0.5s var(--ease); }
+
+  /* IDEIA CENTRAL */
+  .ideia :global(.ideia-flow) { width: 104%; left: -2%; bottom: -150px; opacity: 0.85; }
+  .ideia-t { max-width: 15ch; margin-inline: auto; font-size: clamp(2.8rem, 6.6vw, 6.8rem); }
+  .ideia-sig { margin-top: 30px; font-family: var(--font-display); font-weight: 700; font-size: clamp(1.15rem, 1.6vw, 1.5rem); color: var(--text-2); letter-spacing: -0.02em; }
+  .ideia-tags { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
+  .ideia-tags li { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 999px; border: 1px solid var(--line-2); background: rgb(3 7 11 / 0.6); backdrop-filter: blur(8px); font-weight: 600; color: #fff; }
+  .ideia-tags :global(svg) { color: var(--cyan-hi); }
+
+  /* FRENTES */
+  .fr-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .fr-card { display: flex; flex-direction: column; gap: 16px; padding: 30px; }
+  .fr-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+  .fr-top .chip { white-space: normal; text-align: right; line-height: 1.3; padding-block: 5px; }
+  .fr-card p { color: var(--text-3); font-size: 0.97rem; }
+  .fr-card .link { margin-top: auto; padding-top: 10px; }
+  .fr-card:hover h3 { color: var(--cyan-hi); }
+  .fr-card h3 { transition: color 0.25s; }
+
+  /* INSIGHTS */
+  .in-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .in-pillars { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 40px; }
+  .in-pillars a { display: inline-flex; align-items: center; gap: 10px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line); font-size: 0.9rem; color: var(--text-2); transition: border-color 0.2s, color 0.2s; }
+  .in-pillars a:hover { border-color: var(--cyan-hi); color: var(--cyan-hi); }
+  .in-pillars .mono { color: var(--cyan-hi); font-size: 0.68rem; letter-spacing: 0.12em; }
+
+  /* AUTORIDADE */
+  .au-items { display: grid; gap: 14px; margin-top: 32px; }
+  .au-item { display: flex; gap: 16px; padding: 20px; border-radius: 14px; background: rgb(3 7 11 / 0.6); border: 1px solid var(--line); backdrop-filter: blur(8px); }
+  .au-item strong { color: #fff; font-family: var(--font-display); font-size: 1.1rem; letter-spacing: -0.02em; }
+  .au-item p { margin-top: 4px; font-size: 0.93rem; color: var(--text-3); line-height: 1.55; }
+  .au-btn { margin-top: 32px; }
+
+  /* NEWSLETTER */
+  .nl-t { font-size: clamp(3rem, 7vw, 7rem); }
+  .nl-items { list-style: none; display: grid; gap: 10px; margin: 30px 0 34px; }
+  .nl-items li { display: flex; align-items: center; gap: 14px; color: #fff; font-weight: 500; }
+  .nl-items .mono { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; border: 1px solid var(--line-2); color: var(--cyan-hi); font-size: 0.7rem; letter-spacing: 0.04em; background: rgb(3 7 11 / 0.6); }
+
+  /* CONTATO */
+  .ct-actions { margin-top: 38px; display: flex; flex-wrap: wrap; gap: 14px; }
+  .ct-direct { list-style: none; display: flex; flex-wrap: wrap; gap: 12px 28px; margin-top: 36px; padding-top: 28px; border-top: 1px solid rgb(53 198 240 / 0.18); }
+  .ct-direct a { display: flex; align-items: center; gap: 12px; color: #fff; font-weight: 500; }
+  .ct-direct a:hover { color: var(--cyan-hi); }
+  .ct-direct :global(svg) { color: var(--cyan-hi); }
+  .ct-direct small { display: block; font-size: 0.75rem; color: var(--text-4); font-weight: 400; }
+  .ct-facts { list-style: none; display: grid; gap: 14px; justify-self: end; width: min(100%, 400px); }
+  .ct-facts li { display: flex; align-items: center; gap: 20px; padding: 22px 24px; border-radius: 16px; background: rgb(3 7 11 / 0.66); border: 1px solid var(--line); backdrop-filter: blur(10px); color: var(--text-3); font-size: 0.95rem; line-height: 1.45; }
+  .ct-facts .num { font-family: var(--font-display); font-weight: 800; font-size: 2.6rem; letter-spacing: -0.04em; line-height: 1; min-width: 56px; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  @media (max-width: 1100px) {
+    .hero-in { grid-template-columns: minmax(0, 1fr); }
+    .hero-card { display: none; }
+    .fr-grid, .in-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 900px) {
+    .p2-grid { grid-template-columns: 1fr; }
+    .hero-stats { grid-template-columns: 1fr; }
+    .hero-stats li { padding: 16px 0; }
+    .hero-stats li + li { padding-left: 0; border-left: 0; border-top: 1px solid rgb(53 198 240 / 0.14); }
+    .hero-scroll { display: none !important; }
+    .hero :global(.hero-flow) { display: none; }
+    .ct-facts { justify-self: stretch; width: 100%; margin-top: 12px; }
+  }
+  @media (max-width: 680px) {
+    .fr-grid, .in-grid { grid-template-columns: 1fr; }
+    .car-item { flex-basis: 84vw; }
+    .founders .link { margin-left: 0; }
+    .car-ctrl { width: 100%; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-car-track]')!;
+    const items = [...track.children] as HTMLElement[];
+    const prev = root.querySelector<HTMLButtonElement>('[data-car-prev]')!;
+    const next = root.querySelector<HTMLButtonElement>('[data-car-next]')!;
+    const idxEl = root.querySelector<HTMLElement>('[data-car-idx]')!;
+    const bar = root.querySelector<HTMLElement>('[data-car-bar]')!;
+    const step = () => items[0].getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || '20');
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      const i = max <= 2 ? 0 : Math.round(track.scrollLeft / step());
+      const last = track.scrollLeft >= max - 4;
+      const shown = last ? items.length : Math.min(items.length, i + 1);
+      idxEl.textContent = String(shown).padStart(2, '0');
+      bar.style.width = `${(shown / items.length) * 100}%`;
+      prev.disabled = track.scrollLeft <= 4;
+      next.disabled = last;
+    };
+    prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+    next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+    track.addEventListener('scroll', () => requestAnimationFrame(update), { passive: true });
+    track.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') { e.preventDefault(); next.click(); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); prev.click(); }
+    });
+    window.addEventListener('resize', update);
+    update();
+  });
+</script>

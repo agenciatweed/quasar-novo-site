@@ -1,0 +1,29 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import DataFlow from '../components/DataFlow.astro';
+---
+<Base title="Página não encontrada" description="A página que você procurou não existe ou mudou de endereço.">
+  <section class="nf hud hud--frame">
+    <div class="fx-grid" style="--gx:50%; --gy:40%"></div>
+    <div class="fx-glow fx-glow--violet" style="right:-400px; bottom:-500px; --size:1000px"></div>
+    <DataFlow class="nf-flow" />
+    <div class="wrap nf-in">
+      <p class="mono nf-code">erro 404 · rota não mapeada</p>
+      <h1 class="display">Esta página <span class="grad">não existe.</span></h1>
+      <p class="lead">O endereço pode ter mudado. Comece pela página inicial ou faça o Raio-X da sua empresa.</p>
+      <div class="nf-actions">
+        <a href="/" class="btn btn-primary">Ir para o início<Icon name="arrow-right" /></a>
+        <a href="/raio-x/" class="btn btn-ghost">Fazer o Raio-X</a>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf { position: relative; isolation: isolate; overflow: hidden; min-height: 100svh; display: flex; align-items: center; padding: calc(var(--header-h) + 80px) 0 80px; }
+  .nf :global(.nf-flow) { width: 100%; left: 0; bottom: -40px; opacity: 0.6; }
+  .nf-in { position: relative; z-index: 1; }
+  .nf-code { color: var(--cyan-hi); margin-bottom: 24px; }
+  .nf .lead { margin-top: 24px; }
+  .nf-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
+</style>

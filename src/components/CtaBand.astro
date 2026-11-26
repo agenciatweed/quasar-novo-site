@@ -1,0 +1,78 @@
+---
+import Icon from './Icon.astro';
+import DataFlow from './DataFlow.astro';
+interface Props { variant?: 'raiox' | 'diagnostico'; title?: string; text?: string }
+const { variant = 'raiox' } = Astro.props;
+const copy = variant === 'raiox'
+  ? {
+      title: Astro.props.title ?? 'Sua empresa está pronta para a era da IA?',
+      text: Astro.props.text ?? 'Faça o Raio-X Quasar: 21 perguntas, 5 minutos e uma nota para cada dimensão da sua segurança — da governança à prontidão pós-quântica.',
+      primary: { href: '/raio-x/', label: 'Fazer o Raio-X' },
+      secondary: { href: '/diagnostico-executivo/', label: 'Agendar Diagnóstico Executivo' },
+    }
+  : {
+      title: Astro.props.title ?? 'Vamos antecipar juntos?',
+      text: Astro.props.text ?? 'Em 60 minutos, mostramos onde estão as lacunas da sua empresa — inclusive diante da IA e da computação quântica.',
+      primary: { href: '/diagnostico-executivo/', label: 'Agendar Diagnóstico Executivo' },
+      secondary: { href: '/raio-x/', label: 'Fazer o Raio-X primeiro' },
+    };
+const dims = [
+  ['Governança', 68], ['Pessoas e fraudes', 42], ['Identidades', 81], ['Dados e IA', 55], ['Exposição', 37], ['Resposta', 74], ['Pós-quântico', 24],
+] as const;
+---
+<section class="cta-wrap">
+  <div class="wrap">
+    <div class="cta card hud" data-reveal style="--hud-size:26px">
+      <div class="fx-grid" style="--gx:85%; --gy:50%"></div>
+      <div class="fx-glow fx-glow--violet" style="right:-380px; top:-420px; --size:900px"></div>
+      <div class="fx-glow fx-glow--cyan" style="left:-420px; bottom:-560px; --size:900px"></div>
+      <DataFlow class="cta-flow" />
+      <div class="cta-copy">
+        <h2 class="h2">{copy.title}</h2>
+        <p class="lead">{copy.text}</p>
+        <div class="cta-actions">
+          <a href={copy.primary.href} class="btn btn-primary">{copy.primary.label}<Icon name="arrow-right" /></a>
+          <a href={copy.secondary.href} class="btn btn-ghost">{copy.secondary.label}</a>
+        </div>
+      </div>
+      {variant === 'raiox' ? (
+        <div class="cta-viz" aria-hidden="true">
+          <p class="viz-t"><span class="mono">exemplo de resultado</span><span class="viz-score num">54<small>/100</small></span></p>
+          {dims.map(([n, v], i) => (
+            <div class="viz-row"><span class="viz-n">{n}</span><span class="viz-bar"><i style={`--v:${v}%; --i:${i}`} /></span><span class="num">{v}</span></div>
+          ))}
+        </div>
+      ) : (
+        <ul class="cta-facts">
+          <li><span class="ico" style="--ico:46px"><Icon name="clock" /></span><span><strong>60 minutos</strong>com a diretoria</span></li>
+          <li><span class="ico" style="--ico:46px"><Icon name="layers" /></span><span><strong>6 camadas</strong>avaliadas</span></li>
+          <li><span class="ico ico--violet" style="--ico:46px"><Icon name="target" /></span><span><strong>3 prioridades</strong>para agir</span></li>
+        </ul>
+      )}
+    </div>
+  </div>
+</section>
+<style>
+  .cta-wrap { padding-block: clamp(64px, 8vw, 120px); }
+  .cta { isolation: isolate; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; align-items: center; padding: clamp(32px, 5vw, 76px); border-color: var(--line-2); background: linear-gradient(135deg, #0a1720 0%, #070f16 60%, #0c0f22 100%); }
+  .cta-copy { position: relative; z-index: 1; }
+  .cta h2 { max-width: 16ch; }
+  .cta .lead { margin-top: 20px; }
+  .cta-actions { margin-top: 34px; display: flex; flex-wrap: wrap; gap: 14px; }
+  .cta :global(.cta-flow) { width: 120%; left: -10%; bottom: -80px; opacity: 0.5; }
+  .cta-viz { position: relative; z-index: 1; display: grid; gap: 12px; padding: 24px 26px; border-radius: 14px; background: rgb(3 7 11 / 0.7); border: 1px solid var(--line); backdrop-filter: blur(6px); }
+  .viz-t { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+  .viz-t .mono { color: var(--cyan-hi); font-size: 0.64rem; }
+  .viz-score { font-family: var(--font-display); font-weight: 800; font-size: 1.9rem; color: #fff; letter-spacing: -0.03em; }
+  .viz-score small { font-size: 0.85rem; color: var(--text-4); font-weight: 600; }
+  .viz-row { display: grid; grid-template-columns: 118px 1fr 28px; align-items: center; gap: 12px; color: var(--text-3); font-size: 0.82rem; }
+  .viz-row .num { text-align: right; color: var(--text-2); font-weight: 600; }
+  .viz-bar { height: 7px; border-radius: 99px; background: var(--line); overflow: hidden; }
+  .viz-bar i { display: block; height: 100%; width: var(--v); border-radius: inherit; background: var(--flow); transform-origin: left; animation: grow 1.4s var(--ease) both; animation-delay: calc(var(--i) * 0.08s); }
+  @keyframes grow { from { transform: scaleX(0); } }
+  .cta-facts { position: relative; z-index: 1; list-style: none; display: grid; gap: 14px; }
+  .cta-facts li { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 14px; background: rgb(3 7 11 / 0.6); border: 1px solid var(--line); color: var(--text-3); font-size: 0.95rem; }
+  .cta-facts strong { display: block; color: #fff; font-family: var(--font-display); font-size: 1.25rem; letter-spacing: -0.02em; }
+  @media (max-width: 900px) { .cta { grid-template-columns: 1fr; } }
+  @media (max-width: 420px) { .viz-row { grid-template-columns: 96px 1fr 26px; } }
+</style>

@@ -1,0 +1,22 @@
+---
+import Icon from './Icon.astro';
+interface Props { id?: string }
+const { id = 'nl' } = Astro.props;
+---
+<form class="nl" data-fake-form novalidate>
+  <div class="nl-row">
+    <label class="sr-only" for={`${id}-email`}>E-mail corporativo</label>
+    <input class="input" id={`${id}-email`} name="email" type="email" required autocomplete="email" placeholder="Seu e-mail corporativo" />
+    <button class="btn btn-primary" type="submit">Assine grátis<Icon name="arrow-right" /></button>
+  </div>
+  <label class="check nl-consent"><input type="checkbox" name="consent" required /><span>Aceito receber a newsletter mensal da Quasar. Descadastro em um clique, a qualquer momento.</span></label>
+  <p class="form-ok" role="status" hidden><Icon name="circle-check" size={18} />Inscrição registrada. A próxima edição chega na sua caixa de entrada.</p>
+  <p class="form-err" role="alert" hidden>Informe um e-mail válido e aceite o termo para continuar.</p>
+</form>
+<style>
+  .nl { display: grid; gap: 14px; max-width: 580px; }
+  .nl-row { display: flex; gap: 10px; }
+  .nl-row .input { flex: 1; border-radius: 999px; padding-inline: 22px; }
+  .nl-consent { font-size: 0.82rem; }
+  @media (max-width: 560px) { .nl-row { flex-direction: column; } }
+</style>

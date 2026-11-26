@@ -1,0 +1,47 @@
+---
+// Seção com arte de fundo 1920×1080 (mobile 1080×1920) — guia, seção 3.
+// O texto fica na área "limpa" da arte: à esquerda no desktop, no topo no mobile.
+import Art from './Art.astro';
+import { brand } from '../data/site';
+interface Props {
+  img: string;
+  side?: string;
+  align?: 'left' | 'center' | 'right';
+  id?: string;
+  class?: string;
+  tall?: boolean;
+  scrim?: string;
+  labelledby?: string;
+}
+const { img, side, align = 'left', id, class: cls, tall = false, scrim, labelledby } = Astro.props;
+---
+<section id={id} class:list={['art-sec hud hud--frame', `al-${align}`, cls, { tall }]} aria-labelledby={labelledby} style={scrim ? `--scrim:${scrim}` : undefined}>
+  <div class="art-bg"><Art id={img} /></div>
+  <div class="fx-grid" style={align === 'right' ? '--gx:20%; --gy:40%' : '--gx:78%; --gy:35%'}></div>
+  <div class="fx-glow fx-glow--cyan" style="left:-460px; top:-520px; --size:1000px"></div>
+  <div class="fx-glow fx-glow--violet" style="right:-420px; bottom:-480px; --size:1100px"></div>
+  {side && <span class="fx-side fx-side--left">{side}</span>}
+  <span class="fx-side fx-side--right">{brand.hexSide}</span>
+  <slot name="fx" />
+  <div class="wrap art-in">
+    <div class="art-copy"><slot /></div>
+    <slot name="aside" />
+  </div>
+</section>
+<style>
+  .art-sec { position: relative; isolation: isolate; overflow: hidden; min-height: clamp(680px, 56.25vw, 1080px); display: flex; align-items: center; padding-block: clamp(110px, 10vw, 160px); }
+  .art-sec.tall { min-height: clamp(760px, 62vw, 1160px); }
+  .art-in { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+  .art-copy { max-width: 640px; }
+  .al-center .art-in { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+  .al-center .art-copy { max-width: 980px; }
+  .al-right .art-in { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1fr); }
+  .al-right .art-copy { grid-column: 2; }
+  .al-center { --scrim: radial-gradient(ellipse at center, rgb(3 7 11 / 0.82) 0%, rgb(3 7 11 / 0.6) 45%, rgb(3 7 11 / 0.35) 100%); }
+  .al-right { --scrim: linear-gradient(270deg, rgb(3 7 11 / 0.94) 0%, rgb(3 7 11 / 0.78) 38%, rgb(3 7 11 / 0.2) 72%, rgb(3 7 11 / 0.45) 100%); }
+  @media (max-width: 900px) {
+    .art-sec { align-items: flex-start; min-height: 100svh; }
+    .art-in, .al-right .art-in { grid-template-columns: 1fr; }
+    .al-right .art-copy { grid-column: auto; }
+  }
+</style>

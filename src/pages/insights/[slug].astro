@@ -1,0 +1,185 @@
+---
+import Base from '../../layouts/Base.astro';
+import Art from '../../components/Art.astro';
+import Icon from '../../components/Icon.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import NewsletterForm from '../../components/NewsletterForm.astro';
+import { brand, pillarBy } from '../../data/site';
+import { articles, coverOf, type Article } from '../../data/articles';
+
+export function getStaticPaths() {
+  return articles.map((a) => ({ params: { slug: a.slug }, props: { a } }));
+}
+const { a } = Astro.props as { a: Article };
+const { Content } = a;
+const pillar = pillarBy(a.pillar);
+const toc = a.headings.filter((h) => h.depth === 2);
+const same = articles.filter((x) => x.pillar === a.pillar && x.slug !== a.slug);
+const related = [...same, ...articles.filter((x) => x.pillar !== a.pillar && x.slug !== a.slug)].slice(0, 3);
+const i = articles.findIndex((x) => x.slug === a.slug);
+const prev = articles[(i - 1 + articles.length) % articles.length];
+const next = articles[(i + 1) % articles.length];
+const shareUrl = new URL(`/insights/${a.slug}/`, Astro.site).toString();
+---
+<Base title={a.title} description={a.summary}>
+  <header class="ahero hud hud--frame">
+    <div class="art-bg" style="--scrim: linear-gradient(180deg, rgb(3 7 11 / 0.7) 0%, rgb(3 7 11 / 0.82) 55%, rgb(3 7 11 / 1) 100%); --scrim-m: linear-gradient(180deg, rgb(3 7 11 / 0.78) 0%, rgb(3 7 11 / 1) 100%)"><Art id={coverOf(a)} eager /></div>
+    <div class="fx-grid" style="--gx:80%; --gy:30%"></div>
+    <div class="fx-glow fx-glow--violet" style="right:-460px; top:-460px; --size:1000px"></div>
+    <span class="fx-side fx-side--left">{`// ${pillar.code.toLowerCase()} · ${pillar.short.toLowerCase()}`}</span>
+    <span class="fx-side fx-side--right">{brand.hexSide}</span>
+    <div class="wrap-narrow ahero-in">
+      <nav class="crumbs" aria-label="Trilha de navegação">
+        <a href="/">Início</a><Icon name="chevron-right" size={14} /><a href="/insights/">Insights</a><Icon name="chevron-right" size={14} /><a href={`/insights/?linha=${a.pillar}`}>{pillar.name}</a>
+      </nav>
+      <span class="chip chip--mono">{pillar.code} · {pillar.name}</span>
+      <h1 class="atitle">{a.title}</h1>
+      <p class="asum">{a.summary}</p>
+      <div class="ameta">
+        <span class="author"><img src="/brand/quasar-orb.svg" alt="" width="34" height="34" /><span><strong>Equipe Quasar</strong><small>Novembro de 2026</small></span></span>
+        <span><Icon name="clock" size={16} />{a.readTime} min de leitura</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="abody">
+    <div class="wrap abody-grid">
+      <aside class="atoc" aria-label="Neste artigo">
+        {toc.length > 0 && (
+          <nav class="toc">
+            <p class="toc-t">Neste artigo</p>
+            <ol>{toc.map((h) => <li><a href={`#${h.slug}`} data-toc={h.slug}>{h.text}</a></li>)}</ol>
+          </nav>
+        )}
+        <div class="share">
+          <p class="toc-t">Compartilhar</p>
+          <div>
+            <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener" aria-label="Compartilhar no LinkedIn"><Icon name="linkedin" size={16} /></a>
+            <a href={`mailto:?subject=${encodeURIComponent(a.title)}&body=${encodeURIComponent(shareUrl)}`} aria-label="Enviar por e-mail"><Icon name="mail" size={17} /></a>
+            <button type="button" data-copy={shareUrl} aria-label="Copiar link"><Icon name="link" size={17} /></button>
+          </div>
+        </div>
+      </aside>
+
+      <article class="acontent">
+        <div class="prose"><Content /></div>
+
+        {a.boardQuestion && (
+          <div class="board card hud" style="--hud-size:16px">
+            <span class="ico ico--violet" style="--ico:52px"><Icon name="landmark" /></span>
+            <div><p class="board-k">Pergunta para o conselho</p><p class="board-q">{a.boardQuestion}</p></div>
+          </div>
+        )}
+
+        <div class="next-step">
+          <div>
+            <p class="ns-t">Não soube responder?</p>
+            <p>Faça o Raio-X Quasar: 21 perguntas, 5 minutos e uma nota para cada dimensão da sua segurança.</p>
+          </div>
+          <div class="ns-actions">
+            <a href="/raio-x/" class="btn btn-primary">Fazer o Raio-X<Icon name="arrow-right" /></a>
+            <a href="/diagnostico-executivo/" class="btn btn-ghost">Falar com um especialista</a>
+          </div>
+        </div>
+
+        {a.sources && a.sources.length > 0 && (
+          <div class="sources">
+            <p class="toc-t">Fontes e referências</p>
+            <ol>
+              {a.sources.map((s) => <li>{s.url ? <a href={s.url} target="_blank" rel="noopener">{s.label}<Icon name="arrow-up-right" size={13} /></a> : s.label}</li>)}
+            </ol>
+          </div>
+        )}
+
+        <nav class="pn" aria-label="Outros artigos">
+          <a href={`/insights/${prev.slug}/`} class="card"><small><Icon name="arrow-left" size={14} />Anterior</small><strong>{prev.title}</strong></a>
+          <a href={`/insights/${next.slug}/`} class="card pn-next"><small>Próximo<Icon name="arrow-right" size={14} /></small><strong>{next.title}</strong></a>
+        </nav>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section--tint section--line">
+    <div class="wrap">
+      <div class="rel-head" data-reveal>
+        <h2 class="h2">Continue <span class="grad">lendo.</span></h2>
+        <a href="/insights/" class="btn btn-ghost">Todos os insights<Icon name="arrow-right" /></a>
+      </div>
+      <div class="rel">{related.map((r, k) => <ArticleCard a={r} delay={k * 0.06} />)}</div>
+    </div>
+  </section>
+
+  <section class="section nlb">
+    <div class="wrap nlb-in card hud" style="--hud-size:20px">
+      <div>
+        <h2 class="h2">Ciber no <span class="grad">Conselho</span></h2>
+        <p class="lead">O radar mensal de IA, quântica e cibersegurança — e as perguntas que a sua liderança deveria fazer.</p>
+      </div>
+      <NewsletterForm id="nl-art" />
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ahero { position: relative; isolation: isolate; overflow: hidden; padding: calc(var(--header-h) + 130px) 0 clamp(56px, 6vw, 88px); }
+  .ahero-in { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
+  .crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-4); }
+  .crumbs a { color: var(--text-3); } .crumbs a:hover { color: var(--cyan-hi); }
+  .atitle { font-size: clamp(2.1rem, 4vw, 3.6rem); letter-spacing: -0.04em; line-height: 1.06; }
+  .asum { font-size: clamp(1.1rem, 1.4vw, 1.3rem); color: var(--text-2); line-height: 1.55; max-width: 60ch; }
+  .ameta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 8px; padding-top: 22px; border-top: 1px solid rgb(53 198 240 / 0.18); width: 100%; font-size: 0.9rem; color: var(--text-3); }
+  .ameta > span { display: inline-flex; align-items: center; gap: 8px; }
+  .author img { border-radius: 50%; }
+  .author strong { display: block; color: #fff; font-weight: 600; }
+  .author small { display: block; color: var(--text-4); font-size: 0.8rem; }
+
+  .abody { padding: clamp(48px, 6vw, 80px) 0 clamp(80px, 8vw, 120px); }
+  .abody-grid { display: grid; grid-template-columns: 240px minmax(0, 760px); gap: clamp(32px, 6vw, 96px); justify-content: center; }
+  .atoc { position: sticky; top: calc(var(--header-h) + 32px); align-self: start; display: grid; gap: 30px; }
+  .toc-t { font-size: 0.78rem; font-weight: 700; color: var(--cyan-hi); margin-bottom: 12px; }
+  .toc ol { list-style: none; display: grid; gap: 2px; border-left: 1px solid var(--line); }
+  .toc a { display: block; padding: 7px 0 7px 16px; margin-left: -1px; border-left: 2px solid transparent; font-size: 0.86rem; line-height: 1.4; color: var(--text-4); transition: color 0.2s, border-color 0.2s; }
+  .toc a:hover { color: var(--text-2); }
+  .toc a.on { color: #fff; border-left-color: var(--cyan-hi); }
+  .share div { display: flex; gap: 8px; }
+  .share a, .share button { width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line-2); display: grid; place-items: center; color: var(--text-2); transition: color 0.2s, border-color 0.2s; }
+  .share a:hover, .share button:hover, .share button.done { color: var(--cyan-hi); border-color: var(--cyan-hi); }
+  .acontent { min-width: 0; }
+  .prose :global(h2) { scroll-margin-top: calc(var(--header-h) + 24px); }
+  .prose > :global(p:first-child) { font-size: 1.25rem; color: var(--text); line-height: 1.65; }
+  .board { display: flex; gap: 20px; align-items: flex-start; margin-top: 56px; padding: 30px; background: linear-gradient(135deg, rgb(124 92 255 / 0.12), rgb(10 20 28 / 0.95) 60%); }
+  .board-k { color: var(--lilac); font-weight: 600; font-size: 0.85rem; }
+  .board-q { margin-top: 8px; font-family: var(--font-display); font-weight: 800; color: #fff; font-size: clamp(1.25rem, 1.8vw, 1.55rem); letter-spacing: -0.02em; line-height: 1.3; }
+  .next-step { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 22px; margin-top: 20px; padding: 26px 30px; border-radius: var(--radius); border: 1px solid var(--line-2); background: rgb(0 163 214 / 0.06); }
+  .ns-t { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.2rem; }
+  .next-step p:last-child { color: var(--text-3); font-size: 0.95rem; max-width: 46ch; }
+  .ns-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+  .sources { margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--line); }
+  .sources ol { padding-left: 1.2em; display: grid; gap: 8px; color: var(--text-4); font-size: 0.88rem; }
+  .sources a { display: inline-flex; align-items: center; gap: 4px; color: var(--text-3); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+  .sources a:hover { color: var(--cyan-hi); }
+  .pn { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 48px; }
+  .pn a { display: grid; gap: 8px; padding: 22px 24px; }
+  .pn small { display: inline-flex; align-items: center; gap: 6px; color: var(--cyan-hi); font-weight: 600; font-size: 0.82rem; }
+  .pn strong { color: #fff; font-family: var(--font-display); font-weight: 700; letter-spacing: -0.015em; line-height: 1.3; }
+  .pn-next { text-align: right; } .pn-next small { justify-content: flex-end; }
+  .rel-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: 44px; }
+  .rel { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  .nlb-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; padding: clamp(32px, 4vw, 60px); background: linear-gradient(135deg, #0a1720, #0c0f22); }
+  .nlb .lead { margin-top: 14px; }
+  @media (max-width: 1000px) { .abody-grid { grid-template-columns: 1fr; } .atoc { position: static; order: 2; } .toc { display: none; } .rel { grid-template-columns: 1fr 1fr; } .nlb-in { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .rel, .pn { grid-template-columns: 1fr; } .pn-next { text-align: left; } .pn-next small { justify-content: flex-start; } }
+</style>
+
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('[data-toc]')];
+  if (links.length) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) links.forEach((l) => l.classList.toggle('on', l.dataset.toc === e.target.id));
+    }), { rootMargin: '-20% 0px -70% 0px' });
+    links.forEach((l) => { const h = document.getElementById(l.dataset.toc!); if (h) io.observe(h); });
+  }
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy!); b.classList.add('done'); setTimeout(() => b.classList.remove('done'), 1600); } catch {}
+  }));
+</script>

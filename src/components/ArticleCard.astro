@@ -1,0 +1,36 @@
+---
+import Art from './Art.astro';
+import Icon from './Icon.astro';
+import { coverOf, pillarName, type ArticleMeta } from '../data/articles';
+interface Props { a: ArticleMeta; size?: 'md' | 'lg'; delay?: number }
+const { a, size = 'md', delay = 0 } = Astro.props;
+---
+<a href={`/insights/${a.slug}/`} class:list={['acard card', size]} data-reveal data-pillar={a.pillar} style={`--d:${delay}s`}>
+  <div class="acard-img">
+    <Art id={coverOf(a)} sizes="(max-width: 767px) 100vw, 33vw" />
+    <span class="chip chip--mono acard-chip">{a.pillar.toUpperCase()} · {pillarName(a)}</span>
+  </div>
+  <div class="acard-body">
+    <h3 class="acard-title">{a.title}</h3>
+    <p class="acard-sum">{a.summary}</p>
+    <div class="acard-meta">
+      <span><Icon name="clock" size={15} />{a.readTime} min de leitura</span>
+      <span class="link">Ler<Icon name="arrow-right" /></span>
+    </div>
+  </div>
+</a>
+<style>
+  .acard { display: flex; flex-direction: column; overflow: hidden; height: 100%; }
+  .acard-img { position: relative; aspect-ratio: 16 / 9; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .acard-img :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+  .acard:hover .acard-img :global(img) { transform: scale(1.05); }
+  .acard-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 40%, rgb(3 7 11 / 0.7)); }
+  .acard-chip { position: absolute; left: 16px; bottom: 16px; z-index: 1; background: rgb(3 7 11 / 0.75); backdrop-filter: blur(8px); max-width: calc(100% - 32px); overflow: hidden; text-overflow: ellipsis; }
+  .acard-body { display: flex; flex-direction: column; gap: 14px; padding: 26px 26px 24px; flex: 1; }
+  .acard-title { font-size: 1.22rem; line-height: 1.25; letter-spacing: -0.025em; transition: color 0.25s; }
+  .acard:hover .acard-title { color: var(--cyan-hi); }
+  .acard-sum { color: var(--text-3); font-size: 0.95rem; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .acard-meta { margin-top: auto; padding-top: 16px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; color: var(--text-4); }
+  .acard-meta > span:first-child { display: inline-flex; align-items: center; gap: 7px; }
+  .lg .acard-title { font-size: clamp(1.4rem, 2vw, 1.9rem); }
+</style>

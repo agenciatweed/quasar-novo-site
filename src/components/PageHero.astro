@@ -1,0 +1,45 @@
+---
+// Herói das páginas internas: arte de fundo (slot), cantos de mira, grade, brilhos e texto técnico.
+import Art from './Art.astro';
+import Icon from './Icon.astro';
+import { brand } from '../data/site';
+interface Crumb { href?: string; label: string }
+interface Props { img: string; title: string; accent?: string; lead?: string; crumbs?: Crumb[]; side?: string; compact?: boolean }
+const { img, title, accent, lead, crumbs = [], side = brand.statusSide, compact = false } = Astro.props;
+---
+<section class:list={['phero hud hud--frame', { compact }]}>
+  <div class="art-bg"><Art id={img} eager /></div>
+  <div class="fx-grid" style="--gx:78%; --gy:30%"></div>
+  <div class="fx-glow fx-glow--violet" style="right:-420px; bottom:-520px; --size:1000px"></div>
+  <span class="fx-side fx-side--left">{side}</span>
+  <span class="fx-side fx-side--right">{brand.hexSide}</span>
+  <div class="wrap phero-in">
+    {crumbs.length > 0 && (
+      <nav class="crumbs" aria-label="Trilha de navegação">
+        <ol>
+          <li><a href="/">Início</a></li>
+          {crumbs.map((c) => (
+            <li><Icon name="chevron-right" size={14} />{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>
+          ))}
+        </ol>
+      </nav>
+    )}
+    <h1 class="h1 phero-title">{title}{accent && <> <span class="grad">{accent}</span></>}</h1>
+    {lead && <p class="lead phero-lead">{lead}</p>}
+    {Astro.slots.has('default') && <div class="phero-actions"><slot /></div>}
+    <slot name="after" />
+  </div>
+</section>
+<style>
+  .phero { position: relative; isolation: isolate; overflow: hidden; min-height: clamp(560px, 78vh, 860px); display: flex; align-items: flex-end; padding: calc(var(--header-h) + 120px) 0 clamp(72px, 8vw, 120px); }
+  .phero.compact { min-height: clamp(480px, 62vh, 680px); }
+  .phero-in { position: relative; z-index: 1; }
+  .crumbs ol { list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-4); margin-bottom: 28px; }
+  .crumbs li { display: inline-flex; align-items: center; gap: 6px; }
+  .crumbs a { color: var(--text-3); transition: color 0.2s; }
+  .crumbs a:hover { color: var(--cyan-hi); }
+  .crumbs [aria-current] { color: var(--text-2); }
+  .phero-title { max-width: 18ch; }
+  .phero-lead { margin-top: 26px; max-width: 60ch; color: var(--text-2); }
+  .phero-actions { margin-top: 38px; display: flex; flex-wrap: wrap; gap: 14px; }
+</style>

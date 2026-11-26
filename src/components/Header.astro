@@ -1,0 +1,220 @@
+---
+import Icon from './Icon.astro';
+import { brand, categories, contacts, servicesBy, serviceHref, type CatKey } from '../data/site';
+
+const path = Astro.url.pathname;
+const cats: CatKey[] = ['consultoria', 'servicos-gerenciados'];
+const links = [
+  { href: '/metodologia/', label: 'Metodologia' },
+  { href: '/insights/', label: 'Insights' },
+  { href: '/sobre/', label: 'Sobre a Quasar' },
+];
+const isOn = (href: string) => path.startsWith(href);
+---
+<header class="site-header" data-header>
+  <div class="util">
+    <div class="wrap util-in">
+      <span class="mono util-status"><span class="pulse" aria-hidden="true"></span>{brand.statusSide.replace('// ', '')}</span>
+      <nav class="util-links" aria-label="Atalhos">
+        <a href="/raio-x/">Raio-X Quasar</a>
+        <a href="/newsletter/">Newsletter Ciber no Conselho</a>
+        <a href="/diagnostico-executivo/">Contato</a>
+        <a href={contacts.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn da Quasar"><Icon name="linkedin" size={15} /></a>
+        <a href={contacts.instagram} target="_blank" rel="noopener" aria-label="Instagram da Quasar"><Icon name="instagram" size={16} /></a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="bar">
+    <div class="wrap bar-in">
+      <a href="/" class="logo" aria-label="Quasar Technology — página inicial">
+        <img src="/brand/quasar-logo-white.svg" alt="Quasar Technology" width="134" height="49" />
+      </a>
+
+      <nav class="nav" aria-label="Principal">
+        <ul>
+          {cats.map((c) => (
+            <li class="dd" data-dd>
+              <button type="button" class:list={['nav-link', { on: isOn(`/${c}/`) }]} aria-expanded="false" aria-controls={`dd-${c}`}>
+                {categories[c].short}<Icon name="chevron-down" size={15} class="chev" />
+              </button>
+              <div class="dd-panel" id={`dd-${c}`}>
+                <div class="dd-grid">
+                  <ul class="dd-list">
+                    {servicesBy(c).map((s) => (
+                      <li>
+                        <a href={serviceHref(s)} class="dd-item">
+                          <span class="ico" style="--ico:40px"><Icon name={s.icon} /></span>
+                          <span><strong>{s.menu}</strong><small>{s.short}</small></span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <aside class="dd-feature hud" style="--hud-size:16px; --hud-alpha:.55">
+                    <span class="ico" style="--ico:44px"><Icon name={categories[c].icon} /></span>
+                    <p class="dd-feature-title">{categories[c].title}</p>
+                    <p class="dd-feature-text">{categories[c].lead}</p>
+                    <a href={`/${c}/`} class="link">Ver todas as frentes<Icon name="arrow-right" /></a>
+                    <hr class="divider" />
+                    <a href="/diagnostico-executivo/" class="dd-cta">
+                      <Icon name="target" size={18} />
+                      <span><strong>Diagnóstico Executivo</strong><small>60 min · 6 camadas · 3 prioridades</small></span>
+                    </a>
+                  </aside>
+                </div>
+              </div>
+            </li>
+          ))}
+          {links.map((l) => (
+            <li><a href={l.href} class:list={['nav-link', { on: isOn(l.href) }]} aria-current={isOn(l.href) ? 'page' : undefined}>{l.label}</a></li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="bar-actions">
+        <a href="/raio-x/" class="raiox-link"><Icon name="scan-eye" size={17} />Raio-X</a>
+        <a href="/diagnostico-executivo/" class="btn btn-primary btn-sm">Fale com um especialista</a>
+        <button type="button" class="burger" aria-label="Abrir menu" aria-expanded="false" aria-controls="drawer" data-burger>
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer" id="drawer" data-drawer hidden>
+    <nav class="wrap drawer-in" aria-label="Menu móvel">
+      <a href="/" class="drawer-link">Início</a>
+      {cats.map((c) => (
+        <details class="drawer-group">
+          <summary class="drawer-link">{categories[c].title}<Icon name="chevron-down" size={18} /></summary>
+          <ul>
+            {servicesBy(c).map((s) => (
+              <li><a href={serviceHref(s)}><Icon name={s.icon} size={18} />{s.menu}</a></li>
+            ))}
+            <li><a href={`/${c}/`} class="drawer-all">Ver todas as frentes →</a></li>
+          </ul>
+        </details>
+      ))}
+      {links.map((l) => <a href={l.href} class="drawer-link">{l.label}</a>)}
+      <a href="/raio-x/" class="drawer-link">Raio-X Quasar</a>
+      <a href="/newsletter/" class="drawer-link">Newsletter</a>
+      <a href="/diagnostico-executivo/" class="btn btn-primary btn-block drawer-cta">Fale com um especialista</a>
+      <p class="mono drawer-status">{brand.statusSide}</p>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header { position: fixed; inset: 0 0 auto 0; z-index: 50; transition: background-color 0.4s, border-color 0.4s, backdrop-filter 0.4s, transform 0.5s var(--ease); border-bottom: 1px solid transparent; }
+  .site-header.scrolled, .site-header.open { background: rgb(3 7 11 / 0.82); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); border-bottom-color: rgb(22 50 63 / 0.8); }
+  .site-header.scrolled .util { height: 0; opacity: 0; border-bottom-color: transparent; }
+
+  .util { height: 36px; overflow: hidden; border-bottom: 1px solid rgb(22 50 63 / 0.55); transition: height 0.4s var(--ease), opacity 0.3s; }
+  .util-in { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .util-status { display: inline-flex; align-items: center; gap: 10px; font-size: 0.66rem; color: rgb(53 198 240 / 0.7); }
+  .pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan-hi); box-shadow: 0 0 0 0 rgb(53 198 240 / 0.6); animation: pulse 2.4s infinite; }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgb(53 198 240 / 0.6); } 70% { box-shadow: 0 0 0 8px rgb(53 198 240 / 0); } 100% { box-shadow: 0 0 0 0 rgb(53 198 240 / 0); } }
+  .util-links { display: flex; align-items: center; gap: 22px; font-size: 0.8rem; color: var(--text-3); }
+  .util-links a { display: inline-flex; align-items: center; transition: color 0.2s; }
+  .util-links a:hover { color: var(--cyan-hi); }
+
+  .bar-in { height: var(--header-h); display: flex; align-items: center; gap: 28px; }
+  .logo img { height: 52px; width: auto; }
+  .nav { margin-left: auto; }
+  .nav > ul { list-style: none; display: flex; align-items: center; gap: 4px; }
+  .nav-link { position: relative; display: inline-flex; align-items: center; gap: 6px; height: 44px; padding: 0 14px; border-radius: 999px; font-size: 0.94rem; font-weight: 500; color: var(--text-2); transition: color 0.2s, background-color 0.2s; }
+  .nav-link:hover, .dd.open > .nav-link { color: #fff; background: rgb(255 255 255 / 0.06); }
+  .nav-link.on { color: #fff; }
+  .nav-link.on::after { content: ''; position: absolute; left: 14px; right: 14px; bottom: 6px; height: 2px; border-radius: 2px; background: var(--flow); }
+  .nav-link :global(.chev) { transition: transform 0.3s var(--ease); opacity: 0.7; }
+  .dd.open .nav-link :global(.chev) { transform: rotate(180deg); }
+
+  .dd { position: static; }
+  .dd-panel { position: absolute; left: 0; right: 0; top: 100%; padding: 0 var(--gutter); opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity 0.25s, transform 0.35s var(--ease), visibility 0.25s; }
+  .dd.open .dd-panel { opacity: 1; visibility: visible; transform: none; }
+  .dd-grid { max-width: calc(var(--wrap) - 2 * var(--gutter)); margin: 10px auto 0; display: grid; grid-template-columns: 1fr 320px; gap: 12px; padding: 12px; border-radius: 20px; background: rgb(6 13 19 / 0.97); border: 1px solid var(--line); box-shadow: 0 40px 80px -30px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(53 198 240 / 0.04) inset; backdrop-filter: blur(18px); }
+  .dd-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 4px; padding: 8px; }
+  .dd-item { display: flex; gap: 14px; align-items: flex-start; padding: 14px; border-radius: 14px; transition: background-color 0.2s; }
+  .dd-item:hover { background: rgb(53 198 240 / 0.06); }
+  .dd-item strong { display: block; color: #fff; font-weight: 600; font-size: 0.95rem; line-height: 1.3; }
+  .dd-item small { display: block; margin-top: 4px; color: var(--text-4); font-size: 0.82rem; line-height: 1.45; }
+  .dd-item:hover strong { color: var(--cyan-hi); }
+  .dd-feature { display: flex; flex-direction: column; gap: 12px; padding: 24px; border-radius: 14px; background: linear-gradient(160deg, rgb(0 163 214 / 0.1), rgb(124 92 255 / 0.07)); border: 1px solid var(--line); }
+  .dd-feature-title { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.1rem; letter-spacing: -0.02em; }
+  .dd-feature-text { font-size: 0.85rem; line-height: 1.55; color: var(--text-3); }
+  .dd-feature .divider { margin: 4px 0; }
+  .dd-cta { display: flex; gap: 12px; align-items: center; color: var(--cyan-hi); }
+  .dd-cta strong { display: block; color: #fff; font-size: 0.9rem; }
+  .dd-cta small { display: block; color: var(--text-4); font-size: 0.78rem; }
+  .dd-cta:hover strong { color: var(--cyan-hi); }
+
+  .bar-actions { display: flex; align-items: center; gap: 18px; }
+  .raiox-link { display: inline-flex; align-items: center; gap: 7px; font-size: 0.92rem; font-weight: 600; color: var(--cyan-hi); }
+  .raiox-link:hover { color: #fff; }
+  .burger { display: none; width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line-2); position: relative; }
+  .burger span { position: absolute; left: 12px; right: 12px; height: 2px; border-radius: 2px; background: #fff; transition: transform 0.35s var(--ease), top 0.35s var(--ease); }
+  .burger span:first-child { top: 16px; }
+  .burger span:last-child { top: 25px; }
+  .open .burger span:first-child { top: 21px; transform: rotate(45deg); }
+  .open .burger span:last-child { top: 21px; transform: rotate(-45deg); }
+
+  .drawer { position: fixed; inset: var(--header-h) 0 0 0; background: rgb(3 7 11 / 0.98); overflow-y: auto; border-top: 1px solid var(--line); }
+  .drawer-in { display: flex; flex-direction: column; padding-top: 12px; padding-bottom: 40px; }
+  .drawer-link { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-bottom: 1px solid var(--line); font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: #fff; letter-spacing: -0.02em; list-style: none; cursor: pointer; }
+  .drawer-link::-webkit-details-marker { display: none; }
+  .drawer-group[open] summary :global(svg) { transform: rotate(180deg); }
+  .drawer-group summary :global(svg) { transition: transform 0.3s var(--ease); color: var(--cyan-hi); }
+  .drawer-group ul { list-style: none; padding: 8px 0 14px; border-bottom: 1px solid var(--line); }
+  .drawer-group li a { display: flex; align-items: center; gap: 12px; padding: 11px 0; color: var(--text-2); font-size: 1rem; }
+  .drawer-group li a :global(svg) { color: var(--cyan-hi); flex: none; }
+  .drawer-all { color: var(--cyan-hi) !important; font-weight: 600; }
+  .drawer-cta { margin-top: 28px; }
+  .drawer-status { margin-top: 24px; color: rgb(53 198 240 / 0.55); font-size: 0.66rem; }
+
+  @media (max-width: 1240px) { .raiox-link { display: none; } .nav-link { padding: 0 11px; font-size: 0.9rem; } }
+  @media (max-width: 1100px) {
+    .util, .nav, .bar-actions .btn { display: none; }
+    .burger { display: block; }
+    .bar-actions { margin-left: auto; }
+    .logo img { height: 40px; }
+  }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 12);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const dds = [...document.querySelectorAll<HTMLElement>('[data-dd]')];
+  const closeAll = (except?: HTMLElement) => dds.forEach((d) => {
+    if (d === except) return;
+    d.classList.remove('open');
+    d.querySelector('button')?.setAttribute('aria-expanded', 'false');
+  });
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+  dds.forEach((dd) => {
+    const btn = dd.querySelector('button')!;
+    let t: number | undefined;
+    const open = () => { closeAll(dd); dd.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); };
+    const close = () => { dd.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); };
+    btn.addEventListener('click', () => (dd.classList.contains('open') ? close() : open()));
+    dd.addEventListener('mouseenter', () => { if (fine.matches) { clearTimeout(t); open(); } });
+    dd.addEventListener('mouseleave', () => { if (fine.matches) t = window.setTimeout(close, 160); });
+    dd.addEventListener('focusout', (e) => { if (!dd.contains(e.relatedTarget as Node)) close(); });
+  });
+  document.addEventListener('click', (e) => { if (!(e.target as Element).closest('[data-dd]')) closeAll(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeAll(); toggleDrawer(false); } });
+
+  const burger = document.querySelector<HTMLButtonElement>('[data-burger]')!;
+  const drawer = document.querySelector<HTMLElement>('[data-drawer]')!;
+  function toggleDrawer(force?: boolean) {
+    const on = force ?? drawer.hidden;
+    drawer.hidden = !on;
+    header.classList.toggle('open', on);
+    burger.setAttribute('aria-expanded', String(on));
+    burger.setAttribute('aria-label', on ? 'Fechar menu' : 'Abrir menu');
+    document.documentElement.style.overflow = on ? 'hidden' : '';
+  }
+  burger.addEventListener('click', () => toggleDrawer());
+</script>

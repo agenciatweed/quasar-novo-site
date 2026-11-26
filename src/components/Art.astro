@@ -1,0 +1,13 @@
+---
+// <picture> com versão mobile (art direction) a partir do registro de imagens.
+import { img } from '../data/images';
+interface Props { id: string; eager?: boolean; class?: string; alt?: string; sizes?: string }
+const { id, eager = false, class: cls, alt, sizes = '100vw' } = Astro.props;
+const i = img(id);
+const dims = i.kind === 'card' ? [960, 1200] : i.kind === 'photo' ? [1000, 1250] : [1456, 816];
+---
+<picture class={cls} data-slot={id}>
+  {i.mobileSrc && <source media="(max-width: 767px)" srcset={i.mobileSrc} width="816" height="1456" />}
+  <img src={i.desktop} alt={alt ?? i.alt} width={dims[0]} height={dims[1]} sizes={sizes}
+    loading={eager ? 'eager' : 'lazy'} decoding={eager ? 'sync' : 'async'} fetchpriority={eager ? 'high' : undefined} />
+</picture>

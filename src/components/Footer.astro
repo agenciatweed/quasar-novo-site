@@ -1,0 +1,77 @@
+---
+import Icon from './Icon.astro';
+import { brand, contacts, servicesBy, serviceHref } from '../data/site';
+const year = 2026;
+---
+<footer class="footer">
+  <div class="fx-grid" style="--gx:15%; --gy:0%"></div>
+  <div class="wrap">
+    <div class="top">
+      <div class="brandcol">
+        <img src="/brand/quasar-logo-white.svg" alt="Quasar Technology" width="176" height="65" class="flogo" loading="lazy" />
+        <p class="mother">{brand.mother}</p>
+        <p class="sig"><span class="grad">{brand.signature}</span></p>
+        <div class="social">
+          <a href={contacts.linkedin} target="_blank" rel="noopener" aria-label="LinkedIn"><Icon name="linkedin" size={17} /></a>
+          <a href={contacts.instagram} target="_blank" rel="noopener" aria-label="Instagram"><Icon name="instagram" size={18} /></a>
+          <a href={`mailto:${contacts.people[0].email}`} aria-label="E-mail"><Icon name="mail" size={18} /></a>
+        </div>
+      </div>
+      <nav class="cols" aria-label="Rodapé">
+        <div>
+          <p class="ft">Consultoria</p>
+          <ul>{servicesBy('consultoria').map((s) => <li><a href={serviceHref(s)}>{s.menu}</a></li>)}</ul>
+        </div>
+        <div>
+          <p class="ft">Serviços Gerenciados</p>
+          <ul>{servicesBy('servicos-gerenciados').map((s) => <li><a href={serviceHref(s)}>{s.menu}</a></li>)}</ul>
+          <p class="ft ft-gap">Empresa</p>
+          <ul>
+            <li><a href="/metodologia/">Metodologia 6 camadas</a></li>
+            <li><a href="/sobre/">Sobre a Quasar</a></li>
+            <li><a href="/insights/">Insights</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="ft">Comece por aqui</p>
+          <ul>
+            <li><a href="/raio-x/">Raio-X Quasar <span class="tag">21 perguntas</span></a></li>
+            <li><a href="/diagnostico-executivo/">Diagnóstico Executivo</a></li>
+            <li><a href="/newsletter/">Newsletter Ciber no Conselho</a></li>
+          </ul>
+          <p class="ft ft-gap">Contato</p>
+          <ul class="contact">
+            {contacts.people.map((p) => <li><a href={`mailto:${p.email}`}><Icon name="mail" size={15} />{p.email}</a></li>)}
+            <li><span><Icon name="map-pin" size={15} />Rio de Janeiro · Burnaby/Vancouver</span></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="bottom">
+      <p>© {year} Quasar Technology. Todos os direitos reservados. Em parceria com AMSi Networks.</p>
+      <p class="mono hex">{brand.hexSide}</p>
+    </div>
+  </div>
+</footer>
+<style>
+  .footer { position: relative; isolation: isolate; overflow: hidden; background: #02050800; border-top: 1px solid var(--line); padding: clamp(64px, 8vw, 110px) 0 36px; }
+  .top { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 2fr); gap: clamp(40px, 6vw, 96px); }
+  .flogo { height: 58px; width: auto; }
+  .mother { margin-top: 26px; color: var(--text-3); font-size: 0.95rem; line-height: 1.65; max-width: 44ch; }
+  .sig { margin-top: 18px; font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; }
+  .social { display: flex; gap: 10px; margin-top: 26px; }
+  .social a { width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; border: 1px solid var(--line-2); color: var(--text-2); transition: color 0.2s, border-color 0.2s, background-color 0.2s; }
+  .social a:hover { color: var(--cyan-hi); border-color: var(--cyan-hi); background: rgb(53 198 240 / 0.06); }
+  .cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .ft { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 0.98rem; letter-spacing: -0.01em; margin-bottom: 16px; }
+  .ft-gap { margin-top: 30px; }
+  ul { list-style: none; display: grid; gap: 10px; }
+  li a, li span { display: inline-flex; align-items: center; gap: 8px; color: var(--text-3); font-size: 0.9rem; line-height: 1.4; transition: color 0.2s; }
+  li a:hover { color: var(--cyan-hi); }
+  .contact :global(svg) { color: var(--cyan-hi); flex: none; }
+  .tag { font-size: 0.7rem; font-weight: 600; color: var(--cyan-hi); border: 1px solid var(--line-2); border-radius: 999px; padding: 1px 8px; }
+  .bottom { margin-top: clamp(56px, 7vw, 88px); padding-top: 26px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; font-size: 0.82rem; color: var(--text-4); }
+  .hex { font-size: 0.66rem; color: rgb(53 198 240 / 0.5); }
+  @media (max-width: 1000px) { .top { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .cols { grid-template-columns: 1fr 1fr; } .cols > div:last-child { grid-column: 1 / -1; } }
+</style>

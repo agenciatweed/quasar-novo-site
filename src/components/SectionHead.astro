@@ -1,0 +1,18 @@
+---
+interface Props { title: string; accent?: string; lead?: string; center?: boolean; id?: string; class?: string }
+const { title, accent, lead, center = false, id, class: cls } = Astro.props;
+---
+<header class:list={['shead', cls, { center }]} data-reveal>
+  <div>
+    <h2 class="h2" id={id}>{title}{accent && <> <span class="grad">{accent}</span></>}</h2>
+    {lead && <p class="lead">{lead}</p>}
+  </div>
+  {Astro.slots.has('default') && <div class="shead-side"><slot /></div>}
+</header>
+<style>
+  .shead { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px 48px; flex-wrap: wrap; margin-bottom: clamp(44px, 5vw, 72px); }
+  .shead h2 { max-width: 20ch; }
+  .shead .lead { margin-top: 20px; }
+  .shead.center { justify-content: center; text-align: center; }
+  .shead.center h2, .shead.center .lead { margin-inline: auto; }
+</style>

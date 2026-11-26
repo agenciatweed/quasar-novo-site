@@ -1,0 +1,104 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import Icon from '../../components/Icon.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import DataFlow from '../../components/DataFlow.astro';
+import { categories, layers, servicesBy, serviceHref, type CatKey } from '../../data/site';
+
+export function getStaticPaths() {
+  return (['consultoria', 'servicos-gerenciados'] as CatKey[]).map((cat) => ({ params: { cat }, props: { cat } }));
+}
+const { cat } = Astro.props as { cat: CatKey };
+const c = categories[cat];
+const other: CatKey = cat === 'consultoria' ? 'servicos-gerenciados' : 'consultoria';
+const list = servicesBy(cat);
+const copy = cat === 'consultoria'
+  ? { title: 'Estratégia, governança e conformidade', accent: 'na língua do conselho.', intro: 'A Consultoria Estratégica traduz risco cibernético em impacto financeiro, jurídico e operacional — e desenha o caminho para reduzi-lo, com prioridade, dono e prazo. Do mapa de riscos à certificação, da LGPD à prontidão pós-quântica.', how: ['Diagnóstico executivo e mapa por camada', 'Plano priorizado por risco e retorno', 'Implementação acompanhada e evidências auditáveis', 'Relatório periódico para o conselho'] }
+  : { title: 'Proteção contínua,', accent: '24 horas por dia.', intro: 'Os Serviços Gerenciados operam a defesa no dia a dia: monitoramento 24x7, detecção e resposta, gestão contínua de exposição e proteção de identidades e dados — sem sobrecarregar a equipe interna e com relatórios executivos mensais.', how: ['Onboarding e integração do ambiente', 'Monitoramento e resposta conforme playbooks acordados', 'Gestão contínua de exposição e correções', 'Relatórios mensais de postura para a diretoria'] };
+---
+<Base title={c.title} description={c.lead}>
+  <PageHero img={`cat-${cat}`} title={copy.title} accent={copy.accent} lead={c.lead} crumbs={[{ label: c.short }]} side={`// ${c.short.toLowerCase()}`}>
+    <a href="/diagnostico-executivo/" class="btn btn-primary">Agendar Diagnóstico Executivo<Icon name="arrow-right" /></a>
+    <a href="#frentes" class="btn btn-ghost">Ver as {list.length} frentes</a>
+  </PageHero>
+
+  <section class="section" id="frentes">
+    <div class="fx-grid" style="--gx:85%; --gy:10%"></div>
+    <div class="wrap">
+      <SectionHead title={`${list.length} frentes de`} accent={c.short.toLowerCase() + '.'} lead={copy.intro} />
+      <div class="cl-grid">
+        {list.map((s, i) => (
+          <a href={serviceHref(s)} class="cl-card card" data-reveal style={`--d:${(i % 2) * 0.08}s`}>
+            <div class="cl-top">
+              <span class="ico" style="--ico:58px"><Icon name={s.icon} /></span>
+              <span class="chip chip--mono">{s.tag}</span>
+            </div>
+            <h2 class="h3">{s.title}</h2>
+            <p class="cl-short">{s.short}</p>
+            <ul class="cl-caps">{s.capabilities.slice(0, 3).map((x) => <li>{x}</li>)}</ul>
+            <div class="cl-foot">
+              <span class="cl-layers">{s.layers.map((n) => <span class="mono">C{layers[n - 1].num}</span>)}</span>
+              <span class="link">Ver impacto e metodologia<Icon name="arrow-right" /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tint section--line how">
+    <DataFlow class="how-flow" />
+    <div class="wrap how-grid">
+      <div data-reveal>
+        <h2 class="h2">Como <span class="grad">trabalhamos.</span></h2>
+        <p class="lead">Todo trabalho começa pelo Diagnóstico Executivo e termina no relatório para quem decide. No caminho, a AMSi Networks sustenta a execução técnica em cada uma das 6 camadas.</p>
+      </div>
+      <ol class="how-steps">
+        {copy.how.map((h, i) => <li data-reveal style={`--d:${i * 0.06}s`}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{h}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <a href={`/${other}/`} class="other card hud" data-reveal style="--hud-size:18px">
+        <span class="ico" style="--ico:64px"><Icon name={categories[other].icon} /></span>
+        <span class="other-txt"><small>O outro pilar da Quasar</small><strong>{categories[other].title}</strong><span>{categories[other].lead}</span></span>
+        <Icon name="arrow-right" size={26} />
+      </a>
+    </div>
+  </section>
+
+  <CtaBand variant="raiox" />
+</Base>
+
+<style>
+  .cl-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .cl-card { display: flex; flex-direction: column; gap: 16px; padding: clamp(26px, 3vw, 40px); }
+  .cl-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 8px; }
+  .cl-card h2 { font-size: clamp(1.35rem, 1.8vw, 1.7rem); transition: color 0.25s; }
+  .cl-card:hover h2 { color: var(--cyan-hi); }
+  .cl-short { color: var(--text-3); }
+  .cl-caps { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .cl-caps li { font-size: 0.8rem; padding: 5px 11px; border-radius: 8px; background: rgb(3 7 11 / 0.6); border: 1px solid var(--line); color: var(--text-2); }
+  .cl-foot { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .cl-layers { display: flex; gap: 6px; }
+  .cl-layers .mono { font-size: 0.64rem; letter-spacing: 0.1em; color: var(--cyan-hi); border: 1px solid var(--line-2); border-radius: 6px; padding: 3px 7px; }
+  .how { overflow: hidden; }
+  .how :global(.how-flow) { width: 90%; right: -20%; top: -40px; opacity: 0.5; }
+  .how-grid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .how .lead { margin-top: 22px; }
+  .how-steps { list-style: none; display: grid; gap: 12px; }
+  .how-steps li { display: flex; align-items: center; gap: 18px; padding: 20px 24px; border-radius: 14px; border: 1px solid var(--line); background: rgb(10 20 28 / 0.75); color: #fff; font-weight: 600; font-size: 1.05rem; }
+  .how-steps .mono { color: var(--cyan-hi); font-size: 0.72rem; }
+  .other { display: flex; align-items: center; gap: 28px; padding: clamp(28px, 4vw, 52px); background: linear-gradient(120deg, rgb(0 163 214 / 0.1), rgb(10 20 28 / 0.95) 50%, rgb(124 92 255 / 0.1)); }
+  .other-txt { flex: 1; display: grid; gap: 6px; }
+  .other-txt small { color: var(--cyan-hi); font-weight: 600; font-size: 0.85rem; }
+  .other-txt strong { color: #fff; font-family: var(--font-display); font-size: clamp(1.5rem, 2.4vw, 2.2rem); letter-spacing: -0.03em; }
+  .other-txt span { color: var(--text-3); max-width: 70ch; }
+  .other > :global(svg) { color: var(--cyan-hi); flex: none; transition: transform 0.35s var(--ease); }
+  .other:hover > :global(svg) { transform: translateX(6px); }
+  @media (max-width: 900px) { .cl-grid, .how-grid { grid-template-columns: 1fr; } .other { flex-direction: column; align-items: flex-start; } }
+</style>

@@ -1,0 +1,173 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import Icon from '../components/Icon.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { contacts } from '../data/site';
+
+const steps = [
+  ['send', 'Contato', 'Você envia o formulário ou escreve para um dos fundadores. Respondemos em até 1 dia útil.'],
+  ['user-check', 'Qualificação', 'Entendemos o contexto da empresa — porte, setor e exposição regulatória — para preparar a sessão.'],
+  ['presentation', 'Sessão de 60 minutos', 'Conversa estruturada com a diretoria ou o comitê de riscos, conduzida pela Quasar com a AMSi Networks.'],
+  ['layers', 'Mapa por camada', 'Você recebe a leitura das 6 camadas e as 3 prioridades para agir, com dono e prazo sugeridos.'],
+  ['route', 'Próximos passos', 'Se fizer sentido, propomos o caminho: diagnóstico aprofundado, projeto e, quando necessário, serviço gerenciado.'],
+];
+const personas = [
+  ['landmark', 'Conselheiros e comitês de auditoria e riscos', 'As perguntas certas sobre ciber e IA — e como cobrar respostas.'],
+  ['briefcase', 'CEO e CFO', 'Quanto custa um dia parado e quanto custa prevenir.'],
+  ['shield-check', 'CISO e TI', 'Como priorizar e defender o orçamento no board.'],
+  ['scale', 'Compliance, DPO e jurídico', 'Controles que viram evidência de diligência.'],
+];
+const faq = [
+  ['Quem deve participar da sessão?', 'Idealmente, alguém da diretoria executiva (CEO, CFO ou COO), o responsável por tecnologia ou segurança e, quando houver, um representante do comitê de riscos ou de compliance.'],
+  ['Precisamos dar acesso aos nossos sistemas?', 'Não. O Diagnóstico Executivo é uma conversa estruturada com a liderança. Avaliações técnicas aprofundadas, quando necessárias, são propostas depois e combinadas formalmente.'],
+  ['O que recebemos ao final?', 'Um mapa da sua situação nas 6 camadas do modelo e as 3 prioridades para agir, explicadas em linguagem de negócio — risco, impacto, prioridade e prazo.'],
+  ['Como fica o sigilo das informações?', 'Sigilo absoluto: nenhuma lacuna de cliente é exposta e nenhum cliente é citado sem autorização por escrito. Se preferir, a conversa pode ser coberta por acordo de confidencialidade.'],
+  ['Qual a diferença para o Raio-X Quasar?', 'O Raio-X é uma autoavaliação on-line de 21 perguntas, em cerca de 5 minutos. O Diagnóstico Executivo é uma sessão com especialistas, que aprofunda o resultado e define prioridades. Fazer o Raio-X antes ajuda a aproveitar melhor a sessão.'],
+];
+---
+<Base title="Diagnóstico Executivo" description="Em 60 minutos com a diretoria, a Quasar avalia as 6 camadas de defesa da sua empresa e entrega 3 prioridades para agir — inclusive diante da IA e da computação quântica.">
+  <PageHero img="home-contato" title="Diagnóstico" accent="Executivo." lead="Em 60 minutos, mostramos onde estão as lacunas da sua empresa — inclusive diante da IA e da computação quântica. 6 camadas avaliadas, 3 prioridades para agir." crumbs={[{ label: 'Diagnóstico Executivo' }]} side="// oferta de entrada · 60 min">
+    <a href="#agendar" class="btn btn-primary">Agendar agora<Icon name="arrow-right" /></a>
+    <a href="/raio-x/" class="btn btn-ghost"><Icon name="scan-eye" />Fazer o Raio-X antes</a>
+    <ul slot="after" class="facts">
+      <li><span class="num">60</span><span>minutos com a<br />diretoria</span></li>
+      <li><span class="num">6</span><span>camadas<br />avaliadas</span></li>
+      <li><span class="num">3</span><span>prioridades<br />para agir</span></li>
+    </ul>
+  </PageHero>
+
+  <section class="section">
+    <div class="fx-grid" style="--gx:80%; --gy:0%"></div>
+    <div class="wrap">
+      <SectionHead title="Como funciona," accent="do contato ao plano." />
+      <ol class="flow">
+        {steps.map(([ic, t, d], i) => (
+          <li class="card" data-reveal style={`--d:${i * 0.06}s`}>
+            <span class="flow-n mono">{String(i + 1).padStart(2, '0')}</span>
+            <span class="ico" style="--ico:48px"><Icon name={ic} /></span>
+            <h3>{t}</h3>
+            <p>{d}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--tint section--line" id="agendar">
+    <div class="fx-glow fx-glow--violet" style="right:-480px; top:-300px; --size:1000px"></div>
+    <div class="wrap book">
+      <div class="book-side" data-reveal>
+        <h2 class="h2">Agende o seu <span class="grad">Diagnóstico.</span></h2>
+        <p class="lead">Conte um pouco sobre a sua empresa. Um dos fundadores responde em até 1 dia útil para combinar o melhor horário.</p>
+        <ul class="who">
+          {personas.map(([ic, t, d]) => <li><Icon name={ic} size={20} /><span><strong>{t}</strong>{d}</span></li>)}
+        </ul>
+        <div class="direct card">
+          <p class="direct-t">Prefere falar direto?</p>
+          {contacts.people.map((p) => <a href={`mailto:${p.email}`}><Icon name="mail" size={17} /><span><small>{p.name}</small>{p.email}</span></a>)}
+          <div class="direct-soc">
+            <a href={contacts.linkedin} target="_blank" rel="noopener"><Icon name="linkedin" size={16} />LinkedIn</a>
+            <a href={contacts.instagram} target="_blank" rel="noopener"><Icon name="instagram" size={17} />Instagram</a>
+          </div>
+        </div>
+      </div>
+      <form class="book-form card hud" data-fake-form novalidate data-reveal style="--d:.08s; --hud-size:18px">
+        <p class="form-title">Solicitação de Diagnóstico Executivo</p>
+        <div class="form-grid">
+          <div class="field"><label for="d-nome">Nome completo</label><input class="input" id="d-nome" name="nome" required autocomplete="name" /></div>
+          <div class="field"><label for="d-cargo">Cargo</label><input class="input" id="d-cargo" name="cargo" required placeholder="Ex.: CEO, CFO, CISO, Jurídico" /></div>
+          <div class="field"><label for="d-empresa">Empresa</label><input class="input" id="d-empresa" name="empresa" required autocomplete="organization" /></div>
+          <div class="field"><label for="d-email">E-mail corporativo</label><input class="input" id="d-email" name="email" type="email" required autocomplete="email" /></div>
+          <div class="field"><label for="d-tel">Telefone / WhatsApp <span class="hint">(opcional)</span></label><input class="input" id="d-tel" name="telefone" type="tel" autocomplete="tel" /></div>
+          <div class="field"><label for="d-porte">Porte</label>
+            <select class="select" id="d-porte" name="porte" required>
+              <option value="">Selecione</option><option>Até 250 colaboradores</option><option>251 a 1.000 colaboradores</option><option>Mais de 1.000 colaboradores</option><option>Grupo empresarial</option>
+            </select>
+          </div>
+          <div class="field span-2"><label for="d-setor">Setor</label>
+            <select class="select" id="d-setor" name="setor" required>
+              <option value="">Selecione</option><option>Financeiro, pagamentos ou seguros</option><option>Saúde</option><option>Indústria</option><option>Varejo e consumo</option><option>Tecnologia e serviços digitais</option><option>Energia, infraestrutura e logística</option><option>Setor público</option><option>Outro</option>
+            </select>
+          </div>
+          <fieldset class="field span-2 topics">
+            <legend class="label">O que mais preocupa hoje? <span class="hint">(marque quantos quiser)</span></legend>
+            <div class="topic-grid">
+              {['Fraudes e deepfakes com IA', 'Uso de IA pelos colaboradores', 'Ransomware e continuidade', 'LGPD e ANPD', 'Banco Central (CMN/BCB)', 'ISO 27001 e auditorias de clientes', 'Risco pós-quântico', 'Relatório para o conselho'].map((t, i) => (
+                <label class="topic"><input type="checkbox" name="temas" value={t} /><span>{t}</span></label>
+              ))}
+            </div>
+          </fieldset>
+          <div class="field span-2"><label for="d-msg">Mensagem <span class="hint">(opcional)</span></label><textarea class="textarea" id="d-msg" name="mensagem" placeholder="Contexto, prazos ou o que motivou o contato"></textarea></div>
+          <label class="check span-2"><input type="checkbox" name="consent" required /><span>Autorizo a Quasar a usar estes dados para responder a esta solicitação, conforme a LGPD. Não compartilhamos seus dados com terceiros.</span></label>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Solicitar Diagnóstico Executivo<Icon name="arrow-right" /></button>
+        <p class="form-ok" role="status" hidden><Icon name="circle-check" size={20} />Solicitação registrada. Um dos fundadores entra em contato em até 1 dia útil para confirmar o horário.</p>
+        <p class="form-err" role="alert" hidden>Preencha os campos obrigatórios e aceite o termo para continuar.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap-narrow">
+      <SectionHead title="Perguntas" accent="frequentes." center />
+      <div class="faq">
+        {faq.map(([q, a], i) => (
+          <details class="faq-item" open={i === 0} data-reveal>
+            <summary><span>{q}</span><Icon name="chevron-down" size={20} /></summary>
+            <p>{a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .facts { list-style: none; display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
+  .facts li { display: flex; align-items: center; gap: 14px; padding: 14px 20px 14px 16px; border-radius: 14px; border: 1px solid var(--line-2); background: rgb(3 7 11 / 0.6); backdrop-filter: blur(8px); font-size: 0.85rem; color: var(--text-3); line-height: 1.3; }
+  .facts .num { font-family: var(--font-display); font-weight: 800; font-size: 2.2rem; letter-spacing: -0.04em; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .flow { list-style: none; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; counter-reset: s; }
+  .flow li { position: relative; display: flex; flex-direction: column; gap: 14px; padding: 26px 22px; }
+  .flow-n { position: absolute; top: 22px; right: 22px; color: var(--text-4); font-size: 0.68rem; }
+  .flow h3 { font-size: 1.12rem; letter-spacing: -0.02em; margin-top: 6px; }
+  .flow p { color: var(--text-3); font-size: 0.92rem; }
+  .book { position: relative; display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(36px, 5vw, 80px); align-items: start; }
+  .book .lead { margin-top: 20px; }
+  .who { list-style: none; display: grid; gap: 16px; margin-top: 34px; }
+  .who li { display: flex; gap: 14px; color: var(--text-3); font-size: 0.93rem; }
+  .who :global(svg) { color: var(--cyan-hi); flex: none; margin-top: 2px; }
+  .who strong { display: block; color: #fff; font-weight: 600; }
+  .direct { margin-top: 34px; padding: 24px; display: grid; gap: 14px; }
+  .direct-t { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.1rem; }
+  .direct > a { display: flex; align-items: center; gap: 12px; color: #fff; font-weight: 500; }
+  .direct > a :global(svg) { color: var(--cyan-hi); }
+  .direct small { display: block; color: var(--text-4); font-size: 0.75rem; font-weight: 400; }
+  .direct-soc { display: flex; gap: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .direct-soc a { display: inline-flex; align-items: center; gap: 8px; color: var(--text-3); font-size: 0.9rem; }
+  .direct-soc a:hover, .direct > a:hover { color: var(--cyan-hi); }
+  .book-form { display: grid; gap: 24px; padding: clamp(24px, 3.4vw, 44px); background: linear-gradient(180deg, rgb(14 27 37 / 0.96), rgb(8 16 23 / 0.96)); }
+  .form-title { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.35rem; letter-spacing: -0.02em; }
+  .topics { border: 0; padding: 0; margin: 0; }
+  .topics legend { margin-bottom: 10px; }
+  .topic-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .topic { position: relative; cursor: pointer; }
+  .topic input { position: absolute; opacity: 0; }
+  .topic span { display: flex; align-items: center; min-height: 46px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line-2); background: rgb(3 7 11 / 0.5); font-size: 0.88rem; color: var(--text-2); transition: border-color 0.2s, background-color 0.2s, color 0.2s; }
+  .topic span::before { content: ''; flex: none; width: 16px; height: 16px; margin-right: 10px; border-radius: 5px; border: 1.5px solid var(--line-2); transition: background-color 0.2s, border-color 0.2s; }
+  .topic input:checked + span { border-color: var(--cyan-hi); background: rgb(0 163 214 / 0.12); color: #fff; }
+  .topic input:checked + span::before { background: var(--cyan); border-color: var(--cyan); box-shadow: inset 0 0 0 3px var(--panel); }
+  .topic input:focus-visible + span { outline: 2px solid var(--cyan-hi); outline-offset: 2px; }
+  .topic:hover span { border-color: #2a6178; }
+  .faq { display: grid; gap: 10px; }
+  .faq-item { border: 1px solid var(--line); border-radius: 14px; background: rgb(10 20 28 / 0.6); transition: border-color 0.3s; }
+  .faq-item[open] { border-color: var(--line-2); }
+  .faq-item summary { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 24px; cursor: pointer; list-style: none; font-family: var(--font-display); font-weight: 700; color: #fff; font-size: 1.1rem; letter-spacing: -0.015em; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary :global(svg) { color: var(--cyan-hi); flex: none; transition: transform 0.3s var(--ease); }
+  .faq-item[open] summary :global(svg) { transform: rotate(180deg); }
+  .faq-item p { padding: 0 24px 24px; color: var(--text-3); }
+  @media (max-width: 1100px) { .flow { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  @media (max-width: 900px) { .book { grid-template-columns: 1fr; } .flow { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .flow, .topic-grid { grid-template-columns: 1fr; } }
+</style>

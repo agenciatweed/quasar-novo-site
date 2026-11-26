@@ -1,0 +1,200 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import ArtSection from '../components/ArtSection.astro';
+import Art from '../components/Art.astro';
+import Icon from '../components/Icon.astro';
+import SectionHead from '../components/SectionHead.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { brand, contacts, differentials } from '../data/site';
+import { isReady } from '../data/images';
+
+const leaders = [
+  {
+    name: 'Jorge Muzy', role: 'Fundador e porta-voz', email: contacts.people[0].email, photo: '/team/jorge-muzy.png',
+    bio: [
+      'Mais de 40 anos de carreira corporativa, como CEO e em posições C-level em empresas como Icon Aviation, EMS, Amil e Ibmec. Na última década, dedica-se à aplicação corporativa e à governança da IA generativa.',
+      'Chairman do Instituto Valor, fundador e CEO da AINEWS e idealizador do AI Summit Brasil. Autor do livro “Além dos Algoritmos” e de centenas de publicações sobre tecnologia, inovação e Inteligência Artificial.',
+    ],
+    tags: ['Governança de IA', 'Estratégia C-level', 'AI Summit Brasil'],
+  },
+  {
+    name: 'André Machado da Silva', role: 'Fundador e porta-voz', email: contacts.people[1].email, photo: null,
+    bio: [
+      'Consultor internacional de segurança cibernética e especialista em riscos cibernéticos. Mestre em Ciências Administrativas com especialização em Segurança da Computação (Canadá) e Engenheiro Eletrônico (Brasil).',
+      'Keynote Speaker no AI Summit Brasil (Salvador e São Paulo). Conecta boas práticas internacionais de governança de IA, frameworks globais e resiliência operacional às empresas brasileiras.',
+    ],
+    tags: ['Riscos cibernéticos', 'Frameworks globais', 'Canadá · Brasil'],
+  },
+];
+const commitments = [
+  ['lock-keyhole', 'Sigilo absoluto', 'Nenhuma lacuna de cliente é exposta. Cases só anônimos ou autorizados por escrito.'],
+  ['file-check', 'Toda estatística com fonte', 'Afirmações com dado, fonte ou exemplo verificável — sem alarme, sem medo gratuito.'],
+  ['clock', 'Resposta em até 1 dia útil', 'Todo contato respondido rapidamente, em qualquer canal, com um responsável do início ao fim.'],
+  ['message-square', 'A mesma língua', 'Nenhuma sigla sem tradução. Todo conteúdo termina no impacto para o negócio e no próximo passo.'],
+  ['sparkles', 'Primeiro, valor', 'A primeira conversa entrega algo útil antes de qualquer proposta.'],
+  ['scale', 'LGPD desde o início', 'Consentimento claro e descadastro em toda comunicação.'],
+];
+---
+<Base title="Sobre a Quasar" description="Consultoria de cibersegurança e inovação científica aplicada, fundada por Jorge Muzy e André Silva, com atuação no Brasil, no Canadá e nos Estados Unidos e execução em parceria com a AMSi Networks.">
+  <PageHero img="sobre-hero" title="Ciência aplicada à segurança" accent="da era da IA." lead="Consultoria de cibersegurança e inovação científica aplicada. Protegemos dados, sistemas, algoritmos e decisões críticas — antecipando ameaças em vez de reagir a elas." crumbs={[{ label: 'Sobre a Quasar' }]} side="// posicionamento institucional">
+    <a href="#lideranca" class="btn btn-primary">Conheça a liderança<Icon name="arrow-right" /></a>
+    <a href="/diagnostico-executivo/" class="btn btn-ghost">Fale com um especialista</a>
+  </PageHero>
+
+  <section class="section">
+    <div class="fx-grid" style="--gx:80%; --gy:10%"></div>
+    <div class="wrap pos">
+      <div data-reveal>
+        <h2 class="h2">Segurança decidida no conselho, <span class="grad">não só na TI.</span></h2>
+      </div>
+      <div class="pos-txt" data-reveal style="--d:.08s">
+        <p class="lead">{brand.mother}</p>
+        <p>Atuamos no idioma da diretoria executiva e do Conselho de Administração: mitigação de responsabilidade civil, conformidade com ANPD/LGPD e Banco Central, atendimento a auditorias de cadeia de suprimentos e continuidade operacional frente ao cenário de ransomware.</p>
+        <p>Quase ninguém explica IA ofensiva e risco quântico na língua do conselho. É esse o espaço que a Quasar ocupa: com dado, sem alarme, e com um próximo passo concreto.</p>
+      </div>
+    </div>
+    <div class="wrap mvv">
+      <div class="mvv-card card hud" data-reveal style="--hud-size:16px"><p class="mono">ideia central</p><p class="mvv-t">Enquanto outros reagem, <span class="grad">a Quasar antecipa.</span></p></div>
+      <div class="mvv-card card" data-reveal style="--d:.06s"><p class="mono">missão</p><p class="mvv-t">{brand.mission}</p></div>
+      <div class="mvv-card card" data-reveal style="--d:.12s"><p class="mono">assinatura</p><p class="mvv-t">{brand.signature}</p></div>
+    </div>
+  </section>
+
+  <section class="section section--tint section--line">
+    <div class="wrap">
+      <SectionHead title="Quatro diferenciais," accent="repetidos sempre." />
+      <div class="diff">
+        {differentials.map((d, i) => (
+          <div class="diff-item" data-reveal style={`--d:${i * 0.06}s`}>
+            <span class="diff-n mono">{String(i + 1).padStart(2, '0')}</span>
+            <span class="ico" style="--ico:52px"><Icon name={d.icon} /></span>
+            <h3 class="h3">{d.title}</h3>
+            <p>{d.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="lideranca">
+    <span class="fx-side fx-side--left">// liderança executiva</span>
+    <div class="wrap">
+      <SectionHead title="Liderança" accent="executiva." lead="Os fundadores são também os porta-vozes da Quasar: falam diretamente com conselhos, CEOs, CFOs e diretores jurídicos." />
+      <div class="leaders">
+        {leaders.map((l, i) => (
+          <article class="leader card" data-reveal style={`--d:${i * 0.08}s`}>
+            <div class="leader-photo hud" style="--hud-size:16px; --hud-inset:12px">
+              {l.photo ? <img src={l.photo} alt={l.name} width="800" height="1000" loading="lazy" /> : isReady('andre-silva') ? <Art id="andre-silva" alt={l.name} /> : <div class="leader-mono" role="img" aria-label={l.name}><span>{l.name.split(' ').filter((w) => w.length > 2).map((w) => w[0]).filter((_, k, a) => k === 0 || k === a.length - 1).join('')}</span></div>}
+            </div>
+            <div class="leader-body">
+              <p class="leader-role">{l.role}</p>
+              <h3 class="leader-name">{l.name}</h3>
+              {l.bio.map((b) => <p class="leader-bio">{b}</p>)}
+              <ul class="leader-tags">{l.tags.map((t) => <li class="chip">{t}</li>)}</ul>
+              <a href={`mailto:${l.email}`} class="link"><Icon name="mail" />{l.email}</a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ArtSection img="sobre-presenca" align="left" side="// presença" labelledby="pres-t">
+    <h2 id="pres-t" class="h2" data-reveal>Brasil, Canadá e <span class="grad">Estados Unidos.</span></h2>
+    <p class="lead pres-lead" data-reveal style="--d:.06s">Padrões globais de governança e resiliência, aplicados à realidade regulatória brasileira.</p>
+    <div class="pres" data-reveal style="--d:.12s">
+      <div class="pres-item">
+        <span class="ico" style="--ico:48px"><Icon name="map-pin" /></span>
+        <div><p class="pres-k">Operação Brasil</p><p class="pres-t">Rio de Janeiro & atendimento nacional</p><p>Atuação consultiva e operacional dedicada ao mercado corporativo brasileiro, com domínio das exigências da LGPD/ANPD, do Banco Central (CMN 4.893 / 5.274 e BCB 85 / 538) e das normas ISO.</p></div>
+      </div>
+      <div class="pres-item">
+        <span class="ico ico--violet" style="--ico:48px"><Icon name="globe" /></span>
+        <div><p class="pres-k">Presença América do Norte</p><p class="pres-t">Canadá & Estados Unidos</p><p>Base na Região Metropolitana de Vancouver (Burnaby, BC), conectando boas práticas internacionais de governança de IA, frameworks globais e resiliência operacional às empresas brasileiras.</p></div>
+      </div>
+    </div>
+  </ArtSection>
+
+  <section class="section section--line">
+    <div class="wrap amsi">
+      <div data-reveal>
+        <h2 class="h2">Quasar + AMSi: <span class="grad">antecipação e execução.</span></h2>
+        <p class="lead">O mapa de 6 camadas da AMSi Networks é a base de execução da Quasar. Nós antecipamos as ameaças e desenhamos a proteção; a AMSi sustenta os controles em cada camada — da governança à operação 24x7.</p>
+        <a href="/metodologia/" class="btn btn-ghost amsi-btn">Ver o modelo de 6 camadas<Icon name="arrow-right" /></a>
+      </div>
+      <ol class="amsi-stack" data-reveal style="--d:.08s">
+        {['Governança, Risco e Compliance', 'Perímetro e Arquitetura de Rede', 'Acesso, Identidades e Aplicações', 'Dispositivos, Endpoints e Dados', 'Gestão de Vulnerabilidades e Exposição', 'Operações de Segurança e Resiliência'].map((t, i) => (
+          <li style={`--i:${i}`}><span class="mono">{String(i + 1).padStart(2, '0')}</span>{t}</li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section section--tint section--line">
+    <div class="wrap">
+      <SectionHead title="Compromissos" accent="inegociáveis." lead="As regras que valem para cada conversa, cada conteúdo e cada projeto." />
+      <div class="comm">
+        {commitments.map(([ic, t, d], i) => (
+          <div class="comm-item card" data-reveal style={`--d:${(i % 3) * 0.06}s`}><span class="ico" style="--ico:46px"><Icon name={ic} /></span><div><h3>{t}</h3><p>{d}</p></div></div>
+        ))}
+      </div>
+      <div class="eco card" data-reveal>
+        <img src="/brand/ai-summit-2026.png" alt="AI Summit Brasil 2026" width="180" height="60" loading="lazy" />
+        <p>A liderança da Quasar participa de forma recorrente do <strong>AI Summit Brasil</strong>, em Salvador e em São Paulo — um dos principais fóruns sobre Inteligência Artificial do país.</p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand variant="diagnostico" />
+</Base>
+
+<style>
+  .pos { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(40px, 6vw, 96px); }
+  .pos h2 { max-width: 14ch; }
+  .pos-txt { display: grid; gap: 20px; color: var(--text-3); }
+  .pos-txt .lead { color: var(--text); }
+  .mvv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: clamp(56px, 6vw, 88px); }
+  .mvv-card { padding: 30px; display: grid; gap: 16px; align-content: start; }
+  .mvv-card .mono { color: var(--cyan-hi); font-size: 0.66rem; }
+  .mvv-t { font-family: var(--font-display); font-weight: 800; color: #fff; font-size: clamp(1.25rem, 1.7vw, 1.55rem); letter-spacing: -0.025em; line-height: 1.25; }
+  .diff { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
+  .diff-item { position: relative; display: grid; gap: 16px; align-content: start; padding: 34px 28px 10px 0; }
+  .diff-item + .diff-item { padding-left: 28px; border-left: 1px solid var(--line); }
+  .diff-n { color: var(--text-4); font-size: 0.68rem; }
+  .diff-item p { color: var(--text-3); font-size: 0.97rem; }
+  .leaders { display: grid; gap: 22px; }
+  .leader { display: grid; grid-template-columns: minmax(240px, 0.75fr) minmax(0, 1.6fr); gap: clamp(24px, 4vw, 56px); padding: clamp(18px, 2vw, 26px); }
+  .leader-photo { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 4 / 5; background: var(--panel-2); }
+  .leader-photo img, .leader-photo :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .leader-mono { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(120% 90% at 30% 20%, rgba(53, 198, 240, .18), transparent 60%), radial-gradient(90% 80% at 80% 90%, rgba(124, 92, 255, .2), transparent 60%), #08131B; }
+  .leader-mono span { font-family: var(--font-head, 'Manrope Variable', sans-serif); font-weight: 800; font-size: clamp(4rem, 9vw, 7rem); letter-spacing: -0.04em; background: linear-gradient(90deg, #35C6F0 0%, #35C6F0 40%, #9B86FF 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .leader-body { display: flex; flex-direction: column; gap: 16px; padding: clamp(6px, 2vw, 26px) clamp(6px, 2vw, 26px) clamp(6px, 2vw, 26px) 0; }
+  .leader-role { color: var(--cyan-hi); font-weight: 600; font-size: 0.9rem; }
+  .leader-name { font-size: clamp(1.9rem, 3vw, 2.8rem); }
+  .leader-bio { color: var(--text-3); }
+  .leader-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .leader-body .link { margin-top: auto; padding-top: 10px; }
+  .pres-lead { margin-top: 20px; color: var(--text-2); }
+  .pres { display: grid; gap: 14px; margin-top: 32px; }
+  .pres-item { display: flex; gap: 18px; padding: 22px; border-radius: 16px; background: rgb(3 7 11 / 0.66); border: 1px solid var(--line); backdrop-filter: blur(10px); }
+  .pres-k { color: var(--cyan-hi); font-weight: 600; font-size: 0.82rem; }
+  .pres-t { color: #fff; font-family: var(--font-display); font-weight: 800; font-size: 1.15rem; letter-spacing: -0.02em; margin: 4px 0 8px; }
+  .pres-item p:last-child { color: var(--text-3); font-size: 0.93rem; }
+  .amsi { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 6vw, 96px); align-items: center; }
+  .amsi .lead { margin-top: 22px; }
+  .amsi-btn { margin-top: 32px; }
+  .amsi-stack { list-style: none; display: grid; gap: 8px; }
+  .amsi-stack li { display: flex; align-items: center; gap: 16px; padding: 16px 20px; border-radius: 12px; border: 1px solid var(--line); background: linear-gradient(90deg, rgb(0 163 214 / calc(0.04 + var(--i) * 0.03)), rgb(124 92 255 / calc(0.02 + var(--i) * 0.025))); color: #fff; font-weight: 600; margin-left: calc(var(--i) * 14px); }
+  .amsi-stack .mono { color: var(--cyan-hi); font-size: 0.7rem; }
+  .comm { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .comm-item { display: flex; gap: 18px; padding: 26px; }
+  .comm-item h3 { font-size: 1.12rem; letter-spacing: -0.02em; }
+  .comm-item p { margin-top: 8px; color: var(--text-3); font-size: 0.94rem; }
+  .eco { margin-top: 28px; display: flex; align-items: center; gap: 32px; padding: 28px 32px; }
+  .eco img { height: 56px; width: auto; flex: none; }
+  .eco p { color: var(--text-3); }
+  .eco strong { color: #fff; }
+  @media (max-width: 1000px) { .diff { grid-template-columns: 1fr 1fr; } .diff-item:nth-child(3) { padding-left: 0; border-left: 0; } .comm { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 860px) { .pos, .amsi, .leader { grid-template-columns: 1fr; } .mvv { grid-template-columns: 1fr; } .leader-photo { max-width: 360px; } .amsi-stack li { margin-left: 0; } .eco { flex-direction: column; align-items: flex-start; } }
+  @media (max-width: 600px) { .diff, .comm { grid-template-columns: 1fr; } .diff-item, .diff-item + .diff-item { padding-left: 0; border-left: 0; } }
+</style>
