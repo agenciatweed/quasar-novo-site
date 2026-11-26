@@ -47,15 +47,15 @@ const { id = 'camadas' } = Astro.props;
 </div>
 <style>
   .lx { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 2.4vw, 36px); align-items: start; }
-  .lx-tabs { display: grid; gap: 8px; }
-  .lx-tab { position: relative; width: 100%; display: flex; align-items: center; gap: 16px; text-align: left; padding: 16px 18px; border-radius: 14px; border: 1px solid var(--line); background: rgb(10 20 28 / 0.6); transition: border-color 0.3s, background-color 0.3s; }
+  .lx-tabs { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; min-width: 0; }
+  .lx-tab { position: relative; width: 100%; min-width: 0; display: flex; align-items: center; gap: 16px; text-align: left; padding: 16px 18px; border-radius: 14px; border: 1px solid var(--line); background: rgb(10 20 28 / 0.6); transition: border-color 0.3s, background-color 0.3s; }
   .lx-tab:hover { border-color: var(--line-2); background: rgb(14 27 37 / 0.9); }
   .lx-tab[aria-selected='true'] { border-color: rgb(53 198 240 / 0.55); background: linear-gradient(90deg, rgb(0 163 214 / 0.16), rgb(124 92 255 / 0.06)); box-shadow: 0 20px 40px -28px rgb(0 163 214 / 0.8); }
   .lx-num { flex: none; width: 40px; height: 40px; display: grid; place-items: center; border-radius: 10px; border: 1px solid var(--line-2); color: var(--cyan-hi); font-size: 0.8rem; letter-spacing: 0.05em; }
   .lx-tab[aria-selected='true'] .lx-num { background: var(--cyan); color: var(--bg); border-color: var(--cyan); font-weight: 700; }
   .lx-txt { min-width: 0; flex: 1; }
   .lx-txt strong { display: block; color: #fff; font-weight: 600; font-size: 0.98rem; line-height: 1.3; }
-  .lx-txt small { display: block; margin-top: 3px; color: var(--text-4); font-size: 0.82rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lx-txt small { display: block; margin-top: 3px; color: var(--text-4); font-size: 0.82rem; line-height: 1.45; text-wrap: pretty; }
   .lx-tab :global(.lx-arrow) { color: var(--text-4); transition: transform 0.35s var(--ease), color 0.3s; flex: none; }
   .lx-tab[aria-selected='true'] :global(.lx-arrow) { color: var(--cyan-hi); transform: translateX(3px); }
   .lx-panels { position: sticky; top: calc(var(--header-h) + 24px); }
