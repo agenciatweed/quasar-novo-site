@@ -6,8 +6,9 @@ import SectionHead from '../components/SectionHead.astro';
 import CtaBand from '../components/CtaBand.astro';
 import DataFlow from '../components/DataFlow.astro';
 import { layers, services, serviceHref } from '../data/site';
-import { articles } from '../data/articles';
-const p4 = articles.filter((a) => a.pillar === 'p4');
+import { seriesInfo, seriesOf } from '../data/articles';
+const series = seriesOf('fora-para-dentro');
+const episodeOf = (n: number) => series.find((a) => a.episode === n);
 ---
 <Base title="Metodologia: modelo de defesa em 6 camadas" description="O modelo de defesa em camadas da Quasar integra governança executiva e operação contínua em seis camadas interdependentes, com execução da AMSi Networks.">
   <PageHero img="metodologia-hero" title="Modelo de defesa em camadas" accent="Quasar." lead="Nossa metodologia integra governança executiva e operação contínua em seis camadas interdependentes. Em vez de adquirir ferramentas isoladas, sua empresa constrói resiliência mensurável contra interrupções, vazamentos e sanções regulatórias." crumbs={[{ label: 'Metodologia' }]} side="// arquitetura de defesa em profundidade">
@@ -57,6 +58,7 @@ const p4 = articles.filter((a) => a.pillar === 'p4');
       <div class="lay-list">
         {layers.map((l) => {
           const rel = services.filter((s) => s.layers.includes(l.id));
+          const ep = episodeOf(l.id);
           return (
             <article class="lay card hud" id={`camada-${l.num}`} data-lay={l.num} data-reveal style="--hud-size:16px; --hud-alpha:.5">
               <header class="lay-head">
@@ -73,6 +75,7 @@ const p4 = articles.filter((a) => a.pillar === 'p4');
               </div>
               <ul class="lay-controls">{l.controls.map((c) => <li><Icon name="check" size={15} />{c}</li>)}</ul>
               {rel.length > 0 && <div class="lay-rel">{rel.map((s) => <a href={serviceHref(s)} class="chip">{s.menu}<Icon name="arrow-up-right" size={13} /></a>)}</div>}
+              {ep && <a href={`/insights/${ep.slug}/`} class="lay-ep link"><Icon name="book-open" size={16} />Ler o episódio {String(l.id).padStart(2, '0')} da série “De fora para dentro”<Icon name="arrow-right" /></a>}
             </article>
           );
         })}
@@ -94,13 +97,15 @@ const p4 = articles.filter((a) => a.pillar === 'p4');
           <div class="pr card" data-reveal style={`--d:${i * 0.06}s`}><span class="ico" style="--ico:50px"><Icon name={ic} /></span><h3 class="h3">{t}</h3><p>{d}</p></div>
         ))}
       </div>
-      {p4.length > 0 && (
+      {series.length > 0 && (
         <div class="series card" data-reveal>
           <div>
-            <p class="series-t">Série “De fora para dentro — uma camada por vez”</p>
-            <p class="series-d">Artigos que percorrem o mapa de 6 camadas na prática, para quem decide.</p>
+            <p class="series-t">Série “{seriesInfo['fora-para-dentro'].name}”</p>
+            <p class="series-d">{seriesInfo['fora-para-dentro'].desc}</p>
           </div>
-          <ul>{p4.map((a) => <li><a href={`/insights/${a.slug}/`}>{a.title}<Icon name="arrow-right" size={15} /></a></li>)}</ul>
+          <ul>{series.map((a) => (
+            <li><a href={`/insights/${a.slug}/`}><span><small class="mono">{a.episode ? `Ep. ${String(a.episode).padStart(2, '0')}` : 'Intro'}</small>{a.title.replace(/^Camada \d · /, '')}</span><Icon name="arrow-right" size={15} /></a></li>
+          ))}</ul>
         </div>
       )}
     </div>
@@ -150,6 +155,7 @@ const p4 = articles.filter((a) => a.pillar === 'p4');
   .lay-controls :global(svg) { color: var(--cyan-hi); flex: none; }
   .lay-rel { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
   .lay-rel .chip:hover { border-color: var(--cyan-hi); color: var(--cyan-hi); }
+  .lay-ep { margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); width: 100%; font-size: 0.92rem; }
 
   .principles { overflow: hidden; }
   .principles :global(.pr-flow) { width: 80%; right: -25%; top: 0; opacity: 0.45; }
@@ -163,6 +169,8 @@ const p4 = articles.filter((a) => a.pillar === 'p4');
   .series a { display: flex; justify-content: space-between; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); color: var(--text-2); font-weight: 500; }
   .series a:hover { color: var(--cyan-hi); }
   .series a :global(svg) { color: var(--cyan-hi); flex: none; }
+  .series a > span { display: grid; gap: 2px; }
+  .series a small { color: var(--cyan-hi); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; }
   @media (max-width: 1100px) { .pr-grid { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 960px) {
     .lay-grid, .series { grid-template-columns: 1fr; }

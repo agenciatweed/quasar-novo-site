@@ -80,7 +80,7 @@ export const services: Service[] = [
       'O investimento em segurança deste ano reduz quais riscos — e em quanto?',
     ],
     layers: [1],
-    related: ['risco-cibernetico-na-matriz-de-riscos', 'cinco-perguntas-ao-ciso', 'seguro-cibernetico'],
+    related: ['quanto-custa-um-dia-parado', 'risco-cibernetico-na-matriz-de-riscos', 'indicadores-de-ciber-para-o-conselho'],
   },
   {
     slug: 'iso-27001',
@@ -105,7 +105,7 @@ export const services: Service[] = [
       'Quanto tempo levaríamos para responder ao questionário de segurança de um grande cliente?',
     ],
     layers: [1],
-    related: ['por-que-6-camadas', 'cinco-perguntas-ao-ciso', 'glossario-sem-sigla'],
+    related: ['camada-1-governanca-risco-compliance', 'risco-de-terceiros', 'por-que-6-camadas'],
   },
   {
     slug: 'lgpd-privacidade',
@@ -130,7 +130,7 @@ export const services: Service[] = [
       'Nossos operadores e fornecedores têm obrigações contratuais claras?',
     ],
     layers: [1, 4],
-    related: ['lgpd-e-o-conselho', 'plano-de-resposta-primeiras-24-horas', 'o-que-seus-colaboradores-colam-na-ia'],
+    related: ['lgpd-e-o-conselho', 'camada-4-dispositivos-e-dados', 'plano-de-resposta-primeiras-24-horas'],
   },
   {
     slug: 'ia-nuvem',
@@ -155,7 +155,7 @@ export const services: Service[] = [
       'Quem aprova um novo uso de IA antes que ele chegue à produção?',
     ],
     layers: [3, 4],
-    related: ['governanca-de-ia-corporativa', 'seguranca-de-modelos-de-ia', 'o-que-seus-colaboradores-colam-na-ia'],
+    related: ['politica-de-uso-de-ia', 'agentes-de-ia-com-acesso', 'seguranca-de-modelos-de-ia'],
   },
   {
     slug: 'pos-quantico',
@@ -180,7 +180,7 @@ export const services: Service[] = [
       'Nossos fornecedores críticos têm plano de migração pós-quântica?',
     ],
     layers: [4, 1],
-    related: ['colher-agora-decifrar-depois', 'inventario-de-criptografia', 'padroes-pos-quanticos'],
+    related: ['pos-quantico-em-5-perguntas', 'roteiro-de-migracao-pos-quantica', 'fornecedores-e-o-risco-quantico'],
   },
   {
     slug: 'continuidade-dr',
@@ -205,7 +205,7 @@ export const services: Service[] = [
       'Nossos backups sobreviveriam a um ataque que criptografa a rede inteira?',
     ],
     layers: [6],
-    related: ['backup-nao-e-plano-de-recuperacao', 'plano-de-resposta-primeiras-24-horas', 'seguro-cibernetico'],
+    related: ['quanto-custa-um-dia-parado', 'backup-nao-e-plano-de-recuperacao', 'exercicio-de-mesa-para-a-diretoria'],
   },
   {
     slug: 'automacao',
@@ -230,7 +230,7 @@ export const services: Service[] = [
       'Que respostas a incidentes poderiam ser automáticas — e seguras?',
     ],
     layers: [6, 5],
-    related: ['ia-na-defesa', 'da-pesquisa-a-protecao', 'glossario-sem-sigla'],
+    related: ['ia-na-defesa', 'camada-6-operacoes-e-resiliencia', 'agentes-de-ia-com-acesso'],
   },
   {
     slug: 'soc-mdr',
@@ -255,7 +255,7 @@ export const services: Service[] = [
       'O relatório mensal mostra tendência de risco ou só volume de alertas?',
     ],
     layers: [6],
-    related: ['ia-na-defesa', 'plano-de-resposta-primeiras-24-horas', 'glossario-sem-sigla'],
+    related: ['camada-6-operacoes-e-resiliencia', 'ia-na-defesa', 'plano-de-resposta-primeiras-24-horas'],
   },
   {
     slug: 'ctem-pentest',
@@ -280,7 +280,7 @@ export const services: Service[] = [
       'As falhas críticas são corrigidas em quanto tempo, na prática?',
     ],
     layers: [5],
-    related: ['pentest-explicado-para-o-cfo', 'case-a-lacuna-na-empresa-bem-protegida', 'resolucoes-cmn-bcb'],
+    related: ['camada-5-vulnerabilidades-e-exposicao', 'pentest-explicado-para-o-cfo', 'case-a-lacuna-na-empresa-bem-protegida'],
   },
   {
     slug: 'protecao-dados',
@@ -305,7 +305,7 @@ export const services: Service[] = [
       'Os backups são verificados ou apenas executados?',
     ],
     layers: [4, 6],
-    related: ['dados-secretos-por-10-anos', 'o-que-seus-colaboradores-colam-na-ia', 'backup-nao-e-plano-de-recuperacao'],
+    related: ['camada-4-dispositivos-e-dados', 'dados-secretos-por-10-anos', 'o-que-seus-colaboradores-colam-na-ia'],
   },
   {
     slug: 'identidade-nuvem',
@@ -330,7 +330,7 @@ export const services: Service[] = [
       'Detectaríamos um login legítimo sendo usado por um atacante?',
     ],
     layers: [3, 2],
-    related: ['deepfake-do-ceo', 'email-do-ceo-escrito-por-ia', 'glossario-sem-sigla'],
+    related: ['camada-3-identidades-e-aplicacoes', 'phishing-com-ia', 'risco-de-terceiros'],
   },
 ];
 

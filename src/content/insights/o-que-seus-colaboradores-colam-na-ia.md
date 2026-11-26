@@ -4,6 +4,7 @@ summary: "Contratos, planilhas e código podem estar saindo da empresa pela caix
 pillar: p1
 readTime: 6
 order: 2
+cover: home-quem-somos
 boardQuestion: "Sabemos quais ferramentas de IA nossos times usam hoje — e que tipo de informação está sendo colada nelas?"
 sources:
   - label: "IBM — Cost of a Data Breach Report 2025 (resultados para o Brasil, via PR Newswire)"

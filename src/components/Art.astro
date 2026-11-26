@@ -1,9 +1,11 @@
 ---
 // <picture> com versão mobile (art direction) a partir do registro de imagens.
 import { img } from '../data/images';
-interface Props { id: string; eager?: boolean; class?: string; alt?: string; sizes?: string }
-const { id, eager = false, class: cls, alt, sizes = '100vw' } = Astro.props;
-const i = img(id);
+// `still`: usa só a versão horizontal (para miniaturas em caixa 16:9, mesmo no celular).
+interface Props { id: string; eager?: boolean; class?: string; alt?: string; sizes?: string; still?: boolean }
+const { id, eager = false, class: cls, alt, sizes = '100vw', still = false } = Astro.props;
+const base = img(id);
+const i = still ? { ...base, mobileSrc: undefined } : base;
 const dims = i.kind === 'card' ? [960, 1200] : i.kind === 'photo' ? [1000, 1250] : [1456, 816];
 ---
 <picture class={cls} data-slot={id}>

@@ -4,6 +4,7 @@ summary: "Ferramentas modernas, equipe dedicada, auditoria em dia — e uma port
 pillar: p5
 readTime: 6
 order: 23
+cover: metodologia-hero
 boardQuestion: "Quando foi a última vez que alguém de fora olhou para a nossa segurança tentando encontrar o que não sabemos?"
 sources:
   - label: "Verizon — Data Breach Investigations Report (DBIR)"

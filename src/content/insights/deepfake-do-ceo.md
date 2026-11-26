@@ -4,6 +4,7 @@ summary: "Voz e vídeo de executivos já podem ser falsificados em tempo real. A
 pillar: p1
 readTime: 6
 order: 1
+cover: cover-p1
 featured: true
 boardQuestion: "Temos um protocolo de dupla confirmação, por outro canal, para qualquer pedido urgente de pagamento — inclusive quando o pedido vem por vídeo?"
 sources:

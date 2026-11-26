@@ -5,7 +5,7 @@ import Icon from '../../components/Icon.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import NewsletterForm from '../../components/NewsletterForm.astro';
 import { brand, pillarBy } from '../../data/site';
-import { articles, coverOf, type Article } from '../../data/articles';
+import { articles, coverOf, seriesInfo, seriesOf, type Article } from '../../data/articles';
 
 export function getStaticPaths() {
   return articles.map((a) => ({ params: { slug: a.slug }, props: { a } }));
@@ -14,11 +14,17 @@ const { a } = Astro.props as { a: Article };
 const { Content } = a;
 const pillar = pillarBy(a.pillar);
 const toc = a.headings.filter((h) => h.depth === 2);
-const same = articles.filter((x) => x.pillar === a.pillar && x.slug !== a.slug);
+const ser = a.series ? { key: a.series, ...seriesInfo[a.series], items: seriesOf(a.series) } : null;
+const inSeries = (x: Article) => !!ser && x.series === ser.key;
+const same = articles.filter((x) => x.pillar === a.pillar && x.slug !== a.slug && !inSeries(x));
 const related = [...same, ...articles.filter((x) => x.pillar !== a.pillar && x.slug !== a.slug)].slice(0, 3);
-const i = articles.findIndex((x) => x.slug === a.slug);
-const prev = articles[(i - 1 + articles.length) % articles.length];
-const next = articles[(i + 1) % articles.length];
+// Anterior/próximo: dentro da série, quando houver; senão, na ordem geral.
+const seq = ser ? ser.items : articles;
+const i = seq.findIndex((x) => x.slug === a.slug);
+const gi = articles.findIndex((x) => x.slug === a.slug);
+const prev = i > 0 ? seq[i - 1] : articles[(gi - 1 + articles.length) % articles.length];
+const next = i < seq.length - 1 ? seq[i + 1] : articles[(gi + 1) % articles.length];
+const epLabel = (n?: number) => (n ? `Episódio ${String(n).padStart(2, '0')}` : 'Introdução');
 const shareUrl = new URL(`/insights/${a.slug}/`, Astro.site).toString();
 ---
 <Base title={a.title} description={a.summary}>
@@ -32,7 +38,10 @@ const shareUrl = new URL(`/insights/${a.slug}/`, Astro.site).toString();
       <nav class="crumbs" aria-label="Trilha de navegação">
         <a href="/">Início</a><Icon name="chevron-right" size={14} /><a href="/insights/">Insights</a><Icon name="chevron-right" size={14} /><a href={`/insights/?linha=${a.pillar}`}>{pillar.name}</a>
       </nav>
-      <span class="chip chip--mono">{pillar.code} · {pillar.name}</span>
+      <div class="achips">
+        <span class="chip chip--mono">{pillar.code} · {pillar.name}</span>
+        {ser && <span class="chip chip--mono achip-ser">Série · {epLabel(a.episode)}</span>}
+      </div>
       <h1 class="atitle">{a.title}</h1>
       <p class="asum">{a.summary}</p>
       <div class="ameta">
@@ -64,6 +73,25 @@ const shareUrl = new URL(`/insights/${a.slug}/`, Astro.site).toString();
       <article class="acontent">
         <div class="prose"><Content /></div>
 
+        {ser && (
+          <nav class="series card hud" style="--hud-size:14px" aria-label={`Série ${ser.name}`}>
+            <div class="series-head">
+              <span class="ico" style="--ico:46px"><Icon name="layers" /></span>
+              <div><p class="series-k">Série · {epLabel(a.episode)} de {String(ser.items.length - 1).padStart(2, '0')}</p><p class="series-n">{ser.name}</p></div>
+            </div>
+            <ol class="series-list">
+              {ser.items.map((x) => (
+                <li>
+                  <a href={`/insights/${x.slug}/`} aria-current={x.slug === a.slug ? 'page' : undefined}>
+                    <span class="mono">{x.episode ? String(x.episode).padStart(2, '0') : '00'}</span>
+                    <span>{x.title.replace(/^Camada \d · /, '')}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
+
         {a.boardQuestion && (
           <div class="board card hud" style="--hud-size:16px">
             <span class="ico ico--violet" style="--ico:52px"><Icon name="landmark" /></span>
@@ -92,8 +120,8 @@ const shareUrl = new URL(`/insights/${a.slug}/`, Astro.site).toString();
         )}
 
         <nav class="pn" aria-label="Outros artigos">
-          <a href={`/insights/${prev.slug}/`} class="card"><small><Icon name="arrow-left" size={14} />Anterior</small><strong>{prev.title}</strong></a>
-          <a href={`/insights/${next.slug}/`} class="card pn-next"><small>Próximo<Icon name="arrow-right" size={14} /></small><strong>{next.title}</strong></a>
+          <a href={`/insights/${prev.slug}/`} class="card"><small><Icon name="arrow-left" size={14} />{inSeries(prev) ? `Anterior na série · ${epLabel(prev.episode)}` : 'Anterior'}</small><strong>{prev.title}</strong></a>
+          <a href={`/insights/${next.slug}/`} class="card pn-next"><small>{inSeries(next) ? `Próximo na série · ${epLabel(next.episode)}` : 'Próximo'}<Icon name="arrow-right" size={14} /></small><strong>{next.title}</strong></a>
         </nav>
       </article>
     </div>
@@ -125,6 +153,8 @@ const shareUrl = new URL(`/insights/${a.slug}/`, Astro.site).toString();
   .ahero-in { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: flex-start; gap: 22px; }
   .crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.85rem; color: var(--text-4); }
   .crumbs a { color: var(--text-3); } .crumbs a:hover { color: var(--cyan-hi); }
+  .achips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .achip-ser { border-color: rgb(155 134 255 / 0.45); color: var(--lilac); }
   .atitle { font-size: clamp(2.1rem, 4vw, 3.6rem); letter-spacing: -0.04em; line-height: 1.06; }
   .asum { font-size: clamp(1.1rem, 1.4vw, 1.3rem); color: var(--text-2); line-height: 1.55; max-width: 60ch; }
   .ameta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 8px; padding-top: 22px; border-top: 1px solid rgb(53 198 240 / 0.18); width: 100%; font-size: 0.9rem; color: var(--text-3); }
@@ -147,6 +177,16 @@ const shareUrl = new URL(`/insights/${a.slug}/`, Astro.site).toString();
   .acontent { min-width: 0; }
   .prose :global(h2) { scroll-margin-top: calc(var(--header-h) + 24px); }
   .prose > :global(p:first-child) { font-size: 1.25rem; color: var(--text); line-height: 1.65; }
+  .series { margin-top: 56px; padding: clamp(22px, 3vw, 32px); }
+  .series-head { display: flex; align-items: center; gap: 16px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .series-k { color: var(--cyan-hi); font-weight: 600; font-size: 0.82rem; }
+  .series-n { margin-top: 4px; font-family: var(--font-display); font-weight: 800; color: #fff; font-size: 1.15rem; letter-spacing: -0.02em; line-height: 1.25; }
+  .series-list { list-style: none; display: grid; gap: 2px; margin-top: 12px; }
+  .series-list a { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 10px 12px; border-radius: 10px; color: var(--text-3); font-size: 0.95rem; line-height: 1.4; transition: background-color 0.2s, color 0.2s; }
+  .series-list a:hover { color: #fff; background: rgb(53 198 240 / 0.06); }
+  .series-list .mono { color: var(--text-4); font-size: 0.75rem; letter-spacing: 0.08em; }
+  .series-list a[aria-current='page'] { color: #fff; background: rgb(0 163 214 / 0.12); box-shadow: inset 2px 0 0 var(--cyan-hi); }
+  .series-list a[aria-current='page'] .mono { color: var(--cyan-hi); }
   .board { display: flex; gap: 20px; align-items: flex-start; margin-top: 56px; padding: 30px; background: linear-gradient(135deg, rgb(124 92 255 / 0.12), rgb(10 20 28 / 0.95) 60%); }
   .board-k { color: var(--lilac); font-weight: 600; font-size: 0.85rem; }
   .board-q { margin-top: 8px; font-family: var(--font-display); font-weight: 800; color: #fff; font-size: clamp(1.25rem, 1.8vw, 1.55rem); letter-spacing: -0.02em; line-height: 1.3; }

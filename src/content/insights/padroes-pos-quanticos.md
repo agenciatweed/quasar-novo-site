@@ -4,6 +4,7 @@ summary: "Em agosto de 2024, o NIST publicou os primeiros padrões de criptograf
 pillar: p2
 readTime: 6
 order: 9
+cover: cover-p5
 boardQuestion: "Nossos contratos de tecnologia exigem que fornecedores críticos sigam o calendário de transição pós-quântica?"
 sources:
   - label: "NIST — FIPS 203 (ML-KEM)"

@@ -1,14 +1,14 @@
 ---
 import Art from './Art.astro';
 import Icon from './Icon.astro';
-import { coverOf, pillarName, type ArticleMeta } from '../data/articles';
+import { coverOf, pillarName, seriesInfo, type ArticleMeta } from '../data/articles';
 interface Props { a: ArticleMeta; size?: 'md' | 'lg'; delay?: number }
 const { a, size = 'md', delay = 0 } = Astro.props;
 ---
 <a href={`/insights/${a.slug}/`} class:list={['acard card', size]} data-reveal data-pillar={a.pillar} style={`--d:${delay}s`}>
   <div class="acard-img">
-    <Art id={coverOf(a)} sizes="(max-width: 767px) 100vw, 33vw" />
-    <span class="chip chip--mono acard-chip">{a.pillar.toUpperCase()} · {pillarName(a)}</span>
+    <Art id={coverOf(a)} still sizes="(max-width: 767px) 100vw, 33vw" />
+    <span class="chip chip--mono acard-chip">{a.series ? `Ep. ${String(a.episode ?? 0).padStart(2, '0')} · ${seriesInfo[a.series].short}` : `${a.pillar.toUpperCase()} · ${pillarName(a)}`}</span>
   </div>
   <div class="acard-body">
     <h3 class="acard-title">{a.title}</h3>

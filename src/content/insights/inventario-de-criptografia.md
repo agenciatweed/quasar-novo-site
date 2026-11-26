@@ -4,6 +4,7 @@ summary: "Não dá para migrar o que não se conhece. Antes de falar em algoritm
 pillar: p2
 readTime: 6
 order: 8
+cover: raiox-hero
 boardQuestion: "Se o fornecedor de um sistema crítico anunciasse hoje que vai trocar seus algoritmos de criptografia, saberíamos quais processos de negócio seriam afetados?"
 sources:
   - label: "CISA, NSA e NIST — Quantum-Readiness: Migration to Post-Quantum Cryptography (2023)"

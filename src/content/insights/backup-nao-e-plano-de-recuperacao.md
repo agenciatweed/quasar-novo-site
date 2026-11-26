@@ -4,6 +4,7 @@ summary: "Ter cópias de segurança é diferente de conseguir voltar a operar. E
 pillar: p4
 readTime: 6
 order: 19
+cover: cover-p4
 boardQuestion: "Quando foi a última vez que restauramos, de verdade, um sistema crítico a partir do backup — e quanto tempo levou?"
 sources:
   - label: "NIST SP 800-34 — Contingency Planning Guide for Federal Information Systems"

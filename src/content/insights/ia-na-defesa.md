@@ -4,6 +4,7 @@ summary: "Os atacantes já usam IA para escalar golpes e acelerar invasões. Do 
 pillar: p1
 readTime: 6
 order: 4
+cover: cat-servicos-gerenciados
 boardQuestion: "Quanto tempo leva, hoje, entre o primeiro sinal de um ataque e a contenção — e quem está olhando fora do horário comercial?"
 sources:
   - label: "IBM — Cost of a Data Breach Report 2025"

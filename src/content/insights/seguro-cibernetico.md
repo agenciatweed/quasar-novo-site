@@ -4,6 +4,7 @@ summary: "O seguro cibernético ajuda a absorver o impacto financeiro de um inci
 pillar: p3
 readTime: 6
 order: 14
+cover: sobre-hero
 boardQuestion: "Tudo o que declaramos no questionário do seguro cibernético é verdade hoje — e conseguimos provar com evidências?"
 sources:
   - label: "Superintendência de Seguros Privados (SUSEP) — informações sobre seguros de riscos cibernéticos"

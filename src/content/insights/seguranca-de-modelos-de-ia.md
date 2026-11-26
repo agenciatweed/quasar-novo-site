@@ -4,6 +4,7 @@ summary: "Assistentes, chatbots e agentes de IA conectados a sistemas internos c
 pillar: p1
 readTime: 7
 order: 3
+cover: home-solucoes
 boardQuestion: "Os assistentes e agentes de IA que colocamos em produção foram testados contra abuso antes do lançamento — e quem responde por eles?"
 sources:
   - label: "OWASP — Top 10 for Large Language Model Applications (2025)"

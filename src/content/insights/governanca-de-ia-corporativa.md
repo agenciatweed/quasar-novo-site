@@ -4,6 +4,7 @@ summary: "Diretrizes práticas para diretorias que enfrentam o uso não supervis
 pillar: p1
 readTime: 5
 order: 6
+cover: cat-consultoria
 boardQuestion: "Quem, na nossa empresa, aprova um novo uso de Inteligência Artificial antes que ele chegue à produção?"
 sources:
   - label: "ISO/IEC 42001:2023 — Sistema de gestão de Inteligência Artificial"

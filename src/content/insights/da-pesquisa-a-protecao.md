@@ -4,6 +4,7 @@ summary: "Entre um artigo científico e um controle funcionando na sua empresa e
 pillar: p5
 readTime: 6
 order: 22
+cover: cover-p5
 boardQuestion: "Como a nossa empresa decide quando uma tecnologia emergente de segurança está madura o bastante para receber investimento?"
 sources:
   - label: "NIST — Post-Quantum Cryptography Standardization (2016–2024)"

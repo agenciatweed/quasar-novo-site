@@ -4,6 +4,7 @@ summary: "A pergunta parece simples e raramente tem resposta pronta. Ela define 
 pillar: p2
 readTime: 5
 order: 10
+cover: insights-hero
 boardQuestion: "Temos uma lista aprovada dos dados que precisam continuar secretos por 10 anos ou mais, com dono e nível de proteção definidos?"
 sources:
   - label: "Michele Mosca — Cybersecurity in an era with quantum computers: will we be ready? (IEEE Security & Privacy, 2018)"

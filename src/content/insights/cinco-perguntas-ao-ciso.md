@@ -4,6 +4,7 @@ summary: "Conselheiros não precisam dominar a técnica para exercer bem o seu p
 pillar: p3
 readTime: 6
 order: 11
+cover: cover-p3
 featured: true
 boardQuestion: "Destas cinco perguntas, quantas a nossa diretoria conseguiria responder hoje, com números e sem siglas?"
 sources:

@@ -4,6 +4,7 @@ summary: "Análise executiva sobre a elevação dos controles mínimos exigidos 
 pillar: p3
 readTime: 6
 order: 16
+cover: home-hero
 boardQuestion: "Conseguimos demonstrar ao Banco Central, com evidências, que cada controle mínimo da política de segurança cibernética está implementado e testado?"
 sources:
   - label: "Resolução CMN nº 4.893/2021 e Resolução BCB nº 85/2021 — política de segurança cibernética"

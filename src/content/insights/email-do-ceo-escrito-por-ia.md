@@ -4,6 +4,7 @@ summary: "A fraude do e-mail corporativo é antiga. O que mudou é a qualidade: 
 pillar: p1
 readTime: 5
 order: 5
+cover: home-hero
 boardQuestion: "Se amanhã um fornecedor pedir, por e-mail, a troca da conta bancária de pagamento, quantas pessoas precisam confirmar antes de o dinheiro sair?"
 sources:
   - label: "FBI — Internet Crime Complaint Center (IC3), relatórios anuais sobre Business Email Compromise"

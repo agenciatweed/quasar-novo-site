@@ -4,6 +4,7 @@ summary: "Nas primeiras horas de um incidente, a confusão custa mais que o ataq
 pillar: p3
 readTime: 7
 order: 12
+cover: cat-servicos-gerenciados
 boardQuestion: "Se um incidente grave acontecesse esta noite, quem decidiria — e quem falaria com clientes, reguladores e imprensa amanhã de manhã?"
 sources:
   - label: "Resolução CD/ANPD nº 15/2024 — Regulamento de Comunicação de Incidente de Segurança"

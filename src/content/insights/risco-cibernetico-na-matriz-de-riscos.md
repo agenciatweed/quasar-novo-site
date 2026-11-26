@@ -4,6 +4,7 @@ summary: "Enquanto o risco cibernético viver só no plano de TI, ele não compe
 pillar: p3
 readTime: 6
 order: 13
+cover: cat-consultoria
 boardQuestion: "O risco cibernético aparece na nossa matriz corporativa com a mesma métrica dos demais riscos — e cada item tem dono e prazo?"
 sources:
   - label: "ISO/IEC 27005 — Gestão de riscos de segurança da informação"

@@ -4,6 +4,7 @@ summary: "Por que a adequação à LGPD deixou de ser um projeto jurídico isola
 pillar: p3
 readTime: 6
 order: 15
+cover: insights-hero
 boardQuestion: "Se a ANPD pedisse hoje as evidências da nossa adequação à LGPD, conseguiríamos entregá-las — inclusive as técnicas?"
 sources:
   - label: "Lei nº 13.709/2018 — Lei Geral de Proteção de Dados (LGPD), arts. 46 a 52"

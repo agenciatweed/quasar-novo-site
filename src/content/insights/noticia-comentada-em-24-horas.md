@@ -4,6 +4,7 @@ summary: "Todo incidente que vira manchete é uma aula gratuita. Este é o méto
 pillar: p5
 readTime: 6
 order: 25
+cover: insights-hero
 boardQuestion: "Depois do último grande incidente noticiado no nosso setor, alguém trouxe para a diretoria a pergunta: isso poderia acontecer aqui?"
 sources:
   - label: "Baker McKenzie — Brazil: BCB and CMN establish additional cyber security requirements (dezembro de 2025)"

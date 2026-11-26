@@ -4,6 +4,7 @@ summary: "Estratégia sem execução vira relatório na gaveta. Execução sem e
 pillar: p5
 readTime: 5
 order: 24
+cover: cat-consultoria
 boardQuestion: "Quem, hoje, é responsável por transformar as recomendações de segurança em controles funcionando — e por provar que funcionam?"
 sources:
   - label: "Mapa de controles de cibersegurança em 6 camadas — AMSi Networks"

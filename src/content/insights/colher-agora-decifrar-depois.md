@@ -4,6 +4,7 @@ summary: "Computadores quânticos capazes de quebrar a criptografia atual ainda 
 pillar: p2
 readTime: 6
 order: 7
+cover: cover-p2
 featured: true
 boardQuestion: "Quais dados da empresa precisam continuar secretos por 10 anos ou mais — e eles estão protegidos contra quem os copiar hoje?"
 sources:

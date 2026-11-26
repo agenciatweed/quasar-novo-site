@@ -4,6 +4,7 @@ summary: "Uma trajetória construída no topo das empresas e outra na linha de f
 pillar: p5
 readTime: 5
 order: 21
+cover: sobre-hero
 boardQuestion: "Quem, na nossa empresa, traduz risco cibernético e de IA para a linguagem do conselho?"
 sources:
   - label: "AI Summit Brasil — perfil de Jorge Muzy"

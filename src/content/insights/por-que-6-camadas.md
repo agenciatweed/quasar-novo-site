@@ -4,6 +4,9 @@ summary: "Empresas costumam comprar ferramentas uma a uma, conforme o susto do m
 pillar: p4
 readTime: 6
 order: 17
+cover: metodologia-hero
+series: fora-para-dentro
+episode: 0
 boardQuestion: "Se tivéssemos que apontar a camada mais fraca da nossa defesa hoje, saberíamos qual é — e por quê?"
 sources:
   - label: "NIST — Cybersecurity Framework 2.0"

@@ -4,6 +4,7 @@ summary: "Siglas afastam quem decide. Este glossário traduz os termos mais comu
 pillar: p4
 readTime: 5
 order: 20
+cover: insights-hero
 boardQuestion: "Nossos relatórios de segurança para a diretoria explicam cada sigla na primeira vez em que ela aparece?"
 sources:
   - label: "NIST — Glossário do Computer Security Resource Center"
